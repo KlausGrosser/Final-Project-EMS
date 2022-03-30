@@ -75,6 +75,8 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.19.0</version>
