@@ -1,4 +1,6 @@
 package finalproject.security.email;
 
-public class EmailSender {
+public interface EmailSender {
+
+    void send(String to, String email);
 }
