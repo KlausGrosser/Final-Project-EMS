@@ -1,4 +1,4 @@
 package finalproject.models;
 
-public class User {
+public abstract class User {
 }
