@@ -7,8 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
+
 
 @Getter
 @Setter
@@ -30,7 +29,7 @@ public class Employee extends User{
 
   //@GeneratedValue(strategy=SEQUENCE, generator="emp_SEQ")
   @GeneratedValue(strategy = GenerationType.IDENTITY)//The GeneratedValue annotation may be applied to a primary key property of field of an entity or mapped superclass  in a conjunction with the Id annotation.
-  private long Id;
+  private Long Id;
 
   @Column(name = "first_name")
   private String fName;
@@ -52,7 +51,7 @@ public class Employee extends User{
   public Department department;
   public Address address;
   public Manager manager;
-  //public Position position;
+  public Position position;
 
 
  /* //many Employees can be in one department
@@ -85,12 +84,13 @@ public class Employee extends User{
 
 
   //Class SimpleGrantedAuthority stores a String representation of an authority granted to the Authentication object.
-  @Override
+/*  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     SimpleGrantedAuthority authority =
             new SimpleGrantedAuthority(jobLevel.name());
     return Collections.singletonList(authority);
-  }
+  }*/
+
   }
 
 
