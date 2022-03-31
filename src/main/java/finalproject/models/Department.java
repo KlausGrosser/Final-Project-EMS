@@ -1,16 +1,20 @@
 package finalproject.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Getter
 @Setter
 @Entity
-@Table(name = "department")
+@Table(name = "departments")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Department {
 
     //The ID will be generated automatically
@@ -30,7 +34,8 @@ public class Department {
     //One department can have many Employees
     @OneToMany
     @JoinColumn (name = "employee_id")
-    private Employee employee;
+    @JsonManagedReference
+    private Set<Employee> employees;
 
     //Constructor = only with the department name
     public Department(String name) {

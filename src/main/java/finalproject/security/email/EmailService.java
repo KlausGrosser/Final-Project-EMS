@@ -1,7 +1,6 @@
 package finalproject.security.email;
 
 import finalproject.models.Employee;
-import finalproject.models.User;
 import finalproject.security.token.ConfirmationToken;
 import finalproject.security.token.ConfirmationTokenService;
 import finalproject.services.EmployeeService;
@@ -48,10 +47,10 @@ public class EmailService implements EmailSender{
         }
     }
 
-    public void registerMail(User user) {
+    public void registerMail(Employee employee) {
         //email should be validated
         if(!emailValidator
-                .test(user.getEmail())){
+                .test(employee.getEmail())){
             throw new IllegalStateException(
                     "invalid email"
             );
@@ -59,21 +58,20 @@ public class EmailService implements EmailSender{
         //signing the user up and receiving the token back
         String token = employeeService.newEmployee(
                 new Employee(
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEmail(),
-                        user.getPassword(),
-                        user.getRole(),
-                        user.getDepartment()
+                        employee.getFName(),
+                        employee.getLName(),
+                        employee.getEmail(),
+                        employee.getPassword(),
+                        employee.getRoles()
                 )
         );
         // create a confirmation link to be sent to the user email
         String link = "http://localhost:8080/confirm?token=" + token;
         //Send Email
         this.send(
-                user.getEmail(),
+                employee.getEmail(),
                 emailTemplateEngine.buildRegisterEmail(
-                        user.getFirstName(),
+                        employee.getFName(),
                         link
                 )
         );

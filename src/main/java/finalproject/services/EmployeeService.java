@@ -2,18 +2,56 @@ package finalproject.services;
 
 import finalproject.models.Employee;
 import finalproject.repositories.EmployeeRepository;
+import finalproject.security.token.ConfirmationToken;
+import finalproject.security.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class EmployeeService{
 
   private final EmployeeRepository employeeRepository;
+  private final static String USER_NOT_FOUND_MSG =
+          "user with email %s not found";
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final ConfirmationTokenService confirmationTokenService;
+
+  public String newEmployee(Employee employee) {
+    boolean userExists = employeeRepository
+            .findByEmail(employee.getEmail())
+            .isPresent();
+    if (userExists) {
+      throw new IllegalStateException("email is taken");
+    }
+
+    String encodedPassword = bCryptPasswordEncoder.encode(employee.getPassword());
+    employee.setPassword(encodedPassword);
+    employeeRepository.save(employee);
+
+
+    String token =  UUID.randomUUID().toString();
+    ConfirmationToken confirmationToken = new ConfirmationToken(
+            token,
+            LocalDateTime.now(),
+            LocalDateTime.now().plusMinutes(15),
+            employee
+    );
+    confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+    return token;
+  }
+
+  public void enableDoctor(String email) {
+    employeeRepository.enableEmployee(email);
+  }
 
   //with database
   //create methods for get all, save, delete //see class employeeController
