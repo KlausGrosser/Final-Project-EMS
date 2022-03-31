@@ -42,7 +42,7 @@ public class EmployeeController {
 
   //Get employee by fullName
   @GetMapping("/{fullName}")
-  public ResponseEntity<Employee> findByFullName(String fullName){
+  public ResponseEntity<Employee> findByFullName(@PathVariable String fullName){
     Employee employee = employeeService.findByFullName(fullName);
     if(employee == null) {
       return ResponseEntity.notFound().build();

@@ -20,7 +20,6 @@ import java.util.List;
 public class MyUserDetailsService implements UserDetailsService {
 
     private EmployeeService employeeService;
-    //private ManagerService managerService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -34,9 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
             List<GrantedAuthority> authorities = new ArrayList<>();
-            for(Role role : appUser.getRoles()) {
-                authorities.add(new SimpleGrantedAuthority(role.getName()));
-            }
+                authorities.add(new SimpleGrantedAuthority(appUser.getRole().getName()));
 
             return new User(
                     appUser.getEmail(),

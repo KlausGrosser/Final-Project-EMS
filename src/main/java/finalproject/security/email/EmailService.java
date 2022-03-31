@@ -62,7 +62,7 @@ public class EmailService implements EmailSender{
                         employee.getLName(),
                         employee.getEmail(),
                         employee.getPassword(),
-                        employee.getRoles()
+                        employee.getRole()
                 )
         );
         // create a confirmation link to be sent to the user email
