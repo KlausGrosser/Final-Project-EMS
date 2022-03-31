@@ -20,7 +20,6 @@ import java.util.List;
 public class MyUserDetailsService implements UserDetailsService {
 
     private EmployeeService employeeService;
-    //private ManagerService managerService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
