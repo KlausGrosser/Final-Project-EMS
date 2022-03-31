@@ -1,6 +1,6 @@
 package finalproject.security.token;
 
-import finalproject.models.User;
+import finalproject.models.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,17 +38,17 @@ public class ConfirmationToken {
     @JoinColumn(nullable = false,
             name = "user_id"
     )
-    private User user;
+    private AppUser appUser;
 
     public ConfirmationToken(
             String token,
             LocalDateTime createdAt,
             LocalDateTime expiresAt,
-            User user
+            AppUser appUser
     ) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.user = user;
+        this.appUser = appUser;
     }
 }
