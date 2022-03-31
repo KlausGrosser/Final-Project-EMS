@@ -15,10 +15,10 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     //Get department by Name
-    @GetMapping
-    public ResponseEntity<Department> findByName(String name){
-        departmentService.findByName(name);
-    }
+//    @GetMapping
+//    public ResponseEntity<Department> findByName(String name){
+//        departmentService.findByName(name);
+//    }
 
     //Get all departments
     @GetMapping()
