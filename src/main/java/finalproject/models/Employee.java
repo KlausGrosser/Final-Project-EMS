@@ -2,22 +2,27 @@ package finalproject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "employees") // be default is the table name the class name, but with @table it`` possible to give another name
+@Table(name = "employees") // be default is the table name the class name, but with @table it`s possible to give another name
 public class Employee extends AppUser {
 
   @Column(name = "first_name")
   private String fName;
   @Column(name = "last_name")
   private String lName;
+  private String fullName = fName+" "+lName;
   private LocalDate birthDate;
   private LocalDate hireDate;
   private int iBAN;
@@ -74,12 +79,44 @@ public class Employee extends AppUser {
     this.office = office;
   }
 
-  public Employee(String fName, String lName, String email, String password, Set<Role> roles) {
+  public Employee(String fName, String lName, String email, String password, Role role) {
     this.fName = fName;
     this.lName = lName;
     super.setEmail(email);
     super.setPassword(password);
-    super.setRoles(roles);
+    super.setRole(role);
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    SimpleGrantedAuthority authority =
+            new SimpleGrantedAuthority(role.getName());
+    return Collections.singletonList(authority);
+    }
+
+  @Override
+  public String getUsername() {
+    return null;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return false;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return false;
   }
 }
 

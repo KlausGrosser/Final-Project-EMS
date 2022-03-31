@@ -40,10 +40,15 @@ public class EmployeeController {
   }
 
 
-  //Get employee by lName
-  @GetMapping("/{lName}")
-  public ResponseEntity<Employee> findBylName(String lName){
-    employeeService.findBylName(lName);
+  //Get employee by fullName
+  @GetMapping("/{fullName}")
+  public ResponseEntity<Employee> findByFullName(String fullName){
+    Employee employee = employeeService.findByFullName(fullName);
+    if(employee == null) {
+      return ResponseEntity.notFound().build();
+    }else{
+      return ResponseEntity.ok(employee);
+    }
   }
 
 
