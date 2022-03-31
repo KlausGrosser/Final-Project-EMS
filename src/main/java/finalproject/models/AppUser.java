@@ -3,15 +3,15 @@ package finalproject.models;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.HashSet;
-import java.util.Set;
-
 import static javax.persistence.FetchType.EAGER;
 
+/**
+ * AppUser class in an Entity which means it can be mapped to a table.
+ * Is an abstract class which means it can be subclassed
+ * Lombok's annotations were used
+ */
 @Entity
 @Getter
 @Setter
@@ -38,7 +38,5 @@ public abstract class AppUser implements UserDetails {
     private Role role;
     private Boolean enabled = false;
     private Boolean locked = false;
-
-
 
 }

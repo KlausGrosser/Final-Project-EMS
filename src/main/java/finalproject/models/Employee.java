@@ -4,18 +4,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
+
+/**
+ * Employee class in an Entity that can be persisted to the database
+ * Lombok's annotations were used
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "employees") // be default is the table name the class name, but with @table it`s possible to give another name
+@Table(name = "employees") // by default is the table name the class name, but with @table it`s possible to give another name
 public class Employee extends AppUser {
 
   @Column(name = "first_name")
