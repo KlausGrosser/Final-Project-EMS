@@ -68,8 +68,8 @@ public class EmployeeService{
     return employeeRepository.findByEmail(email);
   }
 
-  public void findByFullName (String fullName){
-    employeeRepository.findByFullName(fullName)
+  public Employee findByFullName (String fullName){
+    return employeeRepository.findByFullName(fullName)
             .orElseThrow(() -> new UsernameNotFoundException("Employee not found"));
   }
 

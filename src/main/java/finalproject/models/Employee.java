@@ -90,7 +90,7 @@ public class Employee extends AppUser {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     SimpleGrantedAuthority authority =
-            new SimpleGrantedAuthority(role.getName());
+            new SimpleGrantedAuthority(this.getRole().getName());
     return Collections.singletonList(authority);
     }
 
