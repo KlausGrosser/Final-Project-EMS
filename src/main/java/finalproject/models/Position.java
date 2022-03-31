@@ -7,6 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Position class in an Entity which means it can be mapped to a table.
+ * Lombok's annotations were used
+ */
 @Entity
 @Getter
 @Setter

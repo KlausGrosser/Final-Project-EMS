@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
+//Repository layer is implemented to access the database
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee, Long> {
 

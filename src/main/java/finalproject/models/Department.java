@@ -8,7 +8,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
-
+/**
+ * Department class in an Entity that can be persisted to the database
+ * Lombok's annotations were used
+ */
 @Getter
 @Setter
 @Entity
@@ -17,7 +20,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class Department {
 
-    //The ID will be generated automatically
     @Id
     @SequenceGenerator(
             name = "department_sequence",
@@ -25,6 +27,7 @@ public class Department {
             allocationSize = 1
     )
     @GeneratedValue(
+            //GenerationType.SEQUENCE generates a unique ID value using a sequence
             strategy = GenerationType.SEQUENCE,
             generator = "department_sequence"
     )
