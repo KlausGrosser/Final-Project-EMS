@@ -68,8 +68,8 @@ public class EmployeeService{
     return employeeRepository.findByEmail(email);
   }
 
-  public void findBylName (String lName){
-    employeeRepository.findBylName(lName)
+  public void findByFullName (String fullName){
+    employeeRepository.findByFullName(fullName)
             .orElseThrow(() -> new UsernameNotFoundException("Employee not found"));
   }
 
@@ -88,6 +88,10 @@ public class EmployeeService{
   public void deleteEmployeeById (long id){
     employeeRepository.deleteById(id);
 
+  }
+
+  public int enableEmployee(String email) {
+    return employeeRepository.enableEmployee(email);
   }
 
 

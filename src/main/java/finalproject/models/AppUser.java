@@ -2,6 +2,9 @@ package finalproject.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.HashSet;
@@ -13,7 +16,7 @@ import static javax.persistence.FetchType.EAGER;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class AppUser {
+public abstract class AppUser implements UserDetails {
 
     @Id
     @SequenceGenerator(
@@ -31,8 +34,10 @@ public abstract class AppUser {
     @Email
     private String email;
     private String password;
-    @ManyToMany(fetch = EAGER)
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne(fetch = EAGER)
+    private Role role;
+    private Boolean enabled = false;
+    private Boolean locked = false;
 
 
 

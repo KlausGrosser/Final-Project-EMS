@@ -78,7 +78,7 @@ public class EmailService implements EmailSender{
     }
 
     @Transactional
-    public void confirmToken(String token) {
+    public String confirmToken(String token) {
         // search for the token
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
@@ -98,6 +98,7 @@ public class EmailService implements EmailSender{
         confirmationTokenService.setConfirmedAt(token);
         // set the user that holds this token to enabled
         employeeService.enableEmployee(
-                confirmationToken.getEmployee().getEmail());
+                confirmationToken.getAppUser().getEmail());
+        return "confirmed";
     }
 }
