@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Doctor Update Page</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<hr>
+		<h2>Update Doctor</h2>
+
+		<form action="#" th:action="@{/doctor/update/}" th:object="${doctor}"
+			method="POST">
+			
+			<!-- Add hidden form field to handle update -->
+			<input type="hidden" th:field="*{ID}" />
+
+			<label>First Name</label>
+			<input type="text" th:field="*{firstName}" class="form-control mb-4 col-4">
+
+			<label>Last Name</label>
+			<input type="text" th:field="*{lastName}" class="form-control mb-4 col-4">
+
+			<label>Email</label>
+			<input type="text" th:field="*{email}" class="form-control mb-4 col-4">
+
+			<label>Password (please change this  to whatever, your old password or a new one)</label>
+			<input type="text" th:field="*{password}"  class="form-control mb-4 col-4">
+
+			<label>Role</label>
+			<br>
+			<select th:field="*{doctorRole}" title="Select Department:">
+				<option th:each="p : ${listDoctorRoles}" th:value="${p}" th:text="${p}" />
+			</select>
+			<br/>
+			<br>
+			<label>Department</label>
+			<br>
+			<select th:field="*{departmentName}" title="Select Department:">
+				<option th:each="p : ${listDepartments}" th:value="${p}" th:text="${p}" />
+			</select>
+			<br/>
+			<br>
+				<button type="submit" class="btn btn-info col-2"> Update Employee</button>
+		</form>
+		
+		<hr>
+		
+		<a th:href = "@{/}"> Back to Homepage</a>
+	</div>
+</body>
+</html>
