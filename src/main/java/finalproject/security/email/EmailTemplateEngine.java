@@ -1,5 +1,8 @@
 package finalproject.security.email;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class EmailTemplateEngine {
 
     protected String buildRegisterEmail(String name, String link) {
