@@ -4,6 +4,7 @@ import finalproject.models.Department;
 import finalproject.services.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -27,8 +28,8 @@ public class DepartmentController {
      * @param name The name of the department to be found.
      * @return ResponseEntity = represents the HTTP response with the given status code
      */
-    @GetMapping
-    public ResponseEntity<Department> findByName(String name){
+    @GetMapping("/{departmentName}")
+    public ResponseEntity<Department> findByName(@PathVariable ("departmentName") String name){
         Department department = departmentService.findByName(name);
         if(department == null) {
             return ResponseEntity.notFound().build();
