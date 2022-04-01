@@ -52,6 +52,7 @@ public class Employee extends AppUser {
 
   //Constructor without ID because it's generated automatically
   public Employee(String fName, String lName, LocalDate birthDate) {
+    super();
     this.fName = fName;
     this.lName = lName;
     this.birthDate = birthDate;

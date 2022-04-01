@@ -49,10 +49,6 @@ public class EmployeeService{
     return token;
   }
 
-  public void enableDoctor(String email) {
-    employeeRepository.enableEmployee(email);
-  }
-
   //with database
   //create methods for get all, save, delete //see class employeeController
   public List<Employee> getAllEmployees()  {
