@@ -55,8 +55,8 @@ public class EmployeeControllerTest {
   Employee employee1 = new Employee();
   employee1.setFName("Alice");
   employee1.setLName("Mutke");
-  employee1.setBirthDate(27.02.80);
-  employee1.setHireDate(01/01/2022);
+  employee1.setBirthDate(1980-02-27);
+  employee1.setHireDate(2022-04-04);
   employee1.setIBAN(182918928);
   employee1.setSocialSecurityNum(343847);
   employee1.setTaxId(45435);
