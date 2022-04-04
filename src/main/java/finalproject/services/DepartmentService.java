@@ -48,7 +48,7 @@ public class DepartmentService {
 
     /**
      * This method will update an existing department
-     * @return a new department added.
+     * @return an updated name of a department
      */
     public Department updateDepartment(Long id, Department newNameDepartment){
         Department department = departmentRepository.findById(id).orElseThrow();

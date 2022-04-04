@@ -56,7 +56,7 @@ public class EmailService implements EmailSender{
             );
         }
         //signing the user up and receiving the token back
-        String token = employeeService.newEmployee(
+        String token = employeeService.signUp(
                 new Employee(
                         employee.getFName(),
                         employee.getLName(),
