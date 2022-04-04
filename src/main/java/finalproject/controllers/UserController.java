@@ -25,7 +25,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
-@RequestMapping("/api/v1")
 public class UserController {
 
     private final EmployeeService employeeService;
