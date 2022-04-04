@@ -4,7 +4,6 @@ import finalproject.models.Department;
 import finalproject.services.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -15,7 +14,7 @@ import java.util.List;
  * RestController annotation allows the class to handle the requests made by the client.
  */
 @RestController
-@RequestMapping ("/departments")
+@RequestMapping ("/api/v1/departments")
 @AllArgsConstructor
 public class DepartmentController {
 
