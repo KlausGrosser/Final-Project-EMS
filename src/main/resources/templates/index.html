@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="ISO-8859-1">
 <title>Hospital Management System</title>
@@ -30,6 +30,7 @@
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/doctor_list}">Doctors List</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/exchange}">Currency Converter</a></li>
 				</ul>
 
 			</div>
@@ -46,6 +47,9 @@
 		<br>
 	<hr>
 		<a  href="#" th:href="@{/departments_list}">Departments List</a>
+		<br>
+	<hr>
+	<a  href="#" th:href="@{/exchange}">Currency Converter</a>
 	<hr>
 </div>
 </body>
