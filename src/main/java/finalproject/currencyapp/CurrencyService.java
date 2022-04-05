@@ -11,7 +11,7 @@ public class CurrencyService {
   private final WebClient webClient;
 
   public CurrencyService(WebClient.Builder builder) {
-    webClient = builder.baseUrl("https://localhost:8080/api/v1/employees").build();
+    webClient = builder.baseUrl("https://api.currencyapi.com/v3/").build();
   }
 
   public Currency getExchange(String baseCurrency, String exchangeCurrency) {
@@ -19,7 +19,7 @@ public class CurrencyService {
             .get()
             .uri(uriBuilder -> uriBuilder
                     .path("/latest")
-                    .queryParam("rhpF9LjPmNUuuKIr2sAVpSgyHMPXRPDT1fRVmKSY") // put API key here
+                    .queryParam("api-key", "rhpF9LjPmNUuuKIr2sAVpSgyHMPXRPDT1fRVmKSY") // put API key here
                     .queryParam("base_currency", baseCurrency)
                     .queryParam("currencies", exchangeCurrency)
                     .build())
