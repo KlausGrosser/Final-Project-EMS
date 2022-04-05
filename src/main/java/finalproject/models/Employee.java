@@ -98,7 +98,7 @@ public class Employee extends AppUser {
     super.setPassword(password);
   }
 
-  @Override
+    @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     SimpleGrantedAuthority authority =
             new SimpleGrantedAuthority(this.getRole().getName());
