@@ -14,7 +14,7 @@ import java.util.List;
  * RestController annotation allows the class to handle the requests made by the client.
  */
 @RestController
-@RequestMapping ("/api/v1/departments")
+@RequestMapping ("/departments")
 @AllArgsConstructor
 public class DepartmentController {
 

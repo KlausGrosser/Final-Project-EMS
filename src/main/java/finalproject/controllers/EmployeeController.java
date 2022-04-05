@@ -1,9 +1,13 @@
 package finalproject.controllers;
 
 import finalproject.models.Employee;
+import finalproject.repositories.RoleRepository;
+import finalproject.services.DepartmentService;
 import finalproject.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -16,13 +20,15 @@ import java.util.Optional;
  * RestController annotation allows the class to handle the requests made by the client.
  */
 @RestController
-@RequestMapping(value ="/api/v1/employees")
+@RequestMapping(value ="/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
 
     //Lombok will generate the constructor for the employeeService field declared as final.
     //Spring will automatically use the Lombok provided constructor to autowire the class.
     private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
+    private final RoleRepository roleRepository;;
 
     /**
      * Getting the employee by its fullName (FirstName & LastName).
@@ -88,27 +94,6 @@ public class EmployeeController {
     }
 
     /**
-     * Adding a new employee
-     * The RequestBody binds the HTTPRequest body to the domain object
-     * @return ResponseEntity = represents the HTTP response with the given status code.
-     */
-    @PostMapping
-    public ResponseEntity<Employee> addEmployee(@ModelAttribute Employee employee){
-      Employee newEmployee = employeeService.addEmployee(employee);
-      if (newEmployee == null) {
-        return ResponseEntity.notFound().build();
-      } else {
-
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(newEmployee.getId())
-                .toUri();
-        return ResponseEntity.created(uri).body(newEmployee);
-      }
-    }
-
-    /**
      * Updating a new employee
      * The RequestBody binds the HTTPRequest body to the domain object
      * The PathVariable indicates that the "id" should be bound to a URI template variable.
@@ -129,16 +114,28 @@ public class EmployeeController {
       }
     }
 
-    /**
-     * Deleting an employee by its {id}.
-     * @return ResponseEntity = represents the HTTP response with the given status code.
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@PathVariable("id") Long id){
-      employeeService.deleteEmployeeById(id);
-      return ResponseEntity.noContent().build();
-
+    @GetMapping(path = "/update/{id}")
+    public String updateForm(@PathVariable ( value = "id") Long id, Model model){
+        Employee employee = employeeService.getEmployeeById(id).orElseThrow();
+        model.addAttribute("listDepartments", departmentService.getAllDepartments());
+        model.addAttribute("listDoctorRoles", roleRepository.findAll());
+        model.addAttribute("employee", employee);
+        return "update_employee";
     }
+
+    @GetMapping(path = "/delete/{id}")
+    public String deleteEmployee(@PathVariable ( value = "id") Long id){
+        employeeService.deleteEmployeeById(id);
+        return "redirect:/employee_list";
+    }
+
+    @PostMapping(path = "/new")
+    public String addEmployee(@ModelAttribute Employee employee){
+        employeeService.updateEmployee(employee.getId(), employee);
+        return "redirect:/employee_list";
+    }
+
+
 }
 
 

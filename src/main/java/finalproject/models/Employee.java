@@ -91,7 +91,14 @@ public class Employee extends AppUser {
     super.setRole(role);
   }
 
-  @Override
+  public Employee(String fName, String lName, String email, String password) {
+    this.fName = fName;
+    this.lName = lName;
+    super.setEmail(email);
+    super.setPassword(password);
+  }
+
+    @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     SimpleGrantedAuthority authority =
             new SimpleGrantedAuthority(this.getRole().getName());
