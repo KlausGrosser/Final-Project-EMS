@@ -20,7 +20,7 @@ import java.util.Optional;
  * RestController annotation allows the class to handle the requests made by the client.
  */
 @RestController
-@RequestMapping(value ="/employees")
+@RequestMapping(value ="/employee")
 @RequiredArgsConstructor
 public class EmployeeController {
 
@@ -45,19 +45,19 @@ public class EmployeeController {
       }
     }
 
-    /**
-     * Getting all employees.
-     * @return ResponseEntity = represents the HTTP response with the given status code.
-     */
-    @GetMapping
-    public ResponseEntity <List<Employee>> getAllEmployees(){
-      List<Employee> employees = employeeService.getAllEmployees();
-      if(employees == null){
-        return ResponseEntity.notFound().build();
-      }else{
-        return ResponseEntity.ok(employees);
-      }
-    }
+//    /**
+//     * Getting all employees.
+//     * @return ResponseEntity = represents the HTTP response with the given status code.
+//     */
+//    @GetMapping(path = "/employees_list")
+//    public ResponseEntity <List<Employee>> getAllEmployees(){
+//      List<Employee> employees = employeeService.getAllEmployees();
+//      if(employees == null){
+//        return ResponseEntity.notFound().build();
+//      }else{
+//        return ResponseEntity.ok(employees);
+//      }
+//    }
 
     /**
      * Getting the employee by its id.

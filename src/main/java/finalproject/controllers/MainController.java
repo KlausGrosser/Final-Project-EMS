@@ -87,7 +87,7 @@ public class MainController {
     return "employees_list";
   }
 
-  @GetMapping(path = "/employee_list")
+  @GetMapping(path = "/employees_list")
   public String listEmployees(Model model){
     return  findPaginated(1, "lastName", "asc", model);
   }
