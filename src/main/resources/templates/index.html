@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="ISO-8859-1">
-<title>Hospital Management System</title>
+<title>Employee Management System</title>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -27,7 +27,7 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/doctor_list}">Doctors List</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/employees_list}">Employees List</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
 				</ul>
@@ -39,10 +39,10 @@
 	<hr>
 		<br>
 		<br>
-		<h1>Welcome to the Hospital Management System</h1>
-		<h2>Below you can find the available feautures:</h2>
+		<h1>Welcome to the Employee Management System</h1>
+		<h2>Below you can find the available features:</h2>
 	<hr>
-		<a  href="#" th:href="@{/doctor_list}">Doctors List</a>
+		<a  href="#" th:href="@{/employees_list}">Employees List</a>
 		<br>
 	<hr>
 		<a  href="#" th:href="@{/departments_list}">Departments List</a>
