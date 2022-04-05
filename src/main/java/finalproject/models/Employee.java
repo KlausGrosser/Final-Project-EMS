@@ -1,18 +1,14 @@
 package finalproject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+
 
 /**
  * Employee class in an Entity that can be persisted to the database
@@ -22,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "employees") // by default the table name  is the class name, but with @table it`s possible to give another name
+@Table(name = "employees") // by default is the table name the class name, but with @table it`s possible to give another name
 public class Employee extends AppUser {
 
   @Column(name = "first_name")
@@ -53,8 +49,6 @@ public class Employee extends AppUser {
   @JsonBackReference
   @JoinColumn(name = "position_id")
   private Position position;
-  @OneToMany (mappedBy = "employee", cascade = CascadeType.ALL)
-  private List<WorkHours> workHours = new ArrayList<>();
 
   //Constructor without ID because it's generated automatically
   public Employee(String fName, String lName, LocalDate birthDate) {
@@ -97,8 +91,12 @@ public class Employee extends AppUser {
     super.setRole(role);
   }
 
-
-
+  public Employee(String fName, String lName, String email, String password) {
+    this.fName = fName;
+    this.lName = lName;
+    super.setEmail(email);
+    super.setPassword(password);
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -109,34 +107,29 @@ public class Employee extends AppUser {
 
   @Override
   public String getUsername() {
-    return getEmail();
+    return null;
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return true;
+    return false;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return true;
+    return false;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return true;
+    return false;
   }
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return false;
   }
-
-
-
 }
-
-
 
 
 
