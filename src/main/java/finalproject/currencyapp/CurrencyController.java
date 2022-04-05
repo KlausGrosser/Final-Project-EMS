@@ -2,13 +2,13 @@ package finalproject.currencyapp;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping(value="/api")
 public class CurrencyController {
   private final CurrencyService currencyService;
 
@@ -16,7 +16,7 @@ public class CurrencyController {
     this.currencyService = currencyService;
   }
 
-  @RequestMapping("/exchange")
+  @GetMapping("/currency_output")
   String getExchangeRates(
           @RequestParam(value = "amount") double amount,
           @RequestParam(value = "base_currency") String baseCurrency,
@@ -40,7 +40,7 @@ public class CurrencyController {
     model.addAttribute("base", baseCurrency);
     model.addAttribute("rates", rates);
 
-    return "currency";
+    return "currency_output";
   }
 
 }

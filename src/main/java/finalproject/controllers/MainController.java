@@ -93,4 +93,9 @@ public class MainController {
   }
 
 
+  @GetMapping(path = "/currency_input")
+  public String currencyConverter(Model model){
+    return "currency_input";
+  }
+
 }
