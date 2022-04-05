@@ -98,9 +98,6 @@ public class Employee extends AppUser {
   }
 
 
-  public Employee(Employee employee) {
-    super();
-  }
 
 
   @Override
