@@ -5,11 +5,11 @@ import finalproject.repositories.RoleRepository;
 import finalproject.services.DepartmentService;
 import finalproject.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -114,7 +114,7 @@ public class EmployeeController {
       }
     }
 
-    @GetMapping(path = "/update/{id}")
+    @PutMapping(path = "/update/{id}")
     public String updateForm(@PathVariable ( value = "id") Long id, Model model){
         Employee employee = employeeService.getEmployeeById(id).orElseThrow();
         model.addAttribute("listDepartments", departmentService.getAllDepartments());
@@ -123,7 +123,7 @@ public class EmployeeController {
         return "update_employee";
     }
 
-    @GetMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public String deleteEmployee(@PathVariable ( value = "id") Long id){
         employeeService.deleteEmployeeById(id);
         return "redirect:/employee_list";

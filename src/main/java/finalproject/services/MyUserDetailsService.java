@@ -2,14 +2,14 @@ package finalproject.services;
 
 import finalproject.models.Employee;
 import finalproject.repositories.EmployeeRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 
     //private EmployeeService employeeService;
@@ -48,6 +48,8 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         //we use email since it ius unique
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("No user with email: " + email));
-        return new Employee(employee);
+        return new UserDetailsImpl(employee);
     }
 }
+
+

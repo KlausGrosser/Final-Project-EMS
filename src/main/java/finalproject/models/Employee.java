@@ -1,13 +1,12 @@
 package finalproject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
 
 
 /**
@@ -98,37 +97,41 @@ public class Employee extends AppUser {
     super.setPassword(password);
   }
 
-    @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    SimpleGrantedAuthority authority =
-            new SimpleGrantedAuthority(this.getRole().getName());
-    return Collections.singletonList(authority);
+  public Employee(Employee employee) {
+    super();
   }
 
-  @Override
-  public String getUsername() {
-    return null;
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return false;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return false;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return false;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return false;
-  }
+//  @Override
+//  public Collection<? extends GrantedAuthority> getAuthorities() {
+//    SimpleGrantedAuthority authority =
+//            new SimpleGrantedAuthority(this.getRole().getName());
+//    return Collections.singletonList(authority);
+//  }
+//
+//  @Override
+//  public String getUsername() {
+//    return null;
+//  }
+//
+//  @Override
+//  public boolean isAccountNonExpired() {
+//    return false;
+//  }
+//
+//  @Override
+//  public boolean isAccountNonLocked() {
+//    return false;
+//  }
+//
+//  @Override
+//  public boolean isCredentialsNonExpired() {
+//    return false;
+//  }
+//
+//  @Override
+//  public boolean isEnabled() {
+//    return false;
+//  }
 }
 
 

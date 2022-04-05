@@ -19,7 +19,7 @@ public class WorkHoursController {
     private final AuthUtil authUtil;
     private final WorkHoursRepository workHoursRepository;
 
-    @PostMapping("/api/startPauseWork")
+    @PostMapping("/checkIn-Out")
     public Object startPauseWork(@RequestParam("action") String action) {
         //get logged in user
         Employee employee = authUtil.getLoggedInUser();
@@ -58,10 +58,12 @@ public class WorkHoursController {
                     //set Total Time Worked
                     workHoursRepository.save(lastWorkHours);
                 }
-                working = false;
                 break;
         }
 
-        return working;
+        return "test";
     }
 }
+
+
+

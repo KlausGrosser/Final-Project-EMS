@@ -12,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @EnableWebMvc
 @SpringBootApplication
 public class FinalProjectEmsApplication {
@@ -45,7 +42,6 @@ public class FinalProjectEmsApplication {
             Employee e1 = new Employee(
                     "Rachel",
                     "Adams",
-//                    LocalDate.of(1980, 1, 1),
                     "test@gmail.com",
                     bCryptPasswordEncoder.encode("test"),
                     roleRepository.findByName("ROLE_SUPER_ADMIN")
