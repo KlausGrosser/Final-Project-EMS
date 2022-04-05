@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequestMapping(value="/api")
+@Controller
 public class CurrencyController {
   private final CurrencyService currencyService;
 
@@ -16,7 +15,7 @@ public class CurrencyController {
     this.currencyService = currencyService;
   }
 
-  @GetMapping("/currency_output")
+  @RequestMapping("/currency_output")
   String getExchangeRates(
           @RequestParam(value = "amount") double amount,
           @RequestParam(value = "base_currency") String baseCurrency,
