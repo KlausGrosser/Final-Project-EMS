@@ -3,8 +3,10 @@ package finalproject.models;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+
 import static javax.persistence.FetchType.EAGER;
 
 /**

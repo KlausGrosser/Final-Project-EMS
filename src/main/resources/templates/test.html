@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{fragments/main_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title> EMPLOYEE MANAGEMENT SYSTEM </title>
+    <link rel="stylesheet" th:href="@{css/Admin_NavBar.css}">
+    <!-- Wird benötigt für die Icons -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header class="header">
+            <p><img th:src="" alt="Employee Management System " width="110" height=""></p>
+        </header>
+
+
+        <!-- START / PAUSE ARBEIT -->
+        <article class = "main">
+            <h4 id="welcomeHeader">Welcome!
+                <small sec:authentication="name"></small>
+            </h4>
+            <button class="btn" id="start-button" onclick="calculateWork('start')">Check in</button>
+            <button class="btn" id="pause-button" onclick="calculateWork('pause')">Check out</button>
+        </article>
+
+
+<th:block layout:fragment="javascript">
+    <script th:src="@{js/Admin_NavBar.js}"></script>
+    <script th:src="@{js/ChangeLanguage_AdminIndex.js}"></script>
+    <script th:src="@{js/Admin_Index.js}"></script>
+    <script type="text/javascript">
+
+        let working = false;
+
+        let work = setInterval(updateTimeWorked, 1000);
+
+
+        function calculateWork(action){
+            $.ajax({
+                method: "post",
+                url: "/api/startPauseWork",
+                dataType: "text",
+                data: {
+                    action: action
+                },
+                success: response => {
+                    working  = JSON.parse(response);
+                    if (working == true){
+                        work = setInterval(updateTimeWorked, 1000);
+                    }
+                },
+                error: response => {
+                    console.log(response);
+                }
+            });
+        }
+    </script>
+</th:block>
+
+</body>
+</html>
