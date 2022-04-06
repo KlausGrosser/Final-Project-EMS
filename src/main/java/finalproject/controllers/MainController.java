@@ -1,6 +1,5 @@
 package finalproject.controllers;
 
-
 import finalproject.models.Employee;
 import finalproject.repositories.RoleRepository;
 import finalproject.security.email.EmailService;
@@ -102,5 +101,6 @@ public class MainController {
   public String currencyConverter1(Model model){
     return "currency_output";
   }
+
 
 }

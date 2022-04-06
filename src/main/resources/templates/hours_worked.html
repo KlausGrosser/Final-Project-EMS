@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{fragments/main_layout}">
+<head>
+    <meta charset="UTF-8">
+<body>
+
+<section layout:fragment="content">
+    <div class="wrapper">
+
+        <!-- HEADER -->
+        <header class="header">
+            <p><img th:src="@{images/TM21.png}" alt="TM21 Logo" width="110" height=""></p>
+        </header>
+
+        <!-- START / PAUSE ARBEIT -->
+        <article class = "main">
+            <h1 id="welcomeHeader"> Hi, <small sec:authentication="name"> </small> </h1>
+            <h2> Please click on the buttons to register your working hours: </h2>
+            <button class="btn" id="start-button" onclick="getHoursWorked('start')">CHECK IN</button>
+            <button class="btn" id="stop-button" onclick="getHoursWorked('stop')">CHECK OUT</button>
+            <h3 id="already-worked-text">Total working hours: <span id="already-worked"></span></h3>
+
+        </article>
+
+</body>
+</html>
