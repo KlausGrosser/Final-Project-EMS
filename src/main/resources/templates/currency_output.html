@@ -41,16 +41,17 @@
   <br>
   <h2>Here is your converted salary  </h2>
   <hr>
-       Base currency:
+    <h4>Base currency: </h4>
         <span th:text="${(param.amount)}"></span>
         <span th:text="${param.base_code}"></span>
       <br>
   <hr>
-      Converted currency:
+     <h4> Converted currency: </h4>
       <span th:text="${@currencyRestService.getConvertedAmount(param.base_code, param.target_code, param.amount)}">...</span>
       <span th:text="${param.target_code}"></span>
       <br>
   <hr>
 
+</div>
 </body>
 </html>

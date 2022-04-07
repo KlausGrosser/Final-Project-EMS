@@ -32,7 +32,6 @@
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
             </ul>
-
         </div>
     </div>
 </nav>
@@ -44,24 +43,38 @@
 <form action="#" th:action="@{/currency_output}" >
     <p>Amount: <input th:name="amount" /></p>
     <p>Base currency: <input type="text" th:name="base_code" /></p>
-    <p>Convert to: <input type="text" th:name="target_code" />
+    <p>Convert to: <input type="text" th:name="target_code" /> </p>
 
-        <select class="form-control" id="dropDownList">
-            <option value="0">select option</option>
-            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+        <form method="post" th:object="${currency}">
+        <label for="currencySelection">Choose your currency</label>
+        <select class="form-control selectpicker" th:field="*{currencySelection}" id="currencySelection">
+            <option value="">Nothing selected</option>
+            <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
+                    th:value="${currencySelection}"
+                    th:text="${currencySelection}">currencySelection
+            </option>
         </select>
 
+    <p><input type="submit" value="Submit" />
 
 
-     <!--   <select th:field="base_code">
-            <option th:value="'USD'"  th:text="Dollar - USD" </option>
+
+
+    <!--    <select class="form-control" id="dropDownList">
+            <option value="0">select your target currency</option>
+            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+        </select>-->
+
+
+
+      <!--  <select>
+            <option th:value="'USD'"  th:text="Dollar - USD"></option>
             <option value="EUR">EURO - EUR </option>
             <option value="MXP">Mexican Peso - MXP </option>
             <option value="ARS">Argentina Peso - ARS </option>
         </select>-->
 
-    </p>
-    <p><input type="submit" value="Submit" />
 
       <!--  <select th:field="*{base_code }">
             <option value="">Select your base currency</option>
