@@ -1,37 +1,54 @@
 package finalproject.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.sql.Time;
-import java.time.LocalDate;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Component
 public class WorkHours {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
-    private LocalDate date;
-    private Time startTime;
-    private Time endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private LocalDateTime currentDate = LocalDateTime.now();
+    private Duration timeWorked;
+    private Duration totalTimeWorked;
+    @Transient
+    private List<Duration> workedTimes = new ArrayList<>();
+    @Transient
+    private List<LocalDateTime> stopTimes = new ArrayList<>();
+    private boolean currentlyWorking;
 
     @ManyToOne
     private Employee employee;
 
-
-    public WorkHours(LocalDate date, Time startTime, Employee employee) {
-        this.date = date;
+    public WorkHours(LocalDateTime startTime, LocalDateTime endTime, LocalDateTime currentDate, Duration timeWorked, Duration totalTimeWorked, List<Duration> workedTimes, List<LocalDateTime> stopTimes, boolean currentlyWorking, Employee employee) {
         this.startTime = startTime;
+        this.endTime = endTime;
+        this.currentDate = currentDate;
+        this.timeWorked = timeWorked;
+        this.totalTimeWorked = totalTimeWorked;
+        this.workedTimes = workedTimes;
+        this.stopTimes = stopTimes;
+        this.currentlyWorking = currentlyWorking;
         this.employee = employee;
     }
+
+    public WorkHours(){}
 
 }

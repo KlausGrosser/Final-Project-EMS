@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -100,6 +99,11 @@ public class MainController {
   @GetMapping(path = "/currency_output")
   public String currencyConverter1(Model model){
     return "currency_output";
+  }
+
+  @GetMapping(path = "/checkInOut")
+  public String getHours(){
+    return "hours_worked";
   }
 
 

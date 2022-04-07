@@ -9,18 +9,20 @@
 <section layout:fragment="content">
     <div class="wrapper">
 
-        <!-- HEADER -->
-        <header class="header">
-            <p><img th:src="@{images/TM21.png}" alt="TM21 Logo" width="110" height=""></p>
-        </header>
-
-        <!-- START / PAUSE ARBEIT -->
         <article class = "main">
-            <h1 id="welcomeHeader"> Hi, <small sec:authentication="name"> </small> </h1>
             <h2> Please click on the buttons to register your working hours: </h2>
-            <button class="btn" id="start-button" onclick="getHoursWorked('start')">CHECK IN</button>
-            <button class="btn" id="stop-button" onclick="getHoursWorked('stop')">CHECK OUT</button>
-            <h3 id="already-worked-text">Total working hours: <span id="already-worked"></span></h3>
+
+            <form th:action="@{/start}" th:object="${start}" method="post">
+                <button type="submit"> check-in</button>
+            </form>
+
+            <form th:action="@{/stop}"  th:object="${stop}" method="post">
+                <button type="submit"> check-out</button>
+            </form>
+
+            <form th:action="@{/getTotalWorked}" th:object="${getTotal}" method="get">
+                <button type="submit"> Total working hours</button>
+            </form>
 
         </article>
 
