@@ -90,21 +90,4 @@ public class MainController {
     return  findPaginated(1, "lastName", "asc", model);
   }
 
-
-  @GetMapping(path = "/currency_input")
-  public String currencyConverter(Model model){
-    return "currency_input";
-  }
-
-  @GetMapping(path = "/currency_output")
-  public String currencyConverter1(Model model){
-    return "currency_output";
-  }
-
-  @GetMapping(path = "/checkInOut")
-  public String getHours(){
-    return "hours_worked";
-  }
-
-
 }
