@@ -4,6 +4,6 @@ public enum CurrencySelection {
 
   EUR,
   USD,
-  MXP,
+  MXN,
   ARS
 }

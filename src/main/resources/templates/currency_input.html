@@ -43,11 +43,11 @@
 <form action="#" th:action="@{/currency_output}" >
     <p>Amount: <input th:name="amount" /></p>
     <p>Base currency: <input type="text" th:name="base_code" /></p>
-    <p>Convert to: <input type="text" th:name="target_code" /> </p>
+
 
         <form method="post" th:object="${currency}">
         <label for="currencySelection">Choose your currency</label>
-        <select class="form-control selectpicker" th:field="*{currencySelection}" id="currencySelection">
+        <select class="form-control selectpicker" th:name="target_code" id="currencySelection">
             <option value="">Nothing selected</option>
             <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
                     th:value="${currencySelection}"
