@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="ISO-8859-1">
   <title>Currency Converter</title>
@@ -27,7 +27,7 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/employee_list}">Doctors List</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/employee_list}">Employee List</a></li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
@@ -39,17 +39,17 @@
 <div class="container">
   <hr>
   <br>
-  <br>
-  <h2>Your converted salary: </h2>
+  <h2>Here is your converted salary  </h2>
   <hr>
-  <span th:text="${base}"></span>:
-  <span th:text="${amount}"></span>
-  <br>
-  <br>
-  <tr th:each="rate: ${rates}">
-    <td th:text="${rate.getKey()}"/>:
-    <td th:text="${rate.getValue()}"/>
-  </tr><br>
+       Base currency:
+        <span th:text="${(param.amount)}"></span>
+        <span th:text="${param.base_code}"></span>
+      <br>
+  <hr>
+      Converted currency:
+      <span th:text="${@currencyRestService.getConvertedAmount(param.base_code, param.target_code, param.amount)}">...</span>
+      <span th:text="${param.target_code}"></span>
+      <br>
   <hr>
 
 </body>
