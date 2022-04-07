@@ -1,6 +1,5 @@
 package finalproject.controllers;
 
-
 import finalproject.models.Employee;
 import finalproject.repositories.RoleRepository;
 import finalproject.security.email.EmailService;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -91,6 +89,5 @@ public class MainController {
   public String listEmployees(Model model){
     return  findPaginated(1, "lastName", "asc", model);
   }
-
 
 }
