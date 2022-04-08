@@ -39,21 +39,37 @@
     <hr>
     <br>
     <br>
-<h2>Please enter your salary and the currency:</h2>
+<h2>Welcome to the Salary Converter</h2>
 <form action="#" th:action="@{/currency_output}" >
-    <p>Amount: <input th:name="amount" /></p>
-    <p>Base currency: <input type="text" th:name="base_code" /></p>
+    <br>
+    <hr>
+    <p><h5>Please enter your amount: &emsp; <input th:name="amount" /></h5></p>
 
-
+            <br>
+            <hr>
         <form method="post" th:object="${currency}">
-        <label for="currencySelection">Choose your currency</label>
-        <select class="form-control selectpicker" th:name="target_code" id="currencySelection">
+
+        <label for="currencySelection">Choose your base currency: &nbsp;</label>
+        <select     th:name="base_code" id="currencySelection">
             <option value="">Nothing selected</option>
             <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
                     th:value="${currencySelection}"
                     th:text="${currencySelection}">currencySelection
             </option>
         </select>
+            <br>
+            <hr>
+
+        <label for="currencySelection">Choose your target currency: </label>
+        <select     th:name="target_code" id="currencySelection">
+            <option value="">Nothing selected</option>
+            <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
+                    th:value="${currencySelection}"
+                    th:text="${currencySelection}">currencySelection
+            </option>
+        </select>
+            <br>
+            <hr>
 
     <p><input type="submit" value="Submit" />
 
