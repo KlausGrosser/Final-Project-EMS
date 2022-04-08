@@ -90,4 +90,9 @@ public class MainController {
     return  findPaginated(1, "lastName", "asc", model);
   }
 
+  @GetMapping(path = "/check_in_out")
+  public String checkIn(){
+    return "check_in_out";
+  }
+
 }
