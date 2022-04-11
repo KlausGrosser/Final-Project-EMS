@@ -3,13 +3,15 @@ package finalproject.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @SequenceGenerator(
@@ -29,4 +31,8 @@ public class Role {
     }
 
 
+    @Override
+    public String getAuthority() {
+        return this.getName();
+    }
 }

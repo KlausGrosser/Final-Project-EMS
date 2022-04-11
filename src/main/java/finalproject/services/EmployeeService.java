@@ -147,7 +147,10 @@ public class EmployeeService {
     public Employee getCurrentlyLoggedIn() {
         return (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
-    
+
+    public void save(Employee employee) {
+        employeeRepository.save(employee);
+    }
 }
 
 

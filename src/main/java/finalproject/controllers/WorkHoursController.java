@@ -1,7 +1,10 @@
 package finalproject.controllers;
 
+import finalproject.models.Employee;
 import finalproject.models.WorkHours;
+import finalproject.services.EmployeeService;
 import finalproject.services.WorkHoursService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,21 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class WorkHoursController {
 
     private final WorkHoursService workHoursService;
-    private final WorkHours workHours;
+    private final EmployeeService employeeService;
 
-    public WorkHoursController(WorkHoursService workHoursService, WorkHours workHours) {
+    @Autowired
+    public WorkHoursController(WorkHoursService workHoursService, EmployeeService employeeService) {
         this.workHoursService = workHoursService;
-        this.workHours = workHours;
+        this.employeeService = employeeService;
     }
 
     //GetMappings
     @GetMapping(path = "/getTime")
     public String getTimeBetweenStartAndEnd() {
-        if (workHours.getStartTime() == null) {
-            return "Please Check in first";
-        } else if(workHours.getEndTime() == null) {
-            return "Please Check out first";
-        }
         return workHoursService.getTimeBetweenStartAndEnd();
     }
 

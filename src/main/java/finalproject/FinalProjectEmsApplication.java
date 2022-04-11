@@ -52,6 +52,16 @@ public class FinalProjectEmsApplication {
             );
             employeeService.addEmployee(e1);
 
+            Employee e2 = new Employee(
+                    "John",
+                    "Doe",
+//                    LocalDate.of(1980, 1, 1),
+                    "test2@gmail.com",
+                    bCryptPasswordEncoder.encode("test"),
+                    roleRepository.findByName("ROLE_SUPER_ADMIN")
+            );
+            employeeService.addEmployee(e2);
+
             // a list of teachers for saving!
             //List.of(t1, t2, t3).forEach(teacher -> teacherService.addRole(teacher));
             //employeeRepository.saveAll(List.of(t1, t2, t3));
