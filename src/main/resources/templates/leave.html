@@ -31,7 +31,7 @@
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check-in/Check-out</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check in - Check out</a></li>
+ 
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
             </ul>
         </div>
@@ -49,24 +49,26 @@
                 <br>
                 <hr>
 
-                <form action="#" th:action="@{/new_leave}" method="post" >
-                         <form method="get" th:object="${leaveDetails}">
-                    <label for="leaveRequest">Choose your leave reason: &nbsp;</label>
-                    <select     th:name="leaverequest" id="leaveRequest">
+                <form action="#" th:action="@{/leave_overview}" >
+                    <!--     <form th:action="@{/new_leave}"  method="post">
+
+                         <form method="get" th:object="${leaveReasons}">-->
+
+                    <label for="leaveReasons">Choose your leave reason: &nbsp;</label>
+                    <select     th:name="leaveReasons" id="leaveReasons">
                         <option value="leave">Nothing selected</option>
                         <option th:each="leaveReasons : ${T(finalproject.models.LeaveReasons).values()}"
                                 th:value="${leaveReasons}"
                                 th:text="${leaveReasons}">
                         </option>
-
-                        <hr>
                         <br>
-                        <label for="leaveRequest">Please select your start date: </label>
+
+                        <label for="leaveReasons">Please select your start date: </label>
                         <input type="date"  class="form-control"
-                               th:value="${#calendars.format(leaveDetails.getFromDate(),'yyyy-MM-dd')}" th:name="fromDate"/>
+                               th:value="${#calendars.format(leaveReasons.getFromDate(),'yyyy-MM-dd')}" th:name="fromDate"/>
 
                         <br>
-                        <label for="leaveRequest">Please select your end date: </label>
+                        <label for="leaverReasons">Please select your end date: </label>
                         <input type="date"  class="form-control"
                                th:value="${#calendars.format(leaveDetails.getToDate(),'yyyy-MM-dd')}" th:name="toDate" />
                     </select>

@@ -1,5 +1,7 @@
 package finalproject.controllers;
 
+import finalproject.currencyapp.Currency;
+import finalproject.models.Employee;
 import finalproject.models.LeaveDetails;
 import finalproject.models.LeaveStatus;
 import finalproject.services.EmployeeService;
@@ -8,6 +10,9 @@ import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RestController
@@ -32,9 +37,18 @@ public class LeaveController {
 
     }
 
+    @GetMapping("/employee/manage-leaves/{leaveReasons}/{fromDate}/{toDate}")
+    public List<LeaveDetails> getLeaveOverview(@PathVariable(value = "leaveReasons", required= true) String request,
+                                                @PathVariable(value = "fromDate", required= true) LocalDateTime fromDate,
+                                               @PathVariable(value = "toDate", required= true) LocalDateTime toDate){
+        return leaveService.getAllLeaves();
+        }
+
+
+    }
 
 
 
-}
+
 
 
