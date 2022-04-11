@@ -43,13 +43,37 @@
     <br>
 
     <hr>
-    <h4>Leave </h4>
-    <span th:text="${param.leaveReasons}"></span>
-    <span th:text="${param.fromDate}"></span>
-    <span th:text="${param.endDate}"></span>
+    <h4>Leave Overview</h4>
+
+    <hr>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <th>Name</th>
+        <th>From Date</th>
+        <th>To Date</th>
+        <th>No of Days</th>
+        <th>Reason</th>
+        <th>Leave Type</th>
+        <th>Action</th>
 
 
+        </tr>
+        </thead>
+        <tbody>
+            <td th:text='Name'/>
+            <td th:text="${param.fromDate}"/>
+            <td th:text="${param.toDate}"/>
+            <td th:text='Days'/>
+            <td th:text="${param.leaveReasons}"/>
+            <td th:text='Leave_Type'/>
+            <td th:text='Action'/>
+        </tr>
+
+        </tbody>
+
+    </table>
 
 </div>
 </body>
 </html>
+
