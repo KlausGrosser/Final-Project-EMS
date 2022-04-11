@@ -37,11 +37,6 @@ public class CurrencyRestController {
   public Double getConversion(@PathVariable(value = "base_code", required= true) String base_code,
                               @PathVariable(value = "target_code", required= true) String target_code,
                               @PathVariable(value = "amount") double amount) {
-/*  if (amount == null) {
-    return "/";
-  }else if (target_code == null) {
-    return "/";
-  }*/
     return currencyRestService.getConvertedAmount(base_code, target_code, amount);
   }
 }

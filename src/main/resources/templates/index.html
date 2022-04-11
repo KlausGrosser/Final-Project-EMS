@@ -29,9 +29,9 @@
 				<ul class="nav navbar-nav">
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/employees_list}">Employees List</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check-in/Check-out</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/leave}">Absence & Leave</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
 				</ul>
 
@@ -51,13 +51,13 @@
 		<a  href="#" th:href="@{/departments_list}">Departments List</a>
 		<br>
 	<hr>
-	<a  href="#" th:href="@{/currency_input}">Currency Converter</a>
-		<br>
-	<hr>
 	<a  href="#" th:href="@{/check_in_out}">Check-in/Check-out</a>
 		<br>
 	<hr>
 	<a  href="#" th:href="@{/leave}">Absence & Leave</a>
+		<br>
+	<hr>
+	<a  href="#" th:href="@{/currency_input}">Currency Converter</a>
 	<br>
 
 </div>
