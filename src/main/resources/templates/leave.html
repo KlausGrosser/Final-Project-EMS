@@ -53,8 +53,8 @@
 
                          <form method="get" th:object="${leaveReasons}">-->
 
-                    <label for="leaveRequest">Choose your leave reason: &nbsp;</label>
-                    <select     th:name="leaverequest" id="leaveRequest">
+                    <label for="leaveReasons">Choose your leave reason: &nbsp;</label>
+                    <select     th:name="leaveReasons" id="leaveReasons">
                         <option value="leave">Nothing selected</option>
                         <option th:each="leaveReasons : ${T(finalproject.models.LeaveReasons).values()}"
                                 th:value="${leaveReasons}"
@@ -64,12 +64,12 @@
 
                         <br>
 
-                        <label for="leaverequest">Please select your start date: </label>
+                        <label for="leaveReasons">Please select your start date: </label>
                         <input type="date"  class="form-control"
                                th:value="${#calendars.format(leaveReasons.getFromDate(),'yyyy-MM-dd')}" th:name="fromDate"/>
 
                         <br>
-                        <label for="leaverequest">Please select your end date: </label>
+                        <label for="leaverReasons">Please select your end date: </label>
                         <input type="date"  class="form-control"
                                th:value="${#calendars.format(leaveReasons.getToDate(),'yyyy-MM-dd')}" th:name="toDate" />
                     </select>
