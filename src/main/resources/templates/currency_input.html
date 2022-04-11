@@ -49,8 +49,8 @@
             <hr>
         <form method="post" th:object="${currency}">
 
-        <label for="currencySelection">Choose your base currency: &nbsp;</label>
-        <select     th:name="base_code" id="currencySelection">
+        <label for="base_code">Choose your base currency: &nbsp;</label>
+        <select     th:name="base_code" id="base_code">
             <option value="">Nothing selected</option>
             <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
                     th:value="${currencySelection}"
@@ -60,8 +60,8 @@
             <br>
             <hr>
 
-        <label for="currencySelection">Choose your target currency: </label>
-        <select     th:name="target_code" id="currencySelection">
+        <label for="target_code">Choose your target currency: </label>
+        <select     th:name="target_code" id="target_code">
             <option value="">Nothing selected</option>
             <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
                     th:value="${currencySelection}"
@@ -73,30 +73,6 @@
 
     <p><input type="submit" value="Submit" />
 
-
-
-
-    <!--    <select class="form-control" id="dropDownList">
-            <option value="0">select your target currency</option>
-            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
-            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
-        </select>-->
-
-
-
-      <!--  <select>
-            <option th:value="'USD'"  th:text="Dollar - USD"></option>
-            <option value="EUR">EURO - EUR </option>
-            <option value="MXP">Mexican Peso - MXP </option>
-            <option value="ARS">Argentina Peso - ARS </option>
-        </select>-->
-
-
-      <!--  <select th:field="*{base_code }">
-            <option value="">Select your base currency</option>
-            <option th:each="${base_code}" th:value="${base_code }"th:text="${EUR}"/>
-            <option th:each="${base_code}" th:value="${countryName }"th:text="${USD}"/>
-        </select>-->
 </form>
 </body>
 </html>

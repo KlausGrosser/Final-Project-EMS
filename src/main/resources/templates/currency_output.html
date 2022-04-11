@@ -39,7 +39,7 @@
 <div class="container">
   <hr>
   <br>
-  <h2>Here is your converted salary  </h2>
+  <h2>Here is your converted amount!  </h2>
   <hr>
     <h4>Base currency: </h4>
         <span th:text="${(param.amount)}"></span>
@@ -48,9 +48,13 @@
   <hr>
      <h4> Converted currency: </h4>
       <span th:text="${@currencyRestService.getConvertedAmount(param.base_code, param.target_code, param.amount)}">...</span>
+
       <span th:text="${param.target_code}"></span>
       <br>
   <hr>
+
+  <h5> Interested into the service of Western Union?</h5>
+  <a href="#" th:href="@{https://www.westernunion.com/}" th:target="_blank">click here</a>
 
 </div>
 </body>
