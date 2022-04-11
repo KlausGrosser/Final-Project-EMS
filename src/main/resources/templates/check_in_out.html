@@ -43,19 +43,19 @@
         <div class="wrapper">
 
             <article class = "main">
-                <h3> Please click to register your working hours: </h3>
+                <h3 > Click to check in: </h3>
 
                 <form th:action="@{/check_in}"  method="post">
                     <button type="submit"> check-in</button>
                 </form>
 
-                <h3> Please click to stop your working hours: </h3>
+                <h3> Click to check out: </h3>
 
                 <form th:action="@{/check_out}" method="post">
                     <button type="submit"> check-out</button>
                 </form>
 
-                <h3> Please click to see the hours you worked today: </h3>
+                <h3>Click to see the total worked time of today: </h3>
 
                 <form th:action="@{/getTime}" method="get">
                     <button type="submit"> Total time</button>
