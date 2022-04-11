@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Check-in/Check-out</title>
+    <title>Leave Request</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -27,10 +27,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/employee_list}">Employee List</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/employees_list}">Employees List</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check-in/Check-out</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Currency Converter</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check in - Check out</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
             </ul>
         </div>
@@ -45,26 +46,36 @@
 
             <article class = "main">
                 <h3> Please click to register a new leave: </h3>
+                <br>
+                <hr>
 
-                <form th:action="@{/new_leave}"  method="post">
-
-                <form method="get" th:object="${leaveReasons}">
-
-                    <label for="leave">Choose your leave reason: &nbsp;</label>
-                    <select     th:name="leave" id="leave">
+                <form action="#" th:action="@{/new_leave}" method="post" >
+                         <form method="get" th:object="${leaveDetails}">
+                    <label for="leaveRequest">Choose your leave reason: &nbsp;</label>
+                    <select     th:name="leaverequest" id="leaveRequest">
                         <option value="leave">Nothing selected</option>
                         <option th:each="leaveReasons : ${T(finalproject.models.LeaveReasons).values()}"
                                 th:value="${leaveReasons}"
                                 th:text="${leaveReasons}">
                         </option>
-                        <input type="date"  class="form-control"
-                               th:value="${#calendars.format(leaveReasons.getFromDate(),'yyyy-MM-dd')}" th:name="fromDate">
-                        <input type="date"  class="form-control"
-                               th:value="${#calendars.format(leaveReasons.getToDate(),'yyyy-MM-dd')}" th:name="toDate" />
-                    </select>
 
+                        <hr>
+                        <br>
+                        <label for="leaveRequest">Please select your start date: </label>
+                        <input type="date"  class="form-control"
+                               th:value="${#calendars.format(leaveDetails.getFromDate(),'yyyy-MM-dd')}" th:name="fromDate"/>
+
+                        <br>
+                        <label for="leaveRequest">Please select your end date: </label>
+                        <input type="date"  class="form-control"
+                               th:value="${#calendars.format(leaveDetails.getToDate(),'yyyy-MM-dd')}" th:name="toDate" />
+                    </select>
+                    <hr>
                     <input type="submit" value="Submit" />
                 </form>
+
+                <hr>
+                <a href="#" th:href="@{https://www.publicholidays.de}" th:target="_blank">Overview of public holidays</a>
 
             </article>
 

@@ -99,7 +99,7 @@ public class MainController {
 
   @GetMapping(path = "/leave")
   public String leaveReasons(Model model) {
-    model.addAttribute("leaveReasons", new LeaveDetails());
+    model.addAttribute("leaveDetails", new LeaveDetails());
     return "leave";
   }
 

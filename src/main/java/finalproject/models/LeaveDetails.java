@@ -1,17 +1,18 @@
 package finalproject.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class LeaveDetails {
 
     @Id
@@ -20,21 +21,11 @@ public class LeaveDetails {
 
     private String username;
 
-    private String employeeName;
+    private Date fromDate;
 
-    @NotNull(message = "Please provide start date!")
-    private LocalDateTime fromDate;
+    private Date toDate;
 
-    @NotNull(message = "Please provide end date!")
-    private LocalDateTime toDate;
-
-    @NotEmpty(message = "Please select type of leave!")
-    private String leaveType;
-
-    @NotEmpty(message = "Please provide a reason for the leave!")
-    private String reason;
-
-    private Duration duration;
+    private int duration;
 
     @Enumerated(EnumType.STRING)
     private LeaveStatus leaveStatus;
@@ -42,6 +33,21 @@ public class LeaveDetails {
     @Enumerated(EnumType.STRING)
     private LeaveReasons leaveReasons;
 
-    private boolean active;
+    @ElementCollection
+    private List<String> leavesRequested = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn
+    private Employee employee;
+
+    public LeaveDetails(String username, Date fromDate, Date toDate, int duration, LeaveStatus leaveStatus, LeaveReasons leaveReasons, List<String> leavesRequested, Employee employee) {
+        this.username = username;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.duration = duration;
+        this.leaveStatus = leaveStatus;
+        this.leaveReasons = leaveReasons;
+        this.leavesRequested = leavesRequested;
+        this.employee = employee;
+    }
 }

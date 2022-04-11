@@ -57,6 +57,10 @@ public class Employee extends AppUser {
   @OneToMany
   List<WorkHours> workHours;
 
+  @OneToMany
+  List<LeaveDetails> leaves;
+
+
   //Constructor without ID because it's generated automatically
   public Employee(String fName, String lName, LocalDate birthDate) {
     super();

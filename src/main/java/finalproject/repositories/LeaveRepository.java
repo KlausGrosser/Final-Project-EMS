@@ -11,11 +11,11 @@ import java.util.List;
 @Repository
 public interface LeaveRepository extends JpaRepository<LeaveDetails, Long> {
 
-   @Query(value = "SELECT u FROM LeaveDetails u WHERE u.username = ?1")
+   @Query(value = "SELECT u.leavesRequested FROM LeaveDetails u WHERE u.username = ?1")
    LeaveDetails getAllLeavesOfUser(String username);
 
-   @Query(value = "SELECT u FROM LeaveDetails u WHERE u.leaveStatus = ?1")
-   List<LeaveDetails> getLeaveStatus(LeaveStatus leaveStatus);
+   @Query(value = "SELECT u.leaveStatus FROM LeaveDetails u WHERE u.username = ?1")
+   List<LeaveDetails> getLeaveStatus(String username);
 
 
 
