@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class WorkHoursController {
 
     private final WorkHoursService workHoursService;
-    private final EmployeeService employeeService;
 
     @Autowired
-    public WorkHoursController(WorkHoursService workHoursService, EmployeeService employeeService) {
+    public WorkHoursController(WorkHoursService workHoursService) {
         this.workHoursService = workHoursService;
-        this.employeeService = employeeService;
     }
 
 
