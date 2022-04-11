@@ -52,6 +52,8 @@ public class Employee extends AppUser {
   @JsonBackReference
   @JoinColumn(name = "position_id")
   private Position position;
+  @OneToMany
+  Set<WorkHours> workHours;
 
   @OneToMany
   List<WorkHours> workHours;

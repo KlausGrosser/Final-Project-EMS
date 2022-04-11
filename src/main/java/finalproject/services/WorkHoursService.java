@@ -202,12 +202,6 @@ public class WorkHoursService {
         return employeeService.findByEmail(auth.getName()).orElseThrow();
     }
 
-//    public boolean rangeWorkHours (){
-//        String now = LocalDateTime.now().format(timeFormatter);
-//        String startingHour =
-//        if ()
-//
-//    }
 
     public Duration getTotalTimeWorked(WorkHours workHours) {
         long mils = 0;
@@ -220,7 +214,6 @@ public class WorkHoursService {
 
         return total;
     }
-
 
 
 }
