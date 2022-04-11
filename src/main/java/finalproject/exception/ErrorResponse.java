@@ -4,18 +4,22 @@ import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
-public class ApiException {
-  private final String message;
-  private final HttpStatus httpStatus;
-  private final ZonedDateTime timestamp;
+public class ErrorResponse {
+  private String message;
+  private HttpStatus httpStatus;
+  private ZonedDateTime timestamp;
 
 
-  public ApiException(String message,
-                      HttpStatus httpStatus,
-                      ZonedDateTime timestamp) {
+  public ErrorResponse(String message,
+                       HttpStatus httpStatus,
+                       ZonedDateTime timestamp) {
     this.message = message;
     this.httpStatus = httpStatus;
     this.timestamp = timestamp;
+  }
+
+  public ErrorResponse(String message) {
+    this.message = message;
   }
 
   public String getMessage() {
@@ -29,6 +33,10 @@ public class ApiException {
 
   public ZonedDateTime getTimestamp() {
     return timestamp;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
   }
 }
 

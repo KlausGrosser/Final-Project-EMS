@@ -1,11 +1,16 @@
 package finalproject.controllers;
 
+import finalproject.exception.ApiRequestException;
+import finalproject.exception.ErrorDto;
+import finalproject.exception.ErrorResponse;
+import finalproject.exception.NotFoundException;
 import finalproject.models.Employee;
 import finalproject.repositories.RoleRepository;
 import finalproject.services.DepartmentService;
 import finalproject.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -135,6 +140,17 @@ public class EmployeeController {
         return "redirect:/employee_list";
     }
 
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+      throw new ApiRequestException("Oops cannot get all employees with custom exception");
+    //  return employeeService.getAllEmployees();
+    }
+
+  @ExceptionHandler(value= NotFoundException.class)
+  @ResponseStatus(code= HttpStatus.NOT_FOUND)
+  public ErrorDto handleNotFoundException(NotFoundException ex){
+    return new ErrorDto(ex.getMessage());
+  }
 
 }
 

@@ -49,8 +49,8 @@
             <hr>
         <form method="post" th:object="${currency}">
 
-        <label for="currencySelection">Choose your base currency: &nbsp;</label>
-        <select     th:name="base_code" id="currencySelection">
+        <label for="base_code">Choose your base currency: &nbsp;</label>
+        <select     th:name="base_code" id="base_code">
             <option value="">Nothing selected</option>
             <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
                     th:value="${currencySelection}"
@@ -60,8 +60,8 @@
             <br>
             <hr>
 
-        <label for="currencySelection">Choose your target currency: </label>
-        <select     th:name="target_code" id="currencySelection">
+        <label for="target_code">Choose your target currency: </label>
+        <select     th:name="target_code" id="target_code">
             <option value="">Nothing selected</option>
             <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
                     th:value="${currencySelection}"

@@ -18,36 +18,34 @@ public class CurrencyRestController {
     return "currency_input";
   }
 
-  @PostMapping("/currency_input")
-  public String save(Currency currency, Model model) {
-    model.addAttribute("currency", currency);
-    return "currency_saved";
-  }
-
-
 
   @GetMapping("/currency_output")
-  public String currencyConverter1() {
+  public String currencyConverterOutput() {
     return "currency_output";
   }
 
-  @PostMapping("/currency_output")
+/*  @PostMapping("/currency_output")
   public String getResult(@RequestParam String base_code, @RequestParam String target_code, @RequestParam double amount) {
 
     currencyRestService.getConvertedAmount(base_code, target_code, amount);
     return "redirect:/currency_output";
-  }
+  }*/
+
+
 
   @GetMapping("/currency_output/{base_code}/{target_code}/{amount}")
-  public Double getConversion(@PathVariable(value = "base_code") String base_code,
-                              @PathVariable(value = "target_code") String target_code,
+  public Double getConversion(@PathVariable(value = "base_code", required= true) String base_code,
+                              @PathVariable(value = "target_code", required= true) String target_code,
                               @PathVariable(value = "amount") double amount) {
-
+/*  if (amount == null) {
+    return "/";
+  }else if (target_code == null) {
+    return "/";
+  }*/
     return currencyRestService.getConvertedAmount(base_code, target_code, amount);
-
   }
-
 }
+
 
 
 

@@ -11,12 +11,41 @@
 
 </head>
 <body>
-<img th:src="@{/src/main/resources/static/img/photo_error.jpeg}" alt="Photo" width="1400" height="900"/>
-<h1>There's no page here! Internal Server Error - 500</h1>
-<p>
-    We're sorry, the page you are looking for does not exist!
-    Go back to <a href="/">home page</a>.
-</p>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/employee_list}">Employee List</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <hr>
+    <br>
+    <br>
+    <h1>There's no page here! </h1>
+
+    You have sent a internal server error - 500
+    <p>
+    <h3>We're sorry, the page you are looking for does not exist!
+    <br>
+        Go back to <a href="/">home page</a>. </h3>
+    </p>
 
 </body>
 </html>
