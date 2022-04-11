@@ -1,6 +1,8 @@
 package finalproject.controllers;
 
+import finalproject.currencyapp.Currency;
 import finalproject.models.Employee;
+import finalproject.models.LeaveDetails;
 import finalproject.repositories.RoleRepository;
 import finalproject.security.email.EmailService;
 import finalproject.services.DepartmentService;
@@ -96,9 +98,9 @@ public class MainController {
   }
 
   @GetMapping(path = "/leave")
-  public String leaveDetails(){
+  public String leaveReasons(Model model) {
+    model.addAttribute("leaveReasons", new LeaveDetails());
     return "leave";
   }
-
 
 }

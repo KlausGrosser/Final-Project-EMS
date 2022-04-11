@@ -39,6 +39,9 @@ public class LeaveDetails {
     @Enumerated(EnumType.STRING)
     private LeaveStatus leaveStatus;
 
+    @Enumerated(EnumType.STRING)
+    private LeaveReasons leaveReasons;
+
     private boolean active;
 
 }
