@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -16,6 +18,7 @@ import java.util.Collections;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "employees") // by default is the table name the class name, but with @table it`s possible to give another name
@@ -49,6 +52,9 @@ public class Employee extends AppUser {
   @JsonBackReference
   @JoinColumn(name = "position_id")
   private Position position;
+
+  @OneToMany
+  List<WorkHours> workHours;
 
   //Constructor without ID because it's generated automatically
   public Employee(String fName, String lName, LocalDate birthDate) {
