@@ -95,4 +95,10 @@ public class MainController {
     return "check_in_out";
   }
 
+  @GetMapping(path = "/leave")
+  public String leaveDetails(){
+    return "leave";
+  }
+
+
 }

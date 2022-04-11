@@ -26,19 +26,18 @@ public class WorkHours {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration timeWorked;
-    private Duration totalTimeWorked;
-    @Transient
+    @ElementCollection(targetClass = Duration.class, fetch = FetchType.EAGER)
+    //@CollectionTable(name = "work_hours", joinColumns = @JoinColumn(name = "user_id"))
     private List<Duration> workedTimes = new ArrayList<>();
     private boolean currentlyWorking;
 
     @ManyToOne
     private Employee employee;
 
-    public WorkHours(LocalDateTime startTime, LocalDateTime endTime, Duration timeWorked, Duration totalTimeWorked, List<Duration> workedTimes, boolean currentlyWorking, Employee employee) {
+    public WorkHours(LocalDateTime startTime, LocalDateTime endTime, Duration timeWorked, List<Duration> workedTimes, boolean currentlyWorking, Employee employee) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.timeWorked = timeWorked;
-        this.totalTimeWorked = totalTimeWorked;
         this.workedTimes = workedTimes;
         this.currentlyWorking = currentlyWorking;
         this.employee = employee;

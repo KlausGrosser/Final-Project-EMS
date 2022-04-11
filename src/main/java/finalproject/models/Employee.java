@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 
 /**
@@ -49,6 +50,8 @@ public class Employee extends AppUser {
   @JsonBackReference
   @JoinColumn(name = "position_id")
   private Position position;
+  @OneToMany
+  Set<WorkHours> workHours;
 
   //Constructor without ID because it's generated automatically
   public Employee(String fName, String lName, LocalDate birthDate) {
