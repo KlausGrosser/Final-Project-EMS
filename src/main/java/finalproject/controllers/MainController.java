@@ -103,4 +103,11 @@ public class MainController {
     return "leave";
   }
 
+  @GetMapping("/leave_overview")
+  public String leaveOverview() {
+    return "leave_overview";
+  }
+
 }
+
+

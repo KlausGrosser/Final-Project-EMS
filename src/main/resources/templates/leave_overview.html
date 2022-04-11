@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Currency Converter</title>
+    <title>Leave Overview</title>
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -32,50 +31,25 @@
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check-in/Check-out</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/leave}">Absence & Leave</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
-
             </ul>
+
         </div>
     </div>
 </nav>
 <div class="container">
     <hr>
     <br>
-    <br>
-<h2>Welcome to the Salary Converter</h2>
-<form action="#" th:action="@{/currency_output}" >
-    <br>
+
     <hr>
-    <p><h5>Please enter your amount: &emsp; <input th:name="amount" /></h5></p>
+    <h4>Leave </h4>
+    <span th:text="${param.leaveReasons}"></span>
+    <span th:text="${param.fromDate}"></span>
+    <span th:text="${param.endDate}"></span>
 
-            <br>
-            <hr>
-        <form method="post" th:object="${currency}">
 
-        <label for="base_code">Choose your base currency: &nbsp;</label>
-        <select     th:name="base_code" id="base_code">
-            <option value="">Nothing selected</option>
-            <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
-                    th:value="${currencySelection}"
-                    th:text="${currencySelection}">currencySelection
-            </option>
-        </select>
-            <br>
-            <hr>
 
-        <label for="target_code">Choose your target currency: </label>
-        <select     th:name="target_code" id="target_code">
-            <option value="">Nothing selected</option>
-            <option th:each="currencySelection : ${T(finalproject.currencyapp.CurrencySelection).values()}"
-                    th:value="${currencySelection}"
-                    th:text="${currencySelection}">currencySelection
-            </option>
-        </select>
-            <br>
-            <hr>
-
-    <p><input type="submit" value="Submit" />
-
-</form>
+</div>
 </body>
 </html>
