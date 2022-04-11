@@ -36,7 +36,7 @@ public class Department {
     private String name;
     //One department can have many Employees
     @OneToMany
-    @JoinColumn (name = "employee_id")
+    @JoinColumn (name = "department")
     @JsonManagedReference
     private Set<Employee> employees;
 

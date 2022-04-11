@@ -1,104 +1,222 @@
-//package finalproject.services;
-//
-//import finalproject.models.Employee;
-//import finalproject.models.WorkHours;
-//import finalproject.repositories.WorkHoursRepository;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.stereotype.Service;
-//import java.time.Duration;
-//import java.time.LocalDateTime;
-//import java.time.LocalTime;
-//import java.time.format.DateTimeFormatter;
-//
-//@Service
-//public class WorkHoursService {
-//
-//    //Format the date and time
-//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//
-//
-//    private final EmployeeService employeeService;
-//    private final WorkHours workHours;
-//    private final WorkHoursRepository workHoursRepository;
-//
-//    //Logger logger = LoggerFactory.getLogger(WorkHoursService.class);
-//
-//    public WorkHoursService(EmployeeService employeeService, WorkHours workHours, WorkHoursRepository workHoursRepository) {
-//        this.employeeService = employeeService;
-//        this.workHours = workHours;
-//        this.workHoursRepository = workHoursRepository;
-//    }
-//
-//    //Method for starting the check-in
-//    public String start(WorkHours workHours) {
-//
-//        String result = "";
-//
-//        if(!rangeWorkingHours()){
-//            return "The working hours range is from 07.00 am to 19.00 pm";
-//        }
-//        else if((!(workHours.isCurrentlyWorking()))) {
-//            workHours.setCurrentlyWorking(true);
-//            workHours.setStartTime(LocalDateTime.now());
-//            result = "Check in at: " + workHours.getStartTime().format(formatter);
-//        } else {
-//            result = "You already check in! Can't do it again if you don't check-out";
-//        }
-//
-//        return result;
-//
-//    }
-//
-//    //Method for stopping the check-in
-//    public String stop() {
-//        String result = "";
-//
-//        if(!rangeWorkingHours()) {
-//            return "The working hours range is from 07.00 am to 19.00 pm";
-//        }else if (workHours.isCurrentlyWorking()) {
-//            workHours.setCurrentlyWorking(false);
-//            workHours.setEndTime(LocalDateTime.now());
-//            result = "Check out at: " + workHours.getEndTime().format(formatter);
-//        } else {
-//            result = "You already check-out!! You need to first check-in";
-//        }
-//        return result;
-//    }
-//
-//
-//    //Method to calculate the time worked during the day
-//    public String getTimeBetweenStartAndEnd() {
-//        Duration difference = Duration.between(workHours.getStartTime(), workHours.getEndTime());
-//        if (difference == null) {
-//            return "Sorry, you need to check in first";
-//        } else {
-//            workHours.setTimeWorked(difference);
-//            workHours.getWorkedTimes().add(difference);
-//            String total = "Time worked today: " + difference.toHours() + " hours, "
-//                    + difference.toMinutes() + " minutes, " + difference.toSeconds() + " seconds";
-//
-//           return total;
-//
-//        }
-//    }
-//
-//    public boolean rangeWorkingHours() {
-//        LocalTime now = LocalTime.now();
-//        return now.isAfter(LocalTime.parse("06:59")) && now.isBefore(LocalTime.parse("19:01"));
-//    }
-//
-//    public void save(Long id){
-//        Employee employee = employeeService.getEmployeeById(id).orElseThrow();
-//        employee.getWorkHours().add(this.workHours);
-//    }
-//
-//}
-//
+package finalproject.services;
+
+import finalproject.models.Employee;
+import finalproject.models.WorkHours;
+import finalproject.repositories.WorkHoursRepository;
+import lombok.Getter;
+import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+
+
+@Service
+@Getter
+@Setter
+public class WorkHoursService {
+
+    private final EmployeeService employeeService;
+    private final WorkHoursRepository workHoursRepository;
+    Logger logger = LoggerFactory.getLogger(WorkHoursService.class);
+
+    @Autowired
+    public WorkHoursService(EmployeeService employeeService, WorkHoursRepository workHoursRepository) {
+        this.employeeService = employeeService;
+        this.workHoursRepository = workHoursRepository;
+
+    }
+
+    //Format the date and time
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+
+    public boolean isCurrentWorkHourOnCurrentDate(){
+        Employee employee = getCurrentEmployee();
+        WorkHours workHours = null;
+        int comparison= -1;
+        if(!employee.getWorkHours().isEmpty()){
+            workHours = findCurrentWorkHours(employee);
+            LocalDate currentDate = LocalDate.now();
+            if(!workHours.getStopTimes().isEmpty()){
+                LocalDateTime lastCheckout = workHours.getStopTimes().get(workHours.getStopTimes().size()-1);
+                comparison = currentDate.compareTo(ChronoLocalDate.from(lastCheckout));
+            }else{
+                LocalDateTime lastCheckin = workHours.getStartTimes().get(workHours.getStartTimes().size()-1);
+                comparison = currentDate.compareTo(ChronoLocalDate.from(lastCheckin));
+            }
+
+        }
+
+        return comparison == 0;
+
+    }
+
+
+    public String start() {
+        Employee employee = getCurrentEmployee();
+        WorkHours workHours = null;
+
+        if(employee.getWorkHours().isEmpty()){
+            workHours = new WorkHours();
+        }else if(!isCurrentWorkHourOnCurrentDate()){
+            workHours = new WorkHours();
+        }
+        else{
+            workHours = findCurrentWorkHours(employee);
+        }
+        String result = "";
+
+        if (!(workHours.isCurrentlyWorking())) {
+            workHours.setCurrentlyWorking(true);
+            workHours.setStartTime(LocalDateTime.now());
+            workHours.getStartTimes().add(workHours.getStartTime());
+
+            workHoursRepository.save(workHours);
+
+            saveWorkHoursToEmployee(employee, workHours);
+
+            employeeService.save(employee);
+
+            result = "Check in at: " + workHours.getStartTime().format(formatter);
+        } else {
+            result = "You already checked in! Can't do it again if you don't check-out";
+        }
+        return result;
+    }
+
+    public String stop() {
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Employee employee = getCurrentEmployee();
+        WorkHours workHours = findCurrentWorkHours(employee);
+        String result = "";
+
+        if(workHours!=null){
+            if (workHours.isCurrentlyWorking()) {
+                workHours.setCurrentlyWorking(false);
+                workHours.setEndTime(LocalDateTime.now());
+                workHours.getStopTimes().add(workHours.getEndTime());
+
+                workHoursRepository.save(workHours);
+
+                saveWorkHoursToEmployee(employee, workHours);
+
+                //employeeService.save(employee);
+
+
+                result = "Check out at: " + workHours.getEndTime().format(formatter);
+            } else {
+                result = "You already checked-out!!";
+            }
+            return result;
+        }else{
+            return "Sorry, you need to check in first!";
+        }
+
+
+    }
+
+
+    public String getTimeBetweenStartAndEnd() {
+        Employee employee = getCurrentEmployee();
+        WorkHours workHours = findCurrentWorkHours(employee);
+        if(workHours!=null){
+            Duration difference = Duration.between(workHours.getStartTime(), workHours.getEndTime());
+            if(difference == null){
+                return "Sorry, you need to check out first";
+            } else {
+                workHours.setTimeWorked(difference);
+
+                Duration lastWorkedTime = Duration.ofDays(0);
+
+                if(!workHours.getWorkedTimes().isEmpty()){
+                    lastWorkedTime = workHours.getWorkedTimes().get(workHours.getWorkedTimes().size() -1);
+                }
+
+                if(lastWorkedTime!=difference){
+                    workHours.getWorkedTimes().add(difference);
+                }
+
+
+                Duration currentTotalWorkedTime = getTotalTimeWorked(workHours);
+
+                workHoursRepository.save(workHours);
+                saveWorkHoursToEmployee(employee, workHours);
+
+                String total = "Time worked today: " + currentTotalWorkedTime.toHours() + " hours, "
+                        + currentTotalWorkedTime.toMinutes() + " minutes, " + currentTotalWorkedTime.toSeconds() + " seconds";
+
+                return total;
+            }
+        }else{
+            return "Sorry, you need to check out first";
+        }
+
+    }
+
+    public void saveWorkHoursToEmployee(Employee employee, WorkHours workHours){
+        WorkHours temp = null;
+        if(!employee.getWorkHours().isEmpty()){
+            temp = employee.getWorkHours().get(employee.getWorkHours().size()-1);
+        }
+
+        long id1 = workHours.getId();
+        long id2 = 0;
+        if(temp != null){
+            id2 = temp.getId();
+        }
+
+        boolean idMatches = id1 == id2;
+        if(idMatches){
+            return;
+        }else{
+            employee.getWorkHours().add(workHours);
+        }
+
+    }
+
+    public WorkHours findCurrentWorkHours(Employee employee){
+        WorkHours workHours = null;
+        if(!employee.getWorkHours().isEmpty()){
+            int currentWorkHours = employee.getWorkHours().size();
+            workHours = employee.getWorkHours().get(currentWorkHours-1);
+        }
+        if(workHours != null){
+            return workHoursRepository.getById(workHours.getId());
+        }else{
+            return null;
+        }
+
+    }
+
+    public Employee getCurrentEmployee(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return employeeService.findByEmail(auth.getName()).orElseThrow();
+    }
+
+
+    public Duration getTotalTimeWorked(WorkHours workHours) {
+        long mils = 0;
+        for (Duration d : workHours.getWorkedTimes()) {
+            mils += d.toMillis();
+        }
+        Duration total = Duration.ofMillis(mils);
+        workHours.setTotalTimeWorked(total);
+        //System.out.println("Total time worked: " + total.toString());
+
+        return total;
+    }
+
+
+}
 
 
 
