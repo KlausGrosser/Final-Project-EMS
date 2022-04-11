@@ -105,6 +105,8 @@ public class WorkHoursService {
                 workHours.setEndTime(LocalDateTime.now());
                 workHours.getStopTimes().add(workHours.getEndTime());
 
+                Duration workedHours = this.getTimeBetweenStartAndEnd(workHours);
+
                 workHoursRepository.save(workHours);
 
                 saveWorkHoursToEmployee(employee, workHours);
@@ -124,38 +126,43 @@ public class WorkHoursService {
 
     }
 
+    public Duration getTimeBetweenStartAndEnd(WorkHours workHours){
 
-    public String getTimeBetweenStartAndEnd() {
+        Duration total = Duration.between(workHours.getStartTime(), workHours.getEndTime());
+
+        workHours.setTimeWorked(total);
+        workHours.getWorkedTimes().add(total);
+
+        System.out.println("Time worked: " + total.toString());
+
+        return total;
+    }
+
+
+    public String getTotalWorkedTime() {
         Employee employee = getCurrentEmployee();
         WorkHours workHours = findCurrentWorkHours(employee);
         if(workHours!=null){
-            Duration difference = Duration.between(workHours.getStartTime(), workHours.getEndTime());
-            if(difference == null){
+            if(workHours.getEndTime() != null){
+                Duration difference = Duration.between(workHours.getStartTime(), workHours.getEndTime());
+                if(difference == null){
+                    return "Sorry, you need to check in first";
+                } else {
+                    long mils = 0;
+                    for(Duration d : workHours.getWorkedTimes()){
+                        mils+= d.toMillis();
+                    }
+
+                    Duration total = Duration.ofMillis(mils);
+                    System.out.println("Total time worked: " +total.toString());
+
+                    return "Time worked today: " + total.toHours() + " hours, "
+                            + total.toMinutes() + " minutes, " + total.toSeconds() + " seconds";
+                }
+            }else{
                 return "Sorry, you need to check out first";
-            } else {
-                workHours.setTimeWorked(difference);
-
-                Duration lastWorkedTime = Duration.ofDays(0);
-
-                if(!workHours.getWorkedTimes().isEmpty()){
-                    lastWorkedTime = workHours.getWorkedTimes().get(workHours.getWorkedTimes().size() -1);
-                }
-
-                if(lastWorkedTime!=difference){
-                    workHours.getWorkedTimes().add(difference);
-                }
-
-
-                Duration currentTotalWorkedTime = getTotalTimeWorked(workHours);
-
-                workHoursRepository.save(workHours);
-                saveWorkHoursToEmployee(employee, workHours);
-
-                String total = "Time worked today: " + currentTotalWorkedTime.toHours() + " hours, "
-                        + currentTotalWorkedTime.toMinutes() + " minutes, " + currentTotalWorkedTime.toSeconds() + " seconds";
-
-                return total;
             }
+
         }else{
             return "Sorry, you need to check out first";
         }
@@ -184,6 +191,21 @@ public class WorkHoursService {
     }
 
     public WorkHours findCurrentWorkHours(Employee employee){
+        WorkHours workHours = null;
+        if(!employee.getWorkHours().isEmpty()){
+            int currentWorkHours = employee.getWorkHours().size();
+            workHours = employee.getWorkHours().get(currentWorkHours-1);
+        }
+        if(workHours != null){
+            return workHoursRepository.getById(workHours.getId());
+        }else{
+            return null;
+        }
+
+    }
+
+    public WorkHours findCurrentWorkHours(){
+        Employee employee = this.getCurrentEmployee();
         WorkHours workHours = null;
         if(!employee.getWorkHours().isEmpty()){
             int currentWorkHours = employee.getWorkHours().size();

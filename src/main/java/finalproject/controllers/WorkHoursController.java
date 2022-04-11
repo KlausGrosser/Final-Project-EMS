@@ -1,7 +1,6 @@
 package finalproject.controllers;
 
-import finalproject.models.Employee;
-import finalproject.models.WorkHours;
+
 import finalproject.services.EmployeeService;
 import finalproject.services.WorkHoursService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,11 @@ public class WorkHoursController {
         this.employeeService = employeeService;
     }
 
+
     //GetMappings
     @GetMapping(path = "/getTime")
-    public String getTimeBetweenStartAndEnd() {
-        return workHoursService.getTimeBetweenStartAndEnd();
+    public String getTotalWorkedTime() {
+        return workHoursService.getTotalWorkedTime();
     }
 
 
@@ -39,6 +39,7 @@ public class WorkHoursController {
     public String stopWorking() {
         return workHoursService.stop();
     }
+
 
 }
 
