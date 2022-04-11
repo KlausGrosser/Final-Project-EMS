@@ -47,47 +47,26 @@
                 <h3> Please click to register a new leave: </h3>
 
                 <form th:action="@{/new_leave}"  method="post">
-                    <button type="submit"> New Leave</button>
+
+                <form method="get" th:object="${leaveReasons}">
+
+                    <label for="leave">Choose your leave reason: &nbsp;</label>
+                    <select     th:name="leave" id="leave">
+                        <option value="leave">Nothing selected</option>
+                        <option th:each="leaveReasons : ${T(finalproject.models.LeaveReasons).values()}"
+                                th:value="${leaveReasons}"
+                                th:text="${leaveReasons}">
+                        </option>
+                        <input type="date"  class="form-control"
+                               th:value="${#calendars.format(leaveReasons.getFromDate(),'yyyy-MM-dd')}" th:name="fromDate">
+                        <input type="date"  class="form-control"
+                               th:value="${#calendars.format(leaveReasons.getToDate(),'yyyy-MM-dd')}" th:name="toDate" />
+                    </select>
+
+                    <input type="submit" value="Submit" />
                 </form>
 
             </article>
-
-            /div>
-            <div class="agile-tables">
-
-                <h3>Manage Leaves</h3>
-                <table id="table-two-axis" class="two-axis">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                        <th>No of Days</th>
-                        <th>Leave Type</th>
-                        <th>Reason</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="leaveInfo,iterStat : ${leavesList}">
-                        <!-- <td th:text="${iterStat.count}"></td> -->
-                        <td th:text="${leaveInfo.username}"></td>
-                        <td th:utext="${#dates.format(leaveInfo.fromDate,'dd MMM yyyy')}"></td>
-                        <td th:utext="${#dates.format(leaveInfo.toDate,'dd MMM yyyy')}"></td>
-                        <td th:text="${leaveInfo.duration}"></td>
-                        <td th:text="${leaveInfo.leaveType}"></td>
-                        <td th:text="${leaveInfo.reason}"></td>
-                        <td>
-                            <a th:href="@{/employee/manage-leaves/accepted/{username}(username=${leaveInfo.id})}" ><span class="label-success" style="color:  white;">ACCEPT</span></a>
-                            <a th:href="@{/user/manage-leaves/reject/{id}(id=${leaveInfo.id})}" ><span class="label-danger" style="color:  white;">REJECT</span></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <!-- //table -->
-        </div>
 
 </body>
 </html>
