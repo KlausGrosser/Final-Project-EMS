@@ -37,7 +37,7 @@
                             <th th:text="#{users.active}">Active</th>
                             <th th:text="#{users.roles}">Roles</th>
                             <th th:text="#{users.edit}">Edit</th>
-                            <th th:text="#{users.delete}">Delete</th>
+                            <th sec:authorize="hasAuthority('SUPERADMIN')" th:text="#{users.delete}">Delete</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,7 +54,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-primary">
+                                <a sec:authorize="hasAuthority('SUPERADMIN')"  th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-primary">
                                     <img th:src="@{/images/outline-delete-24px.svg}">
                                 </a>
                             </td>

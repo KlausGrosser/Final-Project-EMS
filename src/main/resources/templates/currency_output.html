@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>Currency Converter</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+<body>
+
+<div class="container">
+  <hr>
+  <br>
+  <h2>Here is your converted amount!  </h2>
+  <hr>
+    <h4>Base currency: </h4>
+        <span th:text="${(param.amount)}"></span>
+        <span th:text="${param.base_code}"></span>
+      <br>
+  <hr>
+     <h4> Converted currency: </h4>
+      <span th:text="${@currencyService.getConvertedAmount(param.base_code, param.target_code, param.amount)}">...</span>
+
+      <span th:text="${param.target_code}"></span>
+      <br>
+  <hr>
+
+  <h5> Interested into the service of Western Union?</h5>
+  <a href="#" th:href="@{https://www.westernunion.com/}" th:target="_blank">click here</a>
+
+</div>
+</body>
+</html>

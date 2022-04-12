@@ -40,6 +40,12 @@
                     </a>
                 </div>
             </li>
+            <li sec:authorize="hasAuthority('USER')" class="nav-item active">
+                <a class="nav-link" th:href="@{/check_in_out}" th:text="#{link.check_in}"></a>
+            </li>
+            <li sec:authorize="hasAuthority('USER')" class="nav-item active">
+                <a class="nav-link" th:href="@{/currency/currency_input}" th:text="#{link.currency}"></a>
+            </li>
         </ul>
         <div class="form-inline my-2 my-lg-0" sec:authorize="!isAuthenticated()">
             <form action="/registration" method="get">
