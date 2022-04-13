@@ -2,6 +2,7 @@ package com.finalproject.controller;
 
 import com.finalproject.dto.RegistrationUserDTO;
 import com.finalproject.model.service.UserService;
+import com.finalproject.util.email.EmailService;
 import com.finalproject.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,13 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
-    private final UserService userService;
+    //private final UserService userService;
+    private final EmailService emailService;
 
-    public RegistrationController(UserService userService) {
-        this.userService = userService;
+    public RegistrationController(//UserService userService,
+                                  EmailService emailService) {
+        //this.userService = userService;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -36,9 +40,11 @@ public class RegistrationController {
             return "registration";
         }
 
-        userService.createUser(registrationUserDTO);
+        //userService.createUser(registrationUserDTO);
+        emailService.createNewUserAndSendRegistrationMail(registrationUserDTO);
 
-        return "redirect:/login";
+        //return "redirect:/login";
+        return "register_check_email";
     }
 
     @ExceptionHandler(UsernameNotUniqueException.class)
@@ -47,5 +53,11 @@ public class RegistrationController {
         model.addAttribute("user", new RegistrationUserDTO());
         model.addAttribute("usernameErrorMessage", e.getMessage());
         return "registration";
+    }
+
+    @GetMapping(path = "/confirm")
+    public String confirm(@RequestParam("token") String token){
+        emailService.confirmToken(token);
+        return "redirect:/login";
     }
 }

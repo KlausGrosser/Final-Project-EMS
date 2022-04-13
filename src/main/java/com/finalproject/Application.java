@@ -49,6 +49,7 @@ public class Application {
                     "test@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
+                    false,
                     superadminAuthorities,
                     null,
                     null,
@@ -63,6 +64,7 @@ public class Application {
                     "test2@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
+                    false,
                     adminAuthorities,
                     null,
                     null,
@@ -77,16 +79,13 @@ public class Application {
                     "test3@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
+                    false,
                     userAuthorities,
                     null,
                     null,
                     null
             );
             userRepository.save(u3);
-
-            // a list of teachers for saving!
-            //List.of(t1, t2, t3).forEach(teacher -> teacherService.addRole(teacher));
-            //employeeRepository.saveAll(List.of(t1, t2, t3));
         };
     }
 }

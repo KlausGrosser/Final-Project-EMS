@@ -13,6 +13,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -58,19 +60,22 @@ public class UserService implements UserDetailsService {
                 new IllegalArgumentException("Invalid user id: " + id));
     }
 
-    public void createUser(RegistrationUserDTO userDTO) {
+    public User createUser(RegistrationUserDTO userDTO) {
         User user = User
                 .builder()
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())
                 .username(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
-                .enabled(true)
+                //.enabled(true)
+                .enabled(false)
+                .firstLogin(true)
                 .authorities(Collections.singleton(Authority.USER))
                 .build();
         try {
             userRepository.save(user);
             log.info("New user " + user);
+
         } catch (DataIntegrityViolationException e) {
             log.error("Login not unique: " + userDTO.getUsername());
             throw new UsernameNotUniqueException(messageSource.getMessage(
@@ -78,6 +83,7 @@ public class UserService implements UserDetailsService {
                     null,
                     LocaleContextHolder.getLocale()) + userDTO.getUsername(), e);
         }
+        return user;
     }
 
     public void deleteUser(long id) {
@@ -120,4 +126,21 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(()-> new UsernameNotFoundException(email));
     }
 
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
+    }
+
+    public User getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return this.findByUsername(auth.getName());
+    }
+
+    public void changePassword(User user, String newPassword) {
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        user.setPassword(encodedPassword);
+        user.setFirstLogin(false);
+
+        userRepository.save(user);
+    }
 }

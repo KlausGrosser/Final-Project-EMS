@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password:
+    url: jdbc:postgresql://localhost:5432/ems
+    username:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        format_sql: true
+        temp:
+          use_jdbc_metadata_defaults: false
+    show-sql: true
+    open-in-view: true
+    generate-ddl: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: emsdevtestmail@gmail.com  #Replace this field with your Gmail username.
+    password: uumbumwoppbthywz   #DataSourceSettings#   #Replace this field with your Gmail password/App password.
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+

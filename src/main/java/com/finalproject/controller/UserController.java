@@ -11,11 +11,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -28,9 +33,11 @@ import javax.validation.Valid;
 @RequestMapping
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/users")
@@ -81,7 +88,43 @@ public class UserController {
     public String getUserProfilePage(@AuthenticationPrincipal User user,
                                      Model model) {
         model.addAttribute("user", userService.getUserById(user.getId()));
-        return "user-profile";
+
+        if(user.isFirstLogin()){
+            return "password_change";
+        }else{
+            return "user-profile";
+        }
+    }
+
+    @PostMapping("/change_password")
+    public String processChangePassword(HttpServletRequest request, HttpServletResponse response,
+                                        Model model, RedirectAttributes ra,
+                                        @AuthenticationPrincipal User user) throws ServletException {
+
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+
+        model.addAttribute("pageTitle", "Change your password");
+
+        if (oldPassword.equals(newPassword)) {
+            model.addAttribute("message", "Your new password must be different than the old one.");
+
+            return "password_change";
+        }
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            model.addAttribute("message", "Your old password is incorrect.");
+            return "password_change";
+
+        } else {
+            userService.changePassword(user, newPassword);
+            request.logout();
+            ra.addFlashAttribute("message", "You have changed your password successfully. "
+                    + "Please login again.");
+
+            return "redirect:/login";
+        }
+
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

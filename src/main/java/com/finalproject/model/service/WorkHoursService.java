@@ -102,7 +102,7 @@ public class WorkHoursService {
 
                 saveWorkHoursToEmployee(employee, workHours);
 
-               userService.save(employee);
+                userService.save(employee);
 
 
                 result = "Check out at: " + workHours.getEndTime().format(formatter);
@@ -208,13 +208,4 @@ public class WorkHoursService {
 
 
 }
-
-
-
-
-
-
-
-
-
 

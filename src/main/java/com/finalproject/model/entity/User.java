@@ -40,6 +40,9 @@ public class User implements UserDetails {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
+    @Column(name = "first_login", nullable = false)
+    private boolean firstLogin;
+
     @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -58,6 +61,7 @@ public class User implements UserDetails {
     private List<ActivityRequest> activityRequests;
 
     @OneToMany
+    @ToString.Exclude
     List<WorkHours> workHours;
 
 
