@@ -97,6 +97,7 @@ public class WorkHoursService {
                 workHours.setCurrentlyWorking(false);
                 workHours.setEndTime(LocalDateTime.now());
                 workHours.getStopTimes().add(workHours.getEndTime());
+                this.getTimeBetweenStartAndEnd(workHours);
 
                 workHoursRepository.save(workHours);
 
@@ -117,37 +118,24 @@ public class WorkHoursService {
 
     }
 
-    public String getTimeBetweenStartAndEnd() {
+    public String getTotalWorkedTime() {
         User employee = getCurrentEmployee();
         WorkHours workHours = findCurrentWorkHours(employee);
         if(workHours!=null){
-            Duration difference = Duration.between(workHours.getStartTime(), workHours.getEndTime());
-            if(difference == null){
+            if(workHours.getEndTime() != null){
+                Duration difference = Duration.between(workHours.getStartTime(), workHours.getEndTime());
+                if(difference == null){
+                    return "Sorry, you need to check in first";
+                } else {
+                    Duration total = getTotalTimeWorked(workHours);
+
+                    return "Time worked today: " + total.toHours() + " hours, "
+                            + total.toMinutes() + " minutes, " + total.toSeconds() + " seconds";
+                }
+            }else{
                 return "Sorry, you need to check out first";
-            } else {
-                workHours.setTimeWorked(difference);
-
-                Duration lastWorkedTime = Duration.ofDays(0);
-
-                if(!workHours.getWorkedTimes().isEmpty()){
-                    lastWorkedTime = workHours.getWorkedTimes().get(workHours.getWorkedTimes().size() -1);
-                }
-
-                if(lastWorkedTime!=difference){
-                    workHours.getWorkedTimes().add(difference);
-                }
-
-
-                Duration currentTotalWorkedTime = getTotalTimeWorked(workHours);
-
-                workHoursRepository.save(workHours);
-                saveWorkHoursToEmployee(employee, workHours);
-
-                String total = "Time worked today: " + currentTotalWorkedTime.toHours() + " hours, "
-                        + currentTotalWorkedTime.toMinutes() + " minutes, " + currentTotalWorkedTime.toSeconds() + " seconds";
-
-                return total;
             }
+
         }else{
             return "Sorry, you need to check out first";
         }
@@ -203,6 +191,13 @@ public class WorkHoursService {
         workHours.setTotalTimeWorked(total);
 
         return total;
+    }
+
+    public void getTimeBetweenStartAndEnd(WorkHours workHours){
+        Duration total = Duration.between(workHours.getStartTime(), workHours.getEndTime());
+
+        workHours.setTimeWorked(total);
+        workHours.getWorkedTimes().add(total);
     }
 
 
