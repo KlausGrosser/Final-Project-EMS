@@ -1,5 +1,6 @@
 package com.finalproject.controller;
 
+import com.finalproject.util.email.EmailService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class PageController implements ErrorController {
+    private final EmailService emailService;
+
+    public PageController(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
     @GetMapping("/index")
     public String getIndexPage() {
         return "index";
@@ -31,7 +38,6 @@ public class PageController implements ErrorController {
         return "/error/403";
     }
 
-    //@Override
     @RequestMapping("/error")
     public String getErrorPath() {
         return "/error/500";
@@ -40,5 +46,11 @@ public class PageController implements ErrorController {
     @GetMapping(path = "/check_in_out")
     public String checkIn(){
         return "check_in_out";
+    }
+
+    @GetMapping(path = "/confirm")
+    public String confirm(@RequestParam("token") String token){
+        emailService.confirmToken(token);
+        return "redirect:/login";
     }
 }
