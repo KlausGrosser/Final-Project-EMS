@@ -74,6 +74,22 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label class="col-form-label" for="department">
+                            <span th:text="#{registration.department.label}"></span>
+                            <select th:field="*{department}" class="form-control" id="department" required>
+                                <option value="">Select department</option>
+                                <option th:each="department : ${T(com.finalproject.model.entity.Department).values()}"
+                                        th:value="${department}"
+                                        th:text="${department}">department
+                                </option>
+                            </select>
+                            <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
+                                  class="text-danger"></span>
+                        </label>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary" th:text="#{button.signup}">Sign up</button>
             </form>
         </div>

@@ -2,6 +2,7 @@ package com.finalproject.model.service;
 
 import com.finalproject.dto.RegistrationUserDTO;
 import com.finalproject.dto.UpdateUserDTO;
+import com.finalproject.dto.UpdateUserProfileDTO;
 import com.finalproject.model.entity.Activity;
 import com.finalproject.model.entity.Authority;
 import com.finalproject.model.entity.User;
@@ -71,6 +72,7 @@ public class UserService implements UserDetailsService {
                 .enabled(false)
                 .firstLogin(true)
                 .authorities(Collections.singleton(Authority.USER))
+                .department(userDTO.getDepartment())
                 .build();
         try {
             userRepository.save(user);
@@ -109,6 +111,10 @@ public class UserService implements UserDetailsService {
             user.setAuthorities(userDTO.getAuthorities());
         }
 
+        if (Objects.nonNull(userDTO.getDepartment())) {
+            user.setDepartment(userDTO.getDepartment());
+        }
+
 
         try {
             userRepository.save(user);
@@ -144,6 +150,19 @@ public class UserService implements UserDetailsService {
 
         user.setPassword(encodedPassword);
         user.setFirstLogin(false);
+
+        userRepository.save(user);
+    }
+
+    public void updateUserProfile(UpdateUserProfileDTO userDTO) {
+        User user = getCurrentUser();
+
+        user.setAddress(userDTO.getAddress());
+        user.setTelephone(userDTO.getTelephone());
+
+        if (Objects.nonNull(userDTO.getPassword()) && userDTO.getPassword().length() > 0) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
 
         userRepository.save(user);
     }
