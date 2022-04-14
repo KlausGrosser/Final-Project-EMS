@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Getter
 @Setter
@@ -56,14 +57,33 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Activity> activities;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "leave_id")
+    )
+    @ToString.Exclude
+    private List<Leave> leaves;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     @ToString.Exclude
     private List<ActivityRequest> activityRequests;
+
 
     @OneToMany
     @ToString.Exclude
     List<WorkHours> workHours;
 
+    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.firstLogin = firstLogin;
+        this.authorities = authorities;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

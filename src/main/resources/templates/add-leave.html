@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Add new leave</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="display-4" th:text="#{leaves.add.title}">Add leave</h1>
+            <hr>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" th:action="@{/leaves/add}" th:object="${leave}">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="col-form-label" for="reason"
+                                       th:text="#{leaves.add.reason}">
+                                    Leave Reason
+                                </label>
+                                <select th:field="*{leaveReason}" class="form-control" id="reason">
+                                    <option th:each="leaveReason : ${reasons}"
+                                            th:text="${leaveReason}"
+                                            th:value="${leaveReason.name()}">
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('leaveReason')}" th:errors="*{leaveReason}"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-form-label" for="description"
+                                       th:text="#{leaves.add.description.label}">Leave description</label>
+                                <textarea id="description" rows="4"
+                                          th:field="*{description}"
+                                          th:placeholder="#{leaves.add.description.placeholder}"
+                                          class="form-control"></textarea>
+                                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                                      class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-12">
+                            <label for="start">Please select your start date: </label>
+                            <input type="date"  class="form-control"
+                                   th:value="${#calendars.format(leave.getStartTime())}" th:name="startTime" id="start"/>
+
+                            <br>
+                            <label for="end">Please select your end date: </label>
+                            <input type="date"  class="form-control"
+                                   th:value="${#calendars.format(leave.getEndTime())}" th:name="endTime" id="end"/>
+
+                            </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <input class="btn btn-primary" th:value="#{leaves.add.button.submit}" type="submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer::footer}"></footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
