@@ -1,6 +1,7 @@
 package com.finalproject.dto;
 
 
+import com.finalproject.model.entity.Department;
 import com.finalproject.model.entity.User;
 import lombok.*;
 
@@ -34,4 +35,6 @@ public class RegistrationUserDTO {
     @NotBlank(message = "{validation.user.password.not_blank}")
     @Size(min = 5, max = 39, message = "{validation.user.password.size}")
     private String password;
+
+    private Department department;
 }

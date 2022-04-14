@@ -1,8 +1,10 @@
 package com.finalproject.controller;
 
+import com.finalproject.dto.UpdateUserProfileDTO;
 import com.finalproject.model.entity.Activity;
 import com.finalproject.dto.UpdateUserDTO;
 import com.finalproject.model.entity.Authority;
+import com.finalproject.model.entity.Department;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.service.UserService;
 import com.finalproject.util.exception.UsernameNotUniqueException;
@@ -60,6 +62,7 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("authorities", Authority.values());
+        model.addAttribute("departments", Department.values());
         return "update-user";
     }
 
@@ -70,6 +73,7 @@ public class UserController {
                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("authorities", Authority.values());
+            model.addAttribute("departments", Department.values());
             return "update-user";
         }
 
@@ -120,11 +124,28 @@ public class UserController {
             userService.changePassword(user, newPassword);
             request.logout();
             ra.addFlashAttribute("message", "You have changed your password successfully. "
-                    + "Please login again.");
+                    + "Please complete your profile.");
 
-            return "redirect:/login";
+//            return "redirect:/login";
+            return "redirect:/user/profileUpdate";
         }
 
+    }
+
+    @GetMapping("/user/profileUpdate")
+    public String getUserProfileUpdatePage(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        return "update-user-profile";
+    }
+
+    @PostMapping("/user/profileUpdate")
+    public String updateUserProfile(@ModelAttribute("user") @Valid UpdateUserProfileDTO userDTO,
+                             BindingResult bindingResult,
+                             Model model) {
+
+        userService.updateUserProfile(userDTO);
+
+        return "redirect:/profile";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

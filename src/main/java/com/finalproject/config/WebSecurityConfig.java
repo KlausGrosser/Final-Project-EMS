@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAuthority("ADMIN")
                 .antMatchers("/user/delete/{id}")
                 .hasAuthority("SUPERADMIN")
-                .antMatchers("/currency/**", "/check_in_out/**", "/profile", "/activities", "/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**", "/change_password")
+                .antMatchers("/currency/**", "/check_in_out/**", "/profile", "/activities", "/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**", "/change_password", "/user/profileUpdate")
                 .hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/login")
                 .anonymous()
