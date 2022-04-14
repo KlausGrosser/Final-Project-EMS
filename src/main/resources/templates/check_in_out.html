@@ -21,19 +21,19 @@
                 <h3> Please click to register your working hours: </h3>
 
                 <form th:action="@{/check_in_out/check_in}"  method="post">
-                    <button type="submit"> check-in</button>
+                    <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> check-in</button>
                 </form>
 
                 <h3> Please click to stop your working hours: </h3>
 
                 <form th:action="@{/check_in_out/check_out}" method="post">
-                    <button type="submit"> check-out</button>
+                    <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> check-out</button>
                 </form>
 
                 <h3> Please click to see the hours you worked today: </h3>
 
                 <form th:action="@{/check_in_out/getTime}" method="get">
-                    <button type="submit"> Total time</button>
+                    <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> Total time</button>
                 </form>
 
             </article>

@@ -104,7 +104,11 @@ public class UserService implements UserDetailsService {
         if (Objects.nonNull(userDTO.getPassword()) && userDTO.getPassword().length() > 0) {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
-        user.setAuthorities(userDTO.getAuthorities());
+
+        if (Objects.nonNull(userDTO.getAuthorities())) {
+            user.setAuthorities(userDTO.getAuthorities());
+        }
+
 
         try {
             userRepository.save(user);

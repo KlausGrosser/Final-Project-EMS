@@ -63,7 +63,7 @@ public class EmailService implements EmailSender{
         String token = confirmationTokenService.createConfirmationToken(newUser);
 
         // create a confirmation link to be sent to the user email
-        String link = "http://localhost:8080/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/confirm?token=" + token;
         //Send Email
         this.send(
                 user.getUsername(),
@@ -98,6 +98,8 @@ public class EmailService implements EmailSender{
         // set the user that holds this token to enabled
         userService.enableUser(
                 confirmationToken.getUser().getUsername());
+//        confirmationToken.getUser().setEnabled(true);
+        userService.save(confirmationToken.getUser());
         return "confirmed";
     }
 }

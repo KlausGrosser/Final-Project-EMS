@@ -55,9 +55,4 @@ public class RegistrationController {
         return "registration";
     }
 
-    @GetMapping(path = "/confirm")
-    public String confirm(@RequestParam("token") String token){
-        emailService.confirmToken(token);
-        return "redirect:/login";
-    }
 }

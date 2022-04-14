@@ -24,8 +24,8 @@ public class WorkHoursController {
 
     //GetMappings
     @GetMapping(path = "/getTime")
-    public String getTimeBetweenStartAndEnd() {
-        return workHoursService.getTimeBetweenStartAndEnd();
+    public String getTotalWorkedTime() {
+        return workHoursService.getTotalWorkedTime();
     }
 
 
