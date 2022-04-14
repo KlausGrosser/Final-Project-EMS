@@ -46,6 +46,27 @@
             <li sec:authorize="hasAuthority('USER')" class="nav-item active">
                 <a class="nav-link" th:href="@{/currency/currency_input}" th:text="#{link.currency}"></a>
             </li>
+
+
+
+            <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-expanded="false" aria-haspopup="true" th:text="#{link.leaves}">
+                    Leaves
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/leaves" th:text="#{link.all_leaves}">All leaves</a>
+                    <a class="dropdown-item" href="/leaves/add" sec:authorize="hasAuthority('USER')"
+                       th:text="#{link.add_leave}">
+                        Add leave
+                    </a>
+                    <a class="dropdown-item" href="/leaves/request" sec:authorize="hasAuthority('USER')"
+                       th:text="#{link.all_leaves_requests}">
+                        All leaves requests
+                    </a>
+                </div>
+            </li>
+
         </ul>
         <div class="form-inline my-2 my-lg-0" sec:authorize="!isAuthenticated()">
 <!--            <form action="/registration" method="get">

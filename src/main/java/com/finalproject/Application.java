@@ -50,10 +50,8 @@ public class Application {
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    superadminAuthorities,
-                    null,
-                    null,
-                    null
+                    superadminAuthorities
+
             );
             userRepository.save(u1);
 
@@ -65,10 +63,7 @@ public class Application {
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    adminAuthorities,
-                    null,
-                    null,
-                    null
+                    adminAuthorities
             );
             userRepository.save(u2);
 
@@ -80,10 +75,7 @@ public class Application {
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    userAuthorities,
-                    null,
-                    null,
-                    null
+                    userAuthorities
             );
             userRepository.save(u3);
         };
