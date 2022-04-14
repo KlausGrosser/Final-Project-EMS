@@ -10,8 +10,9 @@
 <footer th:fragment="footer" class="container">
     <p>
         <span sec:authorize="isAuthenticated()">
-            <span th:text="#{footer.logged_user}">Logged user:</span>
+            <span th:text="#{footer.logged_user}">Logged employee:</span>
             <span class="mr-4" sec:authentication="name"></span>
+            <span ></span>
             <span th:text="#{footer.roles}">Roles: </span>
             <span class="mr-4" sec:authentication="principal.authorities"></span>
         </span>
@@ -19,7 +20,10 @@
     <span style="float: right">
     <a href="?lang=en" th:text="#{lang.en}">en</a>
     |
-    <a href="?lang=ua" th:text="#{lang.ua}">ua</a>
+    <a href="?lang=ua" th:text="#{lang.de}">de</a>
+            |
+    <a href="?lang=ua" th:text="#{lang.es}">es</a>
+
 </span>
 </footer>
 </body>
