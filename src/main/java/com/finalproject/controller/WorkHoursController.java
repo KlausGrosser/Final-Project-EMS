@@ -37,6 +37,7 @@ public class WorkHoursController {
 
     @PostMapping(path = "/check_out")
     public String stopWorking() {
+
         return workHoursService.stop();
     }
 
