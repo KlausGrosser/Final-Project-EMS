@@ -8,14 +8,22 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<nav th:replace="~{fragments/navbar::navbar}"></nav>
 <body>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+
 
 <div class="container">
-  <hr>
-  <br>
-  <h2>Here is your converted amount!  </h2>
-  <hr>
+<div class="card-header">
+    <h1 class="display-4">
+        <span th:text="#{currency.out.header}"></span>
+    </h1>
+    <hr>
+</div>
+<div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
     <h4>Base currency: </h4>
         <span th:text="${(param.amount)}"></span>
         <span th:text="${param.base_code}"></span>
@@ -31,6 +39,8 @@
   <h5> Interested into the service of Western Union?</h5>
   <a href="#" th:href="@{https://www.westernunion.com/}" th:target="_blank">click here</a>
 
+        </div>
+    </div>
 </div>
 </body>
 </html>
