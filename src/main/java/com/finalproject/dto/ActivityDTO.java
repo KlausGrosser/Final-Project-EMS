@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 /**
  * Data transfer object to move activity data from controller to service
  *
- * @author Yurii Matora
  * @see Activity
  */
 @Getter

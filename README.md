@@ -1,13 +1,28 @@
-# Time-Tracker
+# Employee Management System
 ## Task
-Система Time-Tracking. Администратор закрепляет за пользователем
-Активность. У пользователя может быть одна или несколько Активностей.
-Пользователь отмечает кол-во затраченного времени на каждую активность.
-Пользователь может отправить запрос на добавление/удаление
-Активности.
-## Installation
-Clone project from this repository `git clone https://github.com/Yurwar/time-tracker-spring.git`
+## Objectives
+effective employee management system should include key features,
+such as time and attendance management (e.g., time tracking by way of employee
+timesheets), absence and leave management (e.g., time-off requests).
 
-Go to **../src/main/resources/application.properties** and change properties on yours
-## Run application
-Go to project root folder and execute in terminal `mvn spring-boot:run`
+
+## Features & Capabilities:
+1. Company and department Creation
+- Super Admin will create a company with departments and initial employees (supervisors)
+- Each department should have at least one employee ( the supervisor )
+
+2. Employee registration and profile creation
+- Every new employee will be added by the HR to the system.
+- HR will assign the employee to a department.
+- And email will be sent to the employee includes (username + password)
+- The first sign in the employee will be requested to :
+    - Change the password
+    - Create a profile
+3. Time & Attendance Management
+- Employee can easily check in / check out
+- Time should be calculated and recorded
+-  send an email to the supervisor to unusual absenteeism levels of a specific employee
+
+
+
+
