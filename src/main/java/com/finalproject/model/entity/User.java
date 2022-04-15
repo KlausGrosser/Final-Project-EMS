@@ -87,6 +87,8 @@ public class User implements UserDetails {
     @OneToOne
     private Attendance lastAttendance;
 
+    private String supervisorName;
+
     public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities, Department department) {
         this.id = id;
         this.firstName = firstName;

@@ -3,6 +3,7 @@ package com.finalproject.util.email;
 
 import com.finalproject.dto.RegistrationUserDTO;
 import com.finalproject.model.entity.User;
+import com.finalproject.model.service.AttendanceService;
 import com.finalproject.model.service.UserService;
 import com.finalproject.util.token.ConfirmationToken;
 import com.finalproject.util.token.ConfirmationTokenService;
@@ -12,12 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +32,7 @@ public class EmailService implements EmailSender{
     private final EmailTemplateEngine emailTemplateEngine;
     private final ConfirmationTokenService confirmationTokenService;
     private final UserService userService;
+    private final AttendanceService attendanceService;
 
     @Override
     @Async
@@ -47,6 +51,16 @@ public class EmailService implements EmailSender{
             LOGGER.error("failed to send email", e);
             throw new IllegalStateException("failed to send email");
         }
+    }
+
+    @Scheduled(cron="10 2 * * * MON-FRI")
+    public void sendWarningToAbsentEmployees(){
+        this.sendEmailToMultipleAddresses(
+                attendanceService.getEmailsFromAbsentEmployees(),
+                emailTemplateEngine.buildAbsentEmployeeWarningEmail(),
+                "Unusual absenteeism"
+        );
+
     }
 
     public void createNewUserAndSendRegistrationMail(RegistrationUserDTO user) {
@@ -101,5 +115,30 @@ public class EmailService implements EmailSender{
 //        confirmationToken.getUser().setEnabled(true);
         userService.save(confirmationToken.getUser());
         return "confirmed";
+    }
+
+    public void sendEmailToMultipleAddresses(List<String> emailAddresses, String emailBody, String subject){
+        String[] addresses = emailAddresses.toArray(new String[0]);
+
+        if(!emailAddresses.isEmpty()){
+            try{
+                MimeMessage mimeMessage = mailSender.createMimeMessage();
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, "utf-8");
+                helper.setText(emailBody, true);
+                helper.setTo(addresses);
+                helper.setSubject(subject);
+                helper.setFrom("emsdevtestmail@gmail.com");
+                mailSender.send(mimeMessage);
+
+            } catch (MessagingException e){
+                LOGGER.error("failed to send email", e);
+                throw new IllegalStateException("failed to send email");
+            }
+        }
+
+
+
+
     }
 }
