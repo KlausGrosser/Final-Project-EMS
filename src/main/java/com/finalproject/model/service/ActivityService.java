@@ -19,7 +19,6 @@ import java.util.Set;
 /**
  * Service with business logic for managing activities
  *
- * @author Yurii Matora
  */
 @Service
 @Log4j2

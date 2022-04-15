@@ -21,7 +21,6 @@ import javax.validation.Valid;
 
 /**
  * Controller that react on activity related requests
- *
  * @see Activity
  */
 @Log4j2

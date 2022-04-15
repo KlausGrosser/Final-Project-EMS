@@ -29,7 +29,6 @@ import java.util.Objects;
 /**
  * Service with business logic for managing users
  *
- * @author Yurii Matora
  */
 @Log4j2
 @Service
@@ -166,4 +165,10 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
     }
+
+    /*   //Get employee by keyword
+   public List<User> findByKeyword(String keyword) {
+       return userRepository.findByKeyword(keyword);
+   }*/
+
 }
