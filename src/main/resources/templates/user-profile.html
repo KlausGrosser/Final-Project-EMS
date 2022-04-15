@@ -13,14 +13,21 @@
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 <div class="container">
+    <div class="card-header">
+        <h1 class="display-4">
+            <span th:text="#{users.profile.welcome}"></span>
+            <span th:text="${user.firstName}"></span>
+        </h1>
+        <hr>
+    </div>
+    <div>
+        <form action="/user/profileUpdate" method="get">
+            <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
+                Update
+            </button>
+        </form>
+    </div>
     <div class="card">
-        <div class="card-header">
-            <h1 class="display-4">
-                <span th:text="#{users.profile.welcome}"></span>
-                <span th:text="${user.firstName}"></span>
-            </h1>
-            <hr>
-        </div>
         <div class="card-body">
             <div class="card-text">
                 <span th:text="#{users.profile.first_name}">First name: </span>
@@ -35,6 +42,24 @@
             <div class="card-text">
                 <span th:text="#{users.profile.username}">Username: </span>
                 <span th:text="${user.username}"></span>
+            </div>
+            <hr>
+            <hr>
+            <div class="card-text">
+                <span th:text="#{users.profile.department}">Department: </span>
+                <span th:text="${user.department}"></span>
+            </div>
+            <hr>
+            <hr>
+            <div class="card-text">
+                <span th:text="#{users.profile.address}">Address: </span>
+                <span th:text="${user.address}"></span>
+            </div>
+            <hr>
+            <hr>
+            <div class="card-text">
+                <span th:text="#{users.profile.telephone}">Phone number: </span>
+                <span th:text="${user.telephone}"></span>
             </div>
             <hr>
             <div class="card-text">
