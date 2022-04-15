@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -69,12 +70,24 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<ActivityRequest> activityRequests;
 
-
     @OneToMany
     @ToString.Exclude
-    List<WorkHours> workHours;
+    private List<WorkHours> workHours;
 
-    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities) {
+    @Enumerated(EnumType.STRING)
+    private Department department;
+
+    private String address;
+
+    private int telephone;
+
+    @OneToMany
+    private List<Attendance> attendances;
+
+    @OneToOne
+    private Attendance lastAttendance;
+
+    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -83,6 +96,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
         this.firstLogin = firstLogin;
         this.authorities = authorities;
+        this.department = department;
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.finalproject.model.service;
 
+import com.finalproject.model.entity.Attendance;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.entity.WorkHours;
+import com.finalproject.model.repository.AttendanceRepository;
 import com.finalproject.model.repository.WorkHoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -20,11 +20,13 @@ public class WorkHoursService {
 
     private final UserService userService;
     private final WorkHoursRepository workHoursRepository;
+    private final AttendanceRepository attendanceRepository;
 
     @Autowired
-    public WorkHoursService(UserService userService, WorkHoursRepository workHoursRepository) {
+    public WorkHoursService(UserService userService, WorkHoursRepository workHoursRepository, AttendanceRepository attendanceRepository) {
         this.userService = userService;
         this.workHoursRepository = workHoursRepository;
+        this.attendanceRepository = attendanceRepository;
     }
 
     //Format the date and time
@@ -33,7 +35,7 @@ public class WorkHoursService {
 
 
     public boolean isCurrentWorkHourOnCurrentDate(){
-        User employee = getCurrentEmployee();
+        User employee = userService.getCurrentUser();
         WorkHours workHours = null;
         int comparison= -1;
         if(!employee.getWorkHours().isEmpty()){
@@ -53,17 +55,18 @@ public class WorkHoursService {
 
     }
 
-
     public String start() {
-        User employee = getCurrentEmployee();
+        User employee = userService.getCurrentUser();
         WorkHours workHours = null;
+        Attendance attendance = new Attendance(LocalDate.now(), employee);
 
-        if(employee.getWorkHours().isEmpty()){
+        if(employee.getWorkHours().isEmpty() || !isCurrentWorkHourOnCurrentDate()){
             workHours = new WorkHours();
-        }else if(!isCurrentWorkHourOnCurrentDate()){
-            workHours = new WorkHours();
-        }
-        else{
+            employee.getAttendances().add(attendance);
+            employee.setLastAttendance(attendance);
+            attendanceRepository.save(attendance);
+            userService.save(employee);
+        }else{
             workHours = findCurrentWorkHours(employee);
         }
         String result = "";
@@ -88,7 +91,7 @@ public class WorkHoursService {
 
     public String stop() {
         //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User employee = getCurrentEmployee();
+        User employee = userService.getCurrentUser();
         WorkHours workHours = findCurrentWorkHours(employee);
         String result = "";
 
@@ -119,7 +122,7 @@ public class WorkHoursService {
     }
 
     public String getTotalWorkedTime() {
-        User employee = getCurrentEmployee();
+        User employee = userService.getCurrentUser();
         WorkHours workHours = findCurrentWorkHours(employee);
         if(workHours!=null){
             if(workHours.getEndTime() != null){
@@ -175,11 +178,6 @@ public class WorkHoursService {
             return null;
         }
 
-    }
-
-    public User getCurrentEmployee(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userService.findByUsername(auth.getName());
     }
 
     public Duration getTotalTimeWorked(WorkHours workHours) {

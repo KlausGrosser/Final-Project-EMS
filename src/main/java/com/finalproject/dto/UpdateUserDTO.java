@@ -1,6 +1,7 @@
 package com.finalproject.dto;
 
 import com.finalproject.model.entity.Authority;
+import com.finalproject.model.entity.Department;
 import com.finalproject.model.entity.User;
 import lombok.Data;
 
@@ -34,4 +35,6 @@ public class UpdateUserDTO {
 
     @Size(min = 1, message = "{validation.user.authorities.size}")
     private Set<Authority> authorities;
+
+    private Department department;
 }

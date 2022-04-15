@@ -1,5 +1,6 @@
 package com.finalproject.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class WorkHours {
 
@@ -36,30 +38,6 @@ public class WorkHours {
     private boolean currentlyWorking;
 
     @ManyToOne
-    //@JoinColumn
     private User employee;
-
-    public WorkHours(LocalDate currentDay, LocalDateTime startTime, LocalDateTime endTime, Duration timeWorked, Duration totalTimeWorked, List<Duration> workedTimes, List<LocalDateTime> startTimes, List<LocalDateTime> stopTimes, boolean currentlyWorking, User employee) {
-        this.currentDay = currentDay;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.timeWorked = timeWorked;
-        this.totalTimeWorked = totalTimeWorked;
-        this.workedTimes = workedTimes;
-        this.startTimes = startTimes;
-        this.stopTimes = stopTimes;
-        this.currentlyWorking = currentlyWorking;
-        this.employee = employee;
-    }
-
-    public WorkHours(LocalDateTime startTime, LocalDateTime endTime, Duration timeWorked, Duration totalTimeWorked, List<Duration> workedTimes, boolean currentlyWorking, User employee) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.timeWorked = timeWorked;
-        this.totalTimeWorked = totalTimeWorked;
-        this.workedTimes = workedTimes;
-        this.currentlyWorking = currentlyWorking;
-        this.employee = employee;
-    }
 
 }

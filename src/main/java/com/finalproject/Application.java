@@ -1,5 +1,6 @@
 package com.finalproject;
 
+import com.finalproject.model.entity.Department;
 import com.finalproject.model.repository.UserRepository;
 import com.finalproject.model.service.UserService;
 import com.finalproject.model.entity.Authority;
@@ -21,6 +22,7 @@ import java.util.Set;
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        //checkAbcences;
     }
 
     @Bean
@@ -45,39 +47,54 @@ public class Application {
             User u1 = new User(
                     1L,
                     "Rachel",
-                    "Adams",
-                    "test@gmail.com",
+                    "Green",
+                    "owner@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    superadminAuthorities
-
+                    superadminAuthorities,
+                    Department.HUMAN_RESOURCES
             );
             userRepository.save(u1);
 
             User u2 = new User(
                     2L,
-                    "John",
-                    "Doe",
-                    "test2@gmail.com",
+                    "Monica",
+                    "Geller",
+                    "supervisor1@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    adminAuthorities
+                    adminAuthorities,
+                    Department.FINANCE
             );
             userRepository.save(u2);
 
             User u3 = new User(
                     3L,
                     "Joey",
-                    "Tribiani",
-                    "test3@gmail.com",
+                    "Tribbiani",
+                    "supervisor2@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    userAuthorities
+                    adminAuthorities,
+                    Department.SALES
             );
             userRepository.save(u3);
+
+            User u4 = new User(
+                    4L,
+                    "Chandler",
+                    "Bing",
+                    "supervisor4@gmail.com",
+                    passwordEncoder.encode("test"),
+                    true,
+                    false,
+                    adminAuthorities,
+                    Department.TECH
+            );
+            userRepository.save(u4);
         };
     }
 }
