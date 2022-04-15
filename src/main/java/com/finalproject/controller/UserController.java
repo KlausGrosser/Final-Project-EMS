@@ -27,7 +27,6 @@ import javax.validation.Valid;
 
 /**
  * Controller that react on user related requests
- *
  * @see Activity
  */
 @Controller

@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 /**
  * Data transfer object to transport user data from registration controller to service
  *
- * @author Yurii Matora
  * @see User
  */
 @Getter

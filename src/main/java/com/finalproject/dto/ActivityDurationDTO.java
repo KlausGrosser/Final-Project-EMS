@@ -9,7 +9,6 @@ import javax.validation.constraints.PositiveOrZero;
 /**
  * Data transfer object to transport activity duration data from controller to service
  *
- * @author Yurii Matora
  * @see Activity
  */
 @Data
