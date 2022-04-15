@@ -48,6 +48,19 @@ public class UserController {
         return "users";
     }
 
+/*    @GetMapping("/users")
+    public String getListOfUsers(Model model, String keyword,
+                                 @PageableDefault(size = 15,
+                                         sort = {"lastName", "firstName"}) Pageable pageable) {
+        if (keyword != null){
+            model.addAttribute("users", userService.findByKeyword(keyword));
+        }
+        else {
+            model.addAttribute("users", userService.findAllUsersPageable(pageable));
+        }
+        return "users";
+    }*/
+
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
