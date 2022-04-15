@@ -25,20 +25,15 @@ public class LeaveService {
         return leaveRepository.findAll(pageable);
     }
 
-    public Leave createLeave(LeaveDTO leaveDTO) {
-        Leave leave = Leave
-                .builder()
+    public void createLeave(LeaveDTO leaveDTO) {
+        leaveRepository.save(Leave.builder()
                 .description(leaveDTO.getDescription())
                 .leaveReason(leaveDTO.getLeaveReason())
                 .startTime(leaveDTO.getStartTime())
                 .endTime(leaveDTO.getEndTime())
                 .leaveStatus(LeaveStatus.PENDING)
-                .build();
+                .build());
 
-            leaveRepository.save(leave);
-            log.info("New leave " + leave);
-
-        return leave;
     }
 
     public Leave findLeaveById(long leaveId) {

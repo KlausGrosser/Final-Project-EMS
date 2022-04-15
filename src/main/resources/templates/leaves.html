@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
-    <meta charset="UTF-8">
-    <title>All users</title>
+    <meta charset="utf-8">
+    <title>EMS</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div th:replace="~{fragments/navbar::navbar}"></div>
-
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -29,7 +29,7 @@
                 <div class="col-md-6" th:each="leave : ${leavePage}">
                     <div class="card mb-3 shadow-sm">
                         <div class="card-body">
-                            <p><span th:text="${leave.description}">Description:</span></p>
+                            <p><span th:text="#{leave.check}">Check your leave before requesting it:</span></p>
                         </div>
                         <div class="card-footer">
                             <p>
@@ -41,16 +41,22 @@
                                 <span th:text="${leave.leaveReason}"></span>
                             </p>
                             <p>
+                                <span th:text="#{leaves.leave.description}">Description: </span>
+                                <span th:text="${leave.description}"></span>
+                            </p>
+                            <p>
                                 <span th:text="#{leaves.leave.start_time}">Start time: </span>
-                                <span th:text="${#temporals.format(leave.getStartTime(), 'dd.MM.yyyy')}"></span>
+                                <span th:text="${leave.startTime}"></span>
+
                             </p>
                             <p>
                                 <span th:text="#{leaves.leave.end_time}">End time: </span>
-                                <span th:text="${#temporals.format(leave.getEndTime(), 'dd.MM.yyyy')}"></span>
+                                <span th:text="${leave.endTime}"></span>
+
                             </p>
                             <p>
                                 <span th:text="#{leaves.leave.duration}">Duration: </span>
-                                <span th:text="${leave.duration?.toDaysPart()}"></span>
+                                <span th:text="${leave.getDuration()}"></span>
                                 <span th:text="#{leaves.leave.duration.days}">days</span>
                             </p>
                             <p>

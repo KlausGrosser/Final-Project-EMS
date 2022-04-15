@@ -56,11 +56,11 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/leaves" th:text="#{link.all_leaves}">All leaves</a>
-                    <a class="dropdown-item" href="/leaves/add" sec:authorize="hasAuthority('USER')"
+                    <a class="dropdown-item" href="/leaves/add"
                        th:text="#{link.add_leave}">
                         Add leave
                     </a>
-                    <a class="dropdown-item" href="/leaves/request" sec:authorize="hasAuthority('USER')"
+                    <a class="dropdown-item" href="/leaves"
                        th:text="#{link.all_leaves_requests}">
                         All leaves requests
                     </a>

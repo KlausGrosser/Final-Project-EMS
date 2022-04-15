@@ -43,13 +43,13 @@ public class LeaveController {
         model.addAttribute("reasons", LeaveReason.values());
         return "add-leave";
     }
-
-
-    @GetMapping("/leaves/delete/{id}")
-    public String deleteLeave(@PathVariable("id") long leaveId) {
-        leaveService.deleteLeave(leaveId);
-        return "redirect:/leaves";
-    }
+//
+//
+//    @GetMapping("/leaves/delete/{id}")
+//    public String deleteLeave(@PathVariable("id") long leaveId) {
+//        leaveService.deleteLeave(leaveId);
+//        return "redirect:/leaves";
+//    }
 
 //    @ModelAttribute("duration")
 //    public LeaveDurationDTO getLeaveDurationDTO() {
@@ -61,47 +61,47 @@ public class LeaveController {
     public String addLeave(@ModelAttribute("leave") @Valid LeaveDTO leaveDTO,
                            BindingResult bindingResult,
                            Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("reasons", LeaveReason.values());
-            return "add-leave";
-        }
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("reasons", LeaveReason.values());
+//            return "add-leave";
+//        }
         leaveService.createLeave(leaveDTO);
-        return "redirect:leaves";
+        return "redirect:/leaves";
     }
 
+//
+//    @PostMapping("/leaves/approve/{id}")
+//    public String approveLeaveRequest(@PathVariable("id") long leaveId) {
+//        Leave leave = leaveService.findLeaveById(leaveId);
+//
+//        if (!leave.getLeaveStatus().equals(LeaveStatus.PENDING)) {
+//            return "redirect:/leaves";
+//        }
+//        leaveService.approveLeaveRequest(leaveId);
+//
+//        return "redirect:leaves";
+//    }
 
-    @PostMapping("/leaves/approve/{id}")
-    public String approveLeaveRequest(@PathVariable("id") long leaveId) {
-        Leave leave = leaveService.findLeaveById(leaveId);
-
-        if (!leave.getLeaveStatus().equals(LeaveStatus.PENDING)) {
-            return "redirect:/leaves";
-        }
-        leaveService.approveLeaveRequest(leaveId);
-
-        return "redirect:leaves";
-    }
-
-    @PostMapping("/leaves/reject/{id}")
-    public String rejectLeaveRequest(@PathVariable("id") long leaveId) {
-        Leave leave = leaveService.findLeaveById(leaveId);
-
-        if (!leave.getLeaveStatus().equals(LeaveStatus.PENDING)) {
-            return "redirect:/leaves";
-        }
-
-        leaveService.rejectLeaveRequest(leaveId);
-
-        return "redirect:leaves";
-    }
-
-
-    //Response Status
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String handleIllegalArgumentException(IllegalArgumentException e) {
-        log.error(e.getMessage());
-        return "error/404";
-    }
+//    @PostMapping("/leaves/reject/{id}")
+//    public String rejectLeaveRequest(@PathVariable("id") long leaveId) {
+//        Leave leave = leaveService.findLeaveById(leaveId);
+//
+//        if (!leave.getLeaveStatus().equals(LeaveStatus.PENDING)) {
+//            return "redirect:/leaves";
+//        }
+//
+//        leaveService.rejectLeaveRequest(leaveId);
+//
+//        return "redirect:leaves";
+//    }
+//
+//
+//    //Response Status
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public String handleIllegalArgumentException(IllegalArgumentException e) {
+//        log.error(e.getMessage());
+//        return "error/404";
+//    }
 
 }

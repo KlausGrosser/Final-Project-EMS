@@ -36,11 +36,11 @@ public class Leave {
     private LeaveStatus leaveStatus;
 
     @Column(name = "start_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+   // @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
 
     @Column(name = "end_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     @Column(name = "duration")
