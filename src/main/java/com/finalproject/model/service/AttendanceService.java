@@ -3,6 +3,7 @@ package com.finalproject.model.service;
 import com.finalproject.model.entity.Attendance;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.repository.AttendanceRepository;
+import com.finalproject.util.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,29 @@ import java.util.List;
 public class AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
+    private final EmailService emailService;
 
     @Autowired
-    public AttendanceService(AttendanceRepository attendanceRepository) {
+    public AttendanceService(AttendanceRepository attendanceRepository, EmailService emailService) {
         this.attendanceRepository = attendanceRepository;
+        this.emailService = emailService;
+    }
+
+    public void sendMessageToManager(){
+
+    }
+
+
+
+    public List<String> getEmailsFromAbsentEmployees(){
+        List<String> emails = new ArrayList<>();
+        List<User> absentEmployees = this.getEmployeesWithUnusualAbsenteeism();
+
+        for(User user : absentEmployees){
+            emails.add(user.getUsername());
+        }
+
+        return emails;
     }
 
     public List<User> getEmployeesWithUnusualAbsenteeism(){

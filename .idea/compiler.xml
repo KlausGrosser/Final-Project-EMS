@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="time-tracker-spring" />
         <module name="FinalProjectEMS" />
+        <module name="KAL_EMS" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,7 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="FinalProjectEMS" options="-parameters" />
-      <module name="time-tracker-spring" options="-parameters" />
+      <module name="KAL_EMS" options="-parameters" />
     </option>
   </component>
 </project>
