@@ -1,6 +1,7 @@
 package com.finalproject.config;
 
 import com.finalproject.model.service.UserService;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +14,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * Configure paths allowed for different users authorities and configure user authentication method
  */
+
 @Configuration
 @EnableWebSecurity
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
     private final AccessDeniedHandler accessDeniedHandler;
@@ -28,7 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
+
+        @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userService)
