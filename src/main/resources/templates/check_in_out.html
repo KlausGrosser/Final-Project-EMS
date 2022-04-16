@@ -40,13 +40,11 @@
 
             <div class="card-text">
                 <span th:text="#{checkIn.total}">TotalTime: </span>
-                <form th:action="@{/check_in_out/getTime}"  method="post">
+                <form th:action="@{/check_in_out/getTime}"  method="get">
                     <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> Total Time</button>
                 </form>
             </div>
-            <hr>
 
-        </div>
     </div>
         </div>
 </body>
