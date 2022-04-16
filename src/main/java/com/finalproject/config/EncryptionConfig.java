@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * Contains beans that are responsible for encryption
  */
+
 @Configuration
 public class EncryptionConfig {
     /**

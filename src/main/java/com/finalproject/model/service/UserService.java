@@ -166,9 +166,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    /*   //Get employee by keyword
-   public List<User> findByKeyword(String keyword) {
-       return userRepository.findByKeyword(keyword);
-   }*/
+       //Get employee by keyword
+   public Page<User> findByKeyword(Pageable pageable, String keyword) {
+       return userRepository.findByKeyword(keyword, pageable);
+   }
 
 }

@@ -1,6 +1,8 @@
 package com.finalproject.model.repository;
 
 import com.finalproject.model.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,10 +31,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     int enableUser(String email);
 
-  /*  //Optional<User> findByKeyword(String keyword);
-    @Query(value= "SELECT a FROM user a WHERE a.firstname LIKE %:keyword% OR a.lastname LIKE %:keyword%", nativeQuery=true)
-    List<User> findByKeyword(@Param("keyword") String keyword);
-*/
+
+    @Query(value="SELECT e FROM User e WHERE e.firstName LIKE %:keyword% OR e.lastName LIKE %:keyword%")
+    Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 }
+
 
