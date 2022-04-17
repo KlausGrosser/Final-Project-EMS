@@ -10,6 +10,7 @@ import com.finalproject.model.service.UserService;
 import com.finalproject.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +28,6 @@ import javax.validation.Valid;
 
 /**
  * Controller that react on user related requests
- *
  * @see Activity
  */
 @Controller
@@ -42,26 +42,28 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/users")
+/*    @GetMapping("/users")
     public String getListOfUsers(Model model,
                                  @PageableDefault(size = 15,
                                          sort = {"lastName", "firstName"}) Pageable pageable) {
         model.addAttribute("users", userService.findAllUsersPageable(pageable));
         return "users";
-    }
+    }*/
 
-/*    @GetMapping("/users")
+        @GetMapping("/users")
     public String getListOfUsers(Model model, String keyword,
                                  @PageableDefault(size = 15,
                                          sort = {"lastName", "firstName"}) Pageable pageable) {
         if (keyword != null){
-            model.addAttribute("users", userService.findByKeyword(keyword));
+            model.addAttribute("users", userService.findByKeyword(pageable, keyword));
         }
         else {
             model.addAttribute("users", userService.findAllUsersPageable(pageable));
         }
         return "users";
-    }*/
+    }
+
+
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {

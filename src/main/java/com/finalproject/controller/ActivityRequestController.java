@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Controller that react on activity requests related requests
- *
  * @see Activity
  */
 @Controller

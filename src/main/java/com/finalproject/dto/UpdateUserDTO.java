@@ -12,7 +12,6 @@ import java.util.Set;
 /**
  * Data transfer object to transport user data from update method in controller to service
  *
- * @author Yurii Matora
  * @see User
  */
 @Data
