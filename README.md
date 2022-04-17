@@ -2,7 +2,7 @@
 ## Task
 ## Objectives
 effective employee management system should include key features,
-such as time and attendance management (e.g., time tracking by way of employee
+such as time and absence management (e.g., time tracking by way of employee
 timesheets), absence and leave management (e.g., time-off requests).
 
 
