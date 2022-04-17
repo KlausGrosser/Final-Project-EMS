@@ -1,9 +1,9 @@
 package com.finalproject.model.repository;
 
-import com.finalproject.model.entity.Attendance;
+import com.finalproject.model.entity.Absence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
+public interface AbsenceRepository extends JpaRepository<Absence, Long> {
 }

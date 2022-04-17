@@ -19,6 +19,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
+    Optional<User> findByFullName(String fullName);
 
 
     @Transactional
@@ -32,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int enableUser(String email);
 
 
-    @Query(value="SELECT e FROM User e WHERE e.firstName LIKE %:keyword% OR e.lastName LIKE %:keyword%")
+    @Query(value="SELECT e FROM User e WHERE e.firstName LIKE %:keyword% OR e.lastName LIKE %:keyword% OR e.username LIKE %:keyword% OR e.department LIKE %:keyword%")
     Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 }

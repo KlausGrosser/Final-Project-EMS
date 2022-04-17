@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 @Entity
 @Table(name = "absences")
-public class Attendance {
+public class Absence {
 
     @Id
     @SequenceGenerator(name = "absenceIdSeq", sequenceName = "absence_id_seq", allocationSize = 0)
@@ -21,13 +21,13 @@ public class Attendance {
     @Column(name = "id")
     private Long id;
 
-    private LocalDate attendedDay;
+    private LocalDate absenceDay;
 
     @ManyToOne
     private User employee;
 
-    public Attendance(LocalDate attendedDay, User employee) {
-        this.attendedDay = attendedDay;
+    public Absence(LocalDate absenceDay, User employee) {
+        this.absenceDay = absenceDay;
         this.employee = employee;
     }
 }
