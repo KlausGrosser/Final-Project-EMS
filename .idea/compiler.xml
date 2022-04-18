@@ -11,9 +11,6 @@
         <module name="KAL_EMS" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ems-spring" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
