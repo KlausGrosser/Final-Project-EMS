@@ -3,6 +3,7 @@ package com.finalproject.controller;
 import com.finalproject.model.service.UserService;
 import com.finalproject.model.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,8 @@ public class ShiftController {
     }
 
 
+
+
     //PostMappings
     @PostMapping(path = "/check_in")
     public String startWorking() {
@@ -41,4 +44,6 @@ public class ShiftController {
         return shiftService.stop();
     }
 
+
 }
+
