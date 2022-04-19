@@ -16,12 +16,12 @@ import java.util.List;
 public class AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
-    private final EmailService emailService;
+   // private final EmailService emailService;
 
     @Autowired
-    public AttendanceService(AttendanceRepository attendanceRepository, EmailService emailService) {
+    public AttendanceService(AttendanceRepository attendanceRepository) {
         this.attendanceRepository = attendanceRepository;
-        this.emailService = emailService;
+       // this.emailService = emailService;
     }
 
     public void sendMessageToManager(){

@@ -58,13 +58,6 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Activity> activities;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "leave_id")
-    )
-    @ToString.Exclude
-    private List<Leave> leaves;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     @ToString.Exclude
@@ -73,6 +66,10 @@ public class User implements UserDetails {
     @OneToMany
     @ToString.Exclude
     private List<WorkHours> workHours;
+
+    @OneToMany
+    @ToString.Exclude
+    private List<Leave> leaves;
 
     @Enumerated(EnumType.STRING)
     private Department department;

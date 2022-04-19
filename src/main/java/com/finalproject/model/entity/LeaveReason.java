@@ -12,7 +12,7 @@ public enum LeaveReason {
     FAMILY,
     SICK,
     EMERGENCY,
-    OTHER;
+    OTHER
 
 }
 

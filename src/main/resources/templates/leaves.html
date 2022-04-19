@@ -59,16 +59,11 @@
                                 <span th:text="${leave.getDuration()}"></span>
                                 <span th:text="#{leaves.leave.duration.days}">days</span>
                             </p>
-                            <p>
-                                <span th:text="#{leaves.leave.users}"></span>
-                                <span th:each="user : ${leave.users}">
-                                    <span th:text="${user.username}"></span>
-                                </span>
-                            </p>
+
+
                             <div class="d-flex justify-content-between align-items-center">
                                 <div aria-label="btn-group" class="btn-group" role="group">
                                     <a class="btn btn-sm btn-secondary"
-                                       sec:authorize="hasAuthority('ADMIN')"
                                        th:href="@{/leaves/delete/{id}(id=${leave.id})}"
                                        th:text="#{leaves.leave.button.cancel}">
                                         Cancel

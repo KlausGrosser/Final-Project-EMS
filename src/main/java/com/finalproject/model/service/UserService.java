@@ -144,6 +144,7 @@ public class UserService implements UserDetailsService {
         return this.findByUsername(auth.getName());
     }
 
+
     public void changePassword(User user, String newPassword) {
         String encodedPassword = passwordEncoder.encode(newPassword);
 
