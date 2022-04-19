@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="FinalProjectEMS" />
+        <module name="JavaFinalProject2" />
         <module name="KAL_EMS" />
         <module name="EMSFinalProject" />
       </profile>
@@ -17,6 +18,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="EMSFinalProject" options="-parameters" />
       <module name="FinalProjectEMS" options="-parameters" />
+      <module name="JavaFinalProject2" options="-parameters" />
       <module name="KAL_EMS" options="-parameters" />
     </option>
   </component>

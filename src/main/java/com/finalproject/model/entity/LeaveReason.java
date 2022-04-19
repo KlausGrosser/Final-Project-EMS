@@ -7,23 +7,13 @@ package com.finalproject.model.entity;
  */
 public enum LeaveReason {
 
-    HOLIDAYS("Holidays"),
-    PERSONAL("Personal"),
-    FAMILY("Family"),
-    SICK("Sick"),
-    EMERGENCY("Emergency"),
-    OTHER("Other");
+    HOLIDAYS,
+    PERSONAL,
+    FAMILY,
+    SICK,
+    EMERGENCY,
+    OTHER
 
-    private final String simpleName;
-
-    LeaveReason(String simpleName) {
-        this.simpleName = simpleName;
-    }
-
-    @Override
-    public String toString() {
-        return simpleName;
-    }
 }
 
 

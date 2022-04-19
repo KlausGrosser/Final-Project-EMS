@@ -21,42 +21,42 @@
             <div class="row">
                 <div class="col-md-6">
                     <form method="post" th:action="@{/leaves/add}" th:object="${leave}">
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-form-label" for="reason"
-                                       th:text="#{leaves.add.reason}">
-                                    Leave Reason
+                        <div class="form-row">
+                            <div class="col-md-6 mb-6">
+                                <label class="col-form-label" for="reason">
+                                    <span th:text="#{leaves.add.reason}"></span>
+                                    <select th:field="*{leaveReason}" class="form-control" id="reason" required>
+                                        <option value="">Select reason</option>
+                                        <option th:each="leaveReason : ${T(com.finalproject.model.entity.LeaveReason).values()}"
+                                                th:value="${leaveReason}"
+                                                th:text="${leaveReason}">leaveReason
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('leaveReason')}" th:errors="*{leaveReason}"
+                                          class="text-danger"></span>
                                 </label>
-                                <select th:field="*{leaveReason}" class="form-control" id="reason">
-                                    <option th:each="leaveReason : ${reasons}"
-                                            th:text="${leaveReason}"
-                                            th:value="${leaveReason.name()}">
-                                    </option>
-                                </select>
-                                <span th:if="${#fields.hasErrors('leaveReason')}" th:errors="*{leaveReason}"
-                                      class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label class="col-form-label" for="description"
-                                       th:text="#{leaves.add.description.label}">Leave description</label>
-                                <textarea id="description" rows="4"
-                                          th:field="*{description}"
-                                          th:placeholder="#{leaves.add.description.placeholder}"
-                                          class="form-control"></textarea>
-                                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
-                                      class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-12">
-                            <label for="start">Please select your start date: </label>
-                            <input type="date"  class="form-control"
-                                   th:value="${#calendars.format(leave.getStartTime())}" th:name="startTime" id="start"/>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label" for="description"
+                                   th:text="#{leaves.add.description.label}">Leave description
+                            </label>
+                            <textarea id="description" rows="4"
+                                      th:field="*{description}"
+                                      th:placeholder="#{leaves.add.description.placeholder}"
+                                      class="form-control">
+                                </textarea>
+                        </div>
 
-                            <br>
-                            <label for="end">Please select your end date: </label>
-                            <input type="date"  class="form-control"
-                                   th:value="${#calendars.format(leave.getEndTime())}" th:name="endTime" id="end"/>
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label" for="startTime">Start time:</label>
+                            <input type="date" th:field="*{startTime}" placeholder="yyyy-MM-dd" id="startTime" required>
+                        </div>
 
-                            </div>
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label" for="endTime">End time:</label>
+                            <input type="date" th:field="*{endTime}" placeholder="yyyy-MM-dd"  id="endTime" required>
+                        </div>
                         <div class="row">
                             <div class="col-md-6 mt-1">
                                 <input class="btn btn-primary" th:value="#{leaves.add.button.submit}" type="submit">

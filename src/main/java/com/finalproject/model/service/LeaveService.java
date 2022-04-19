@@ -8,38 +8,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.Set;
+
+
 
 @Service
 @Log4j2
 public class LeaveService {
 
     private final LeaveRepository leaveRepository;
+    private final UserService userService;
 
     @Autowired
-    public LeaveService(LeaveRepository leaveRepository) {
+    public LeaveService(LeaveRepository leaveRepository, UserService userService) {
         this.leaveRepository = leaveRepository;
+        this.userService = userService;
+
     }
 
     public Page<Leave> findAllLeavesPageable(Pageable pageable) {
         return leaveRepository.findAll(pageable);
     }
 
-    public Leave createLeave(LeaveDTO leaveDTO) {
+    public void createLeave(LeaveDTO leaveDTO) {
+
+        User employee = userService.getCurrentUser();
+
         Leave leave = Leave
                 .builder()
-                .description(leaveDTO.getDescription())
                 .leaveReason(leaveDTO.getLeaveReason())
+                .description(leaveDTO.getDescription())
                 .startTime(leaveDTO.getStartTime())
                 .endTime(leaveDTO.getEndTime())
                 .leaveStatus(LeaveStatus.PENDING)
+                .username(employee)
                 .build();
 
-            leaveRepository.save(leave);
-            log.info("New leave " + leave);
+        leaveRepository.save(leave);
 
-        return leave;
     }
+
 
     public Leave findLeaveById(long leaveId) {
         return leaveRepository.findById(leaveId).orElseThrow(() ->
@@ -47,14 +54,14 @@ public class LeaveService {
     }
 
 
-    public void deleteLeave(long id) {
-        Leave leave = findLeaveById(id);
-        Set<User> users = leave.getUsers();
-        for (User user : users) {
-            user.getLeaves().remove(leave);
-        }
-        leaveRepository.delete(leave);
-    }
+//    public void deleteLeave(long id) {
+//        Leave leave = findLeaveById(id);
+//        Set<User> users = leave.getUsers();
+//        for (User user : users) {
+//            user.getLeaves().remove(leave);
+//        }
+//        leaveRepository.delete(leave);
+//    }
 
 
     public void approveLeaveRequest(long leaveId) {
@@ -70,5 +77,14 @@ public class LeaveService {
         leaveRepository.save(leave);
     }
 
+
 }
+
+
+
+
+
+
+
+
 

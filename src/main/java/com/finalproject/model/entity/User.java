@@ -59,13 +59,6 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Activity> activities;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "leave_id")
-    )
-    @ToString.Exclude
-    private List<Leave> leaves;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     @ToString.Exclude
@@ -75,9 +68,12 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Shift> shifts;
 
-    //@Enumerated(EnumType.STRING)
-    //private Department department;
-    private String department;
+    @OneToMany
+    @ToString.Exclude
+    private List<Leave> leaves;
+
+    @Enumerated(EnumType.STRING)
+    private Department department;
 
     private String address;
 
@@ -98,7 +94,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
         this.firstLogin = firstLogin;
         this.authorities = authorities;
-        this.department = department.name();
+        this.department = department;
     }
 
     @Override

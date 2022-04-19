@@ -1,22 +1,14 @@
 package com.finalproject.model.entity;
 
-import com.finalproject.util.converter.DurationConverter;
-import com.finalproject.util.converter.LocalDateTimeConverter;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Set;
+
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"leavesRequests"})
-@ToString(exclude = {"leavesRequests"})
 @Entity
 @Table(name = "leaves")
 public class Leave {
@@ -35,19 +27,16 @@ public class Leave {
     @Enumerated(value = EnumType.STRING)
     private LeaveStatus leaveStatus;
 
-    @Column(name = "start_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startTime;
+    @Column
+    private String startTime;
 
-    @Column(name = "end_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endTime;
+    @Column
+    private String endTime;
 
-    @Column(name = "duration")
-    @Convert(converter = DurationConverter.class)
+    @Column
     private Duration duration;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "leaves", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<User> users;
+    @ManyToOne
+    private User username;
 
 }
