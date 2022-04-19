@@ -1,22 +1,27 @@
 package com.finalproject.controller;
 
+import com.finalproject.dto.CompanyDTO;
+import com.finalproject.model.service.CompanyService;
 import com.finalproject.util.email.EmailService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Controller that gives static pages
  */
 @Controller
 public class PageController implements ErrorController {
-    private final EmailService emailService;
 
-    public PageController(EmailService emailService) {
+    private final EmailService emailService;
+    private final CompanyService companyService;
+
+    public PageController(EmailService emailService, CompanyService companyService) {
         this.emailService = emailService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/index")
@@ -53,4 +58,6 @@ public class PageController implements ErrorController {
         emailService.confirmToken(token);
         return "redirect:/login";
     }
+
+
 }
