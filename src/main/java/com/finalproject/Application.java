@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,8 +35,14 @@ public class Application {
         return (args) -> {
             Set<Authority> superadminAuthorities = new HashSet<Authority>();
             superadminAuthorities.add(Authority.SUPERADMIN);
+            superadminAuthorities.add(Authority.ADMIN_HR);
             superadminAuthorities.add(Authority.ADMIN);
             superadminAuthorities.add(Authority.USER);
+
+            Set<Authority> admin_HRAuthorities = new HashSet<Authority>();
+            admin_HRAuthorities.add(Authority.ADMIN_HR);
+            admin_HRAuthorities.add(Authority.ADMIN);
+            admin_HRAuthorities.add(Authority.USER);
 
             Set<Authority> adminAuthorities = new HashSet<Authority>();
             adminAuthorities.add(Authority.ADMIN);
@@ -46,15 +51,17 @@ public class Application {
             Set<Authority> userAuthorities = new HashSet<Authority>();
             userAuthorities.add(Authority.USER);
 
+
+
             User u1 = new User(
                     1L,
                     "Rachel",
                     "Green",
-                    "owner@gmail.com",
+                    "HRsupervisor@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    superadminAuthorities,
+                    admin_HRAuthorities,
                     Department.HUMAN_RESOURCES
             );
             userRepository.save(u1);
@@ -97,7 +104,36 @@ public class Application {
                     Department.TECH
             );
             userRepository.save(u4);
-        };
-    }
 
+            User u5 = new User(
+                    5L,
+                    "Ross",
+                    "Geller",
+                    "user@gmail.com",
+                    passwordEncoder.encode("test"),
+                    true,
+                    false,
+                    userAuthorities,
+                    Department.TECH
+            );
+            userRepository.save(u5);
+
+            User u6 = new User(
+                    6L,
+                    "Phoebe",
+                    "Buffay",
+                    "super_admin@gmail.com",
+                    passwordEncoder.encode("test"),
+                    true,
+                    false,
+                    superadminAuthorities
+
+            );
+            userRepository.save(u6);
+
+
+        };
+
+    }
 }
+

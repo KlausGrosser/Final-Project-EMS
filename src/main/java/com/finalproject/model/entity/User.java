@@ -72,8 +72,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Leave> leaves;
 
-    @Enumerated(EnumType.STRING)
-    private Department department;
+    private String department;
 
     private String address;
 
@@ -94,8 +93,20 @@ public class User implements UserDetails {
         this.enabled = enabled;
         this.firstLogin = firstLogin;
         this.authorities = authorities;
-        this.department = department;
+        this.department = department.name();
     }
+
+    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.firstLogin = firstLogin;
+        this.authorities = authorities;
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {

@@ -23,6 +23,9 @@
             <li sec:authorize="hasAuthority('ADMIN')" class="nav-item active">
                 <a class="nav-link" th:href="@{/users}" th:text="#{link.all_users}"></a>
             </li>
+            <li sec:authorize="hasAuthority('SUPERADMIN')" class="nav-item active">
+                <a class="nav-link" th:href="@{/companies}" th:text="#{link.all_companies}"></a>
+            </li>
             <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-expanded="false" aria-haspopup="true" th:text="#{link.activities}">
