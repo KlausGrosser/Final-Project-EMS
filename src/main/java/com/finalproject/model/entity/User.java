@@ -6,7 +6,6 @@ import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -33,7 +32,9 @@ public class User implements UserDetails {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "username", nullable = false, unique = true)
+    private String fullName = this.firstName + " " + this.lastName;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -65,7 +66,7 @@ public class User implements UserDetails {
 
     @OneToMany
     @ToString.Exclude
-    private List<WorkHours> workHours;
+    private List<Shift> shifts;
 
     @OneToMany
     @ToString.Exclude
@@ -79,10 +80,8 @@ public class User implements UserDetails {
     private int telephone;
 
     @OneToMany
-    private List<Attendance> attendances;
-
-    @OneToOne
-    private Attendance lastAttendance;
+    @ToString.Exclude
+    private List<Absence> absences;
 
     private String supervisorName;
 

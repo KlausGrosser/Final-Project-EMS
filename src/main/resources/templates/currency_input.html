@@ -13,21 +13,25 @@
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 <div class="container">
-    <hr>
-    <br>
-    <br>
-<h2>Welcome to the Salary Converter</h2>
-    <form action="#" th:action="@{/currency/currency_output}" >
-        <br>
+    <div class="card-header">
+        <h1 class="display-4">
+            <span th:text="#{currency.header}"></span>
+        </h1>
         <hr>
-        <p><h5>Please enter your amount: &emsp; <input th:name="amount" /></h5></p>
-
+    </div>
+    <div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-text">
+    <form action="#" th:action="@{/currency/currency_output}" >
+        <p><h5>Please enter your amount: &emsp; <input th:name="amount"      required/></h5></p>
         <br>
         <hr>
         <form method="post" th:object="${currency}">
 
             <label for="base_code">Choose your base currency: &nbsp;</label>
-            <select     th:name="base_code" id="base_code">
+            <select     th:name="base_code" id="base_code" required>
                 <option value="">Nothing selected</option>
                 <option th:each="currencySelection : ${T(com.finalproject.model.entity.CurrencySelection).values()}"
                         th:value="${currencySelection}"
@@ -38,7 +42,7 @@
             <hr>
 
             <label for="target_code">Choose your target currency: </label>
-            <select     th:name="target_code" id="target_code">
+            <select     th:name="target_code" id="target_code" required>
                 <option value="">Nothing selected</option>
                 <option th:each="currencySelection : ${T(com.finalproject.model.entity.CurrencySelection).values()}"
                         th:value="${currencySelection}"
@@ -49,7 +53,6 @@
             <hr>
 
             <p>
-<!--                <input type="submit" value="Submit" />-->
                 <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
                     Submit
                 </button>

@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
                 .enabled(false)
                 .firstLogin(true)
                 .authorities(Collections.singleton(Authority.USER))
-                .department(userDTO.getDepartment())
+                .department(userDTO.getDepartment().name())
                 .build();
         try {
             userRepository.save(user);
@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
         }
 
         if (Objects.nonNull(userDTO.getDepartment())) {
-            user.setDepartment(userDTO.getDepartment());
+            user.setDepartment(userDTO.getDepartment().name());
         }
 
 
@@ -133,6 +133,11 @@ public class UserService implements UserDetailsService {
     public User findByUsername(String email){
         return userRepository.findByUsername(email)
                 .orElseThrow(()-> new UsernameNotFoundException(email));
+    }
+
+    public User findByFullName(String fullName){
+        return userRepository.findByFullName(fullName)
+                .orElseThrow();
     }
 
     public int enableUser(String email) {
@@ -167,9 +172,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    /*   //Get employee by keyword
-   public List<User> findByKeyword(String keyword) {
-       return userRepository.findByKeyword(keyword);
-   }*/
+       //Get employee by keyword
+   public Page<User> findByKeyword(Pageable pageable, String keyword) {
+       return userRepository.findByKeyword(keyword, pageable);
+   }
 
 }

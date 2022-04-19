@@ -10,14 +10,13 @@
         <module name="FinalProjectEMS" />
         <module name="JavaFinalProject2" />
         <module name="KAL_EMS" />
+        <module name="EMSFinalProject" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ems-spring" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="EMSFinalProject" options="-parameters" />
       <module name="FinalProjectEMS" options="-parameters" />
       <module name="JavaFinalProject2" options="-parameters" />
       <module name="KAL_EMS" options="-parameters" />

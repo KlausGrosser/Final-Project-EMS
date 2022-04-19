@@ -3,7 +3,7 @@ package com.finalproject.util.email;
 
 import com.finalproject.dto.RegistrationUserDTO;
 import com.finalproject.model.entity.User;
-import com.finalproject.model.service.AttendanceService;
+import com.finalproject.model.service.AbsenceService;
 import com.finalproject.model.service.UserService;
 import com.finalproject.util.token.ConfirmationToken;
 import com.finalproject.util.token.ConfirmationTokenService;
@@ -32,7 +32,7 @@ public class EmailService implements EmailSender{
     private final EmailTemplateEngine emailTemplateEngine;
     private final ConfirmationTokenService confirmationTokenService;
     private final UserService userService;
-    private final AttendanceService attendanceService;
+    private final AbsenceService absenceService;
 
     @Override
     @Async
@@ -56,7 +56,7 @@ public class EmailService implements EmailSender{
     @Scheduled(cron="10 2 * * * MON-FRI")
     public void sendWarningToAbsentEmployees(){
         this.sendEmailToMultipleAddresses(
-                attendanceService.getEmailsFromAbsentEmployees(),
+                absenceService.getEmailsFromAbsentEmployees(),
                 emailTemplateEngine.buildAbsentEmployeeWarningEmail(),
                 "Unusual absenteeism"
         );

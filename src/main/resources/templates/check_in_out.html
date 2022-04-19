@@ -11,33 +11,41 @@
 <body>
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 <div class="container">
-    <hr>
-    <br>
-    <br>
-    <section layout:fragment="content">
-        <div class="wrapper">
+    <div class="card-header">
+        <h1 class="display-4">
+            <span th:text="#{checkIn.header}"></span>
+        </h1>
+        <hr>
+    </div>
 
-            <article class = "main">
-                <h3> Please click to start your working hours: </h3>
-
+    <div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-text">
+                <span th:text="#{checkIn.start}">CheckIn: </span>
                 <form th:action="@{/check_in_out/check_in}"  method="post">
                     <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> check-in</button>
                 </form>
+                </div>
+            <hr>
 
-                <h3> Please click to stop your working hours: </h3>
-
-                <form th:action="@{/check_in_out/check_out}" method="post">
+            <div class="card-text">
+                <span th:text="#{checkIn.stop}">CheckOut: </span>
+                <form th:action="@{/check_in_out/check_out}"  method="post">
                     <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> check-out</button>
                 </form>
+            </div>
+            <hr>
 
-                <h3> Please click to see the hours you worked today: </h3>
-
-                <form th:action="@{/check_in_out/getTime}" method="get">
-                    <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> Total time</button>
+            <div class="card-text">
+                <span th:text="#{checkIn.total}">TotalTime: </span>
+                <form th:action="@{/check_in_out/getTime}"  method="get">
+                    <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit"> Total Time</button>
                 </form>
+            </div>
 
-            </article>
-
+    </div>
         </div>
 </body>
 </html>
