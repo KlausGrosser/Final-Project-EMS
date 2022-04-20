@@ -20,6 +20,7 @@
         </h1>
         <hr>
     </div>
+    <br>
     <div>
         <form action="/user/profileUpdate" method="get">
             <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
@@ -44,18 +45,20 @@
                 <span th:text="${user.username}"></span>
             </div>
             <hr>
-            <hr>
             <div class="card-text">
                 <span th:text="#{users.profile.department}">Department: </span>
                 <span th:text="${user.department}"></span>
             </div>
             <hr>
+            <div class="card-text">
+                <span th:text="#{users.profile.supervisor}">Supervisor: </span>
+                <span th:text="${user.supervisorName}"></span>
+            </div>
             <hr>
             <div class="card-text">
                 <span th:text="#{users.profile.address}">Address: </span>
                 <span th:text="${user.address}"></span>
             </div>
-            <hr>
             <hr>
             <div class="card-text">
                 <span th:text="#{users.profile.telephone}">Phone number: </span>

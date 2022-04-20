@@ -5,7 +5,9 @@ import com.finalproject.dto.UpdateUserDTO;
 import com.finalproject.dto.UpdateUserProfileDTO;
 import com.finalproject.model.entity.Activity;
 import com.finalproject.model.entity.Authority;
+import com.finalproject.model.entity.Supervisor;
 import com.finalproject.model.entity.User;
+import com.finalproject.model.repository.SupervisorRepository;
 import com.finalproject.model.repository.UserRepository;
 import com.finalproject.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -36,13 +39,15 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final MessageSource messageSource;
     private final PasswordEncoder passwordEncoder;
+    private final SupervisorRepository supervisorRepository;
 
     public UserService(UserRepository userRepository,
                        MessageSource messageSource,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder, SupervisorRepository supervisorRepository) {
         this.userRepository = userRepository;
         this.messageSource = messageSource;
         this.passwordEncoder = passwordEncoder;
+        this.supervisorRepository = supervisorRepository;
     }
 
     @Override
@@ -65,16 +70,22 @@ public class UserService implements UserDetailsService {
                 .builder()
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())
+                .fullName(userDTO.getFirstName() + " " + userDTO.getLastName())
                 .username(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
-                //.enabled(true)
                 .enabled(false)
                 .firstLogin(true)
                 .authorities(Collections.singleton(Authority.USER))
                 .department(userDTO.getDepartment().name())
+                .supervisorRole(userDTO.isSupervisorRole())
+                .supervisorName(userDTO.getSupervisorName())
                 .build();
         try {
             userRepository.save(user);
+            if(userDTO.isSupervisorRole()){
+                Supervisor supervisor = new Supervisor(user.getId(), user.getFullName(), user.getDepartment());
+                supervisorRepository.save(supervisor);
+            }
             log.info("New user " + user);
 
         } catch (DataIntegrityViolationException e) {
@@ -102,6 +113,7 @@ public class UserService implements UserDetailsService {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setUsername(userDTO.getUsername());
+        user.setSupervisorRole(userDTO.isSupervisorRole());
         if (Objects.nonNull(userDTO.getPassword()) && userDTO.getPassword().length() > 0) {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         }
@@ -114,9 +126,16 @@ public class UserService implements UserDetailsService {
             user.setDepartment(userDTO.getDepartment().name());
         }
 
+        if (Objects.nonNull(userDTO.getSupervisorName())) {
+            user.setSupervisorName(userDTO.getSupervisorName());
+        }
 
         try {
             userRepository.save(user);
+            if(userDTO.isSupervisorRole()){
+                Supervisor supervisor = new Supervisor(user.getId(), user.getFullName(), user.getDepartment());
+                supervisorRepository.save(supervisor);
+            }
         } catch (DataIntegrityViolationException e) {
             log.error("Login not unique: " + userDTO.getUsername());
             throw new UsernameNotUniqueException(messageSource.getMessage(
@@ -175,5 +194,25 @@ public class UserService implements UserDetailsService {
    public Page<User> findByKeyword(Pageable pageable, String keyword) {
        return userRepository.findByKeyword(keyword, pageable);
    }
+
+   public List<User> getAllEmployees(){
+        return userRepository.findAll();
+   }
+
+    public ArrayList<Supervisor> getAllSupervisors(){
+        return (ArrayList<Supervisor>) supervisorRepository.findAll();
+    }
+
+    public void saveToSupervisorRepository(Supervisor supervisor){
+        this.supervisorRepository.save(supervisor);
+    }
+
+    public void saveAll(List<User> users){
+      userRepository.saveAll(users);
+    }
+
+    public void saveAllToSupervisorRepo(List<Supervisor> users){
+        supervisorRepository.saveAll(users);
+    }
 
 }

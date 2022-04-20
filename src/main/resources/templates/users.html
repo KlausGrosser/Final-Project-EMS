@@ -26,20 +26,18 @@
                     </div>
                 </div>
                 <div class="card-body">
+                     <form th:action="@{/users}" method="get">
+                         <label for="txtSearch"></label><input id="txtSearch" type="text" name="keyword" placeholder="Name, email, department..." size="30">
+                         <button class="btn btn-outline-primary mr-3 my-2 my-sm-0"  type="submit">
+                             Search
+                         </button>
+                     </form>
+                    <hr>
                     <form action="/registration" method="get">
                         <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
                             Add new employee
                         </button>
-                        <hr>
                     </form>
-
-                     <form th:action="@{/users}" method="get">
-                         <input id="txtSearch" type="text" name="keyword">
-                         <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
-                             Search
-                         </button>
-                     </form>
-
                     <table th:unless="${users.isEmpty()}" class="table table-striped">
                         <thead>
                         <tr>

@@ -1,10 +1,13 @@
 package com.finalproject.controller;
 
+import com.finalproject.dto.RegistrationUserDTO;
+import com.finalproject.model.entity.Shift;
 import com.finalproject.util.email.EmailService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,14 +46,15 @@ public class PageController implements ErrorController {
         return "/error/500";
     }
 
-    @GetMapping(path = "/check_in_out")
-    public String checkIn(){
+   /* @GetMapping(path = "/shifts")
+    public String getCheckInPage(){
         return "check_in_out";
-    }
+    }*/
 
     @GetMapping(path = "/confirm")
     public String confirm(@RequestParam("token") String token){
         emailService.confirmToken(token);
         return "redirect:/login";
     }
+
 }

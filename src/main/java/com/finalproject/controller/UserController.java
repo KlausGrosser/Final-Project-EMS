@@ -78,6 +78,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("authorities", Authority.values());
         model.addAttribute("departments", Department.values());
+        model.addAttribute("supervisorsList", userService.getAllSupervisors());
         return "update-user";
     }
 

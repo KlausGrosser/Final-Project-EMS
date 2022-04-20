@@ -42,6 +42,8 @@ public class Shift {
 
     private boolean absent = true;
 
+    private String statusMessage = "Please check in";
+
     @ManyToOne
     private User employee;
 

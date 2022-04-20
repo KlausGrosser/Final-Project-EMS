@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    private String fullName = this.firstName + " " + this.lastName;
+    private String fullName;
 
     @Column(name = "email", nullable = false, unique = true)
     private String username;
@@ -73,10 +74,8 @@ public class User implements UserDetails {
 
     @OneToMany
     @ToString.Exclude
-    private List<Shift> shifts;
+    private List<Shift> shifts = new ArrayList<>();
 
-    //@Enumerated(EnumType.STRING)
-    //private Department department;
     private String department;
 
     private String address;
@@ -87,9 +86,23 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Absence> absences;
 
+    private boolean supervisorRole;
+
     private String supervisorName;
 
-    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities, Department department) {
+    public User(Long id,
+                String firstName,
+                String lastName,
+                String username,
+                String password,
+                boolean enabled,
+                boolean firstLogin,
+                Set<Authority> authorities,
+                Department department,
+                String address,
+                int telephone,
+                boolean supervisorRole,
+                String supervisorName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -99,6 +112,11 @@ public class User implements UserDetails {
         this.firstLogin = firstLogin;
         this.authorities = authorities;
         this.department = department.name();
+        this.address = address;
+        this.telephone = telephone;
+        this.supervisorRole = supervisorRole;
+        this.supervisorName = supervisorName;
+        this.fullName = firstName + " " + lastName;
     }
 
     @Override

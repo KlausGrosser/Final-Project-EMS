@@ -41,14 +41,11 @@
                 </div>
             </li>
             <li sec:authorize="hasAuthority('USER')" class="nav-item active">
-                <a class="nav-link" th:href="@{/check_in_out}" th:text="#{link.check_in}"></a>
+                <a class="nav-link" th:href="@{/shifts}" th:text="#{link.check_in}"></a>
             </li>
             <li sec:authorize="hasAuthority('USER')" class="nav-item active">
                 <a class="nav-link" th:href="@{/currency/currency_input}" th:text="#{link.currency}"></a>
             </li>
-
-
-
             <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-expanded="false" aria-haspopup="true" th:text="#{link.leaves}">
@@ -65,6 +62,9 @@
                         All leaves requests
                     </a>
                 </div>
+            </li>
+            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item active">
+                <a class="nav-link" th:href="@{/shifts/assign_shifts}" th:text="#{link.shifts}"></a>
             </li>
 
         </ul>
