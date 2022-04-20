@@ -8,14 +8,12 @@ import javax.persistence.ManyToOne;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class ShiftDTO {
 
-    private boolean checkIn;
-    private boolean checkOut;
-    private boolean currentTimeWorked;
-    private boolean totalTimeWorked;
+    private LocalDate assignedDay;
+    private LocalDateTime assignedStartTime;
+    private LocalDateTime assignedEndTime;
+    private String assignedEmployeeName;
 }

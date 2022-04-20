@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Companies</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div th:if="${companies.isEmpty()}">
+            <h1 class="display-4" th:text="#{companies.empty}"></h1>
+            <hr>
+          </div>
+          <div th:unless="${companies.isEmpty()}">
+            <h1 class="display-4" th:text="#{companies.header}">Companies</h1>
+            <hr>
+          </div>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/companies}" method="get">
+            <label for="txtSearch"></label><input id="txtSearch" type="text" name="keyword" placeholder="Name, CEO, address..." size="30">
+            <button class="btn btn-outline-primary mr-3 my-2 my-sm-0"  type="submit">
+              Search
+            </button>
+          </form>
+          <hr>
+          <form action="/registration" method="get">
+            <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
+              Add new company
+            </button>
+          </form>
+          <table th:unless="${companies.isEmpty()}" class="table table-striped">
+            <thead>
+            <tr>
+              <th th:text="#{companies.id}">Id</th>
+              <th th:text="#{companies.name}">Name</th>
+              <th th:text="#{companies.ceo}">CEO</th>
+              <th th:text="#{companies.address}">Address</th>
+              <th th:text="#{companies.edit}">Edit</th>
+              <th sec:authorize="hasAuthority('SUPERADMIN')" th:text="#{companies.delete}">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="company : ${companies}">
+              <td><span th:text="${company.id}"></span></td>
+              <td><span th:text="${company.name}"></span></td>
+              <td><span th:text="${company.ceo}"></span></td>
+              <td><span th:text="${company.address}"></span></td>
+              <td>
+                <a th:href="@{/companies/update/{id}(id=${company.id})}" class="btn btn-primary">
+                  <img th:src="@{/images/outline-edit-24px.svg}">
+                </a>
+              </td>
+              <td>
+                <a sec:authorize="hasAuthority('SUPERADMIN')"  th:href="@{/companies/delete/{id}(id=${company.id})}" class="btn btn-primary">
+                  <img th:src="@{/images/outline-delete-24px.svg}">
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer"
+             th:include="~{/fragments/pagination.html::page-navigation(url='/users',page=${companies})}"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="~{fragments/footer::footer}"></footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

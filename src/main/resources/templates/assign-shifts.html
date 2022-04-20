@@ -11,116 +11,21 @@
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h1 class="display-4" th:text="#{registration.header}"></h1>
-            <hr>
-        </div>
-        <div class="card-body">
-            <form th:action="@{/registration}" th:object="${shift}" method="post">
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.first_name.label}"></span>
-                            <input type="text"
-                                   th:field="*{firstName}"
-                                   th:placeholder="#{registration.first_name.placeholder}"
-                                   class="form-control"
-                                   required/>
-                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.last_name.label}"></span>
-                            <input type="text"
-                                   th:field="*{lastName}"
-                                   th:placeholder="#{registration.last_name.placeholder}"
-                                   class="form-control"
-                                   required
-                            />
-                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <form method="post" th:object="${user}">
+
+                <div class="form-group">
+                    <label for="shift">Employee</label>
+                    <select id="shift" class="form-control select2-single" th:field="*{currentShift}">
+                        <option value="">Search employee</option>
+                    </select>
                 </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.username.label}"></span>
-                            <input type="text"
-                                   th:field="*{username}"
-                                   th:placeholder="#{registration.username.placeholder}"
-                                   class="form-control"
-                                   required/>
-                            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.password.label}"></span>
-                            <input type="password"
-                                   th:field="*{password}"
-                                   th:placeholder="#{registration.password.placeholder}"
-                                   class="form-control"
-                                   required
-                            />
-                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label class="col-form-label" for="department">
-                            <span th:text="#{registration.department.label}"></span>
-                            <select th:field="*{department}" class="form-control" id="department" required>
-                                <option value="">Select department</option>
-                                <option th:each="department : ${T(com.finalproject.model.entity.Department).values()}"
-                                        th:value="${department}"
-                                        th:text="${department}">department
-                                </option>
-                            </select>
-                            <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.supervisorRole.label} + ' Check for yes, leave blank for no: '"></span>
-                            <input type="checkbox"
-                                   th:field="*{supervisorRole}"
-                                   th:placeholder="#{registration.supervisorRole.placeholder}"
-                                   class="form-control"
-                                   name="Check for yes, leave blank for no"
-                            />
-                            <span th:if="${#fields.hasErrors('supervisorRole')}" th:errors="*{supervisorRole}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label class="col-form-label">
-                            <span th:text="#{registration.supervisorName.label}"></span>
-                            <select th:field="*{supervisorName}" class="form-control" id="supervisor" required>
-                                <option value="">Select Supervisor</option>
-                                <option th:each="supervisor : ${supervisorsList}"
-                                        th:value="${supervisor.fullName}"
-                                        th:text="${supervisor.department} + ' : ' + ${supervisor.fullName}">
-                                </option>
-                            </select>
-                            <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" th:text="#{button.signup}">Sign up</button>
+
+                <button class="btn btn-primary" type="submit">Assign shift</button>
             </form>
         </div>
-    </div>
+</div>
 </div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
@@ -134,5 +39,43 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/select2-develop/dist/js/select2.full.js}"></script>
+
+<script>
+    $("#shift").select2({
+        theme: "bootstrap4",
+        ajax: {
+            url: '/shifts/assign_shifts',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $("#shift").autocomplete({
+            source: "plantNamesAutocomplete",
+            minLength: 3,
+            select: function(event, ui) {
+                this.value = ui.item.label;
+                $("#Plant_Id").val(ui.item.value);
+                return false;
+            }
+        });
+    });
+</script>
+
+
 </body>
 </html>

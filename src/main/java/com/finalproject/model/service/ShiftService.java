@@ -1,9 +1,11 @@
 package com.finalproject.model.service;
 
+import com.finalproject.dto.ShiftDTO;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.entity.Shift;
 import com.finalproject.model.repository.AbsenceRepository;
 import com.finalproject.model.repository.ShiftRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.Objects;
 
 
 @Service
+@Log4j2
 public class ShiftService {
 
     private final UserService userService;
@@ -153,6 +156,25 @@ public class ShiftService {
 
         shift.setTimeWorkedInLastPeriod(total);
         shift.getWorkedPeriods().add(total);
+    }
+
+    public void createNewShift(ShiftDTO shiftDTO) {
+        Shift shift = Shift
+                .builder()
+                .assignedDay(shiftDTO.getAssignedDay())
+                .assignedStartTime(shiftDTO.getAssignedStartTime())
+                .assignedEndTime(shiftDTO.getAssignedEndTime())
+                .employee(userService.findByFullName(shiftDTO.getAssignedEmployeeName()))
+                .build();
+
+        try {
+            this.saveShiftAndUpdateEmployee(shift.getEmployee(), shift);
+            //shiftRepository.save(shift);
+            log.info("New shift " + shift);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

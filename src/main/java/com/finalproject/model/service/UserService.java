@@ -215,4 +215,15 @@ public class UserService implements UserDetailsService {
         supervisorRepository.saveAll(users);
     }
 
+    public List<String> getAllEmployeesNames(){
+        List<String> names = new ArrayList<>();
+
+        for(User user : userRepository.findAll()){
+            names.add(user.getFullName());
+        }
+
+        return names;
+    }
+
+
 }

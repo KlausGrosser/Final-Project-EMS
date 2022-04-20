@@ -20,7 +20,7 @@
             <li sec:authorize="isAuthenticated()" class="nav-item active">
                 <a class="nav-link" th:href="@{/profile}" th:text="#{link.profile}"></a>
             </li>
-            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item active">
+            <li sec:authorize="hasAuthority('SUPERVISOR')" class="nav-item active">
                 <a class="nav-link" th:href="@{/users}" th:text="#{link.all_users}"></a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
@@ -30,24 +30,24 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/activities" th:text="#{link.all_activities}">All activities</a>
-                    <a class="dropdown-item" href="/activities/add" sec:authorize="hasAuthority('ADMIN')"
+                    <a class="dropdown-item" href="/activities/add" sec:authorize="hasAuthority('SUPERVISOR')"
                        th:text="#{link.add_activity}">
                         Add activity
                     </a>
-                    <a class="dropdown-item" href="/activities/request" sec:authorize="hasAuthority('ADMIN')"
+                    <a class="dropdown-item" href="/activities/request" sec:authorize="hasAuthority('SUPERVISOR')"
                        th:text="#{link.all_activity_requests}">
                         All activity requests
                     </a>
                 </div>
             </li>
             <li sec:authorize="hasAuthority('USER')" class="nav-item active">
-                <a class="nav-link" th:href="@{/shifts}" th:text="#{link.check_in}"></a>
+                <a class="nav-link" th:href="@{/check_in_out}" th:text="#{link.check_in}"></a>
             </li>
             <li sec:authorize="hasAuthority('USER')" class="nav-item active">
                 <a class="nav-link" th:href="@{/currency/currency_input}" th:text="#{link.currency}"></a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownList" role="button" data-toggle="dropdown"
                    aria-expanded="false" aria-haspopup="true" th:text="#{link.leaves}">
                     Leaves
                 </a>
@@ -63,7 +63,7 @@
                     </a>
                 </div>
             </li>
-            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item active">
+            <li sec:authorize="hasAuthority('SUPERVISOR')" class="nav-item active">
                 <a class="nav-link" th:href="@{/shifts/assign_shifts}" th:text="#{link.shifts}"></a>
             </li>
 
