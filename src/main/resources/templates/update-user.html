@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label class="col-form-label" for="department" sec:authorize="hasAuthority('SUPERADMIN')">
-                                    <span th:text="#{registration.department.label}"></span>
+                                    <span th:text="#{users.update.department.label}"></span>
                                     <select th:field="*{department}" class="form-control" id="department">
                                         <option value="">Select department</option>
                                         <option th:each="department : ${T(com.finalproject.model.entity.Department).values()}"
@@ -80,6 +80,36 @@
                                           class="text-danger"></span>
                                 </label>
                             </div>
+                            <div class="col-md-3 mb-3">
+                                <label>
+                                    <span th:text="#{users.update.supervisorRole.label}"></span>
+                                    <input type="checkbox"
+                                           th:field="*{supervisorRole}"
+                                           th:placeholder="#{users.update.supervisorRole.placeholder}"
+                                           class="form-control"
+                                           name="Check for yes, leave blank for no"
+                                    />
+                                    <span th:if="${#fields.hasErrors('supervisorRole')}" th:errors="*{supervisorRole}"
+                                          class="text-danger"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label class="col-form-label">
+                                    <span th:text="#{registration.supervisorName.label}"></span>
+                                    <select th:field="*{supervisorName}" class="form-control" id="supervisorName" required>
+                                        <option value="">Select Supervisor</option>
+                                        <option th:each="supervisor : ${supervisorsList}"
+                                                th:value="${supervisor.fullName}"
+                                                th:text="${supervisor.department} + ' : ' + ${supervisor.fullName}">
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
+                                          class="text-danger"></span>
+                                </label>
+                            </div>
+                        </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

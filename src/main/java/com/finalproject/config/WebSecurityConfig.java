@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-        @Override
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userService)
@@ -47,14 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/js/**", "/images/**", "/css/**", "/index", "/", "/access-denied", "/favicon.ico", "/error/**", "/confirm", "/leaves/**")
                 .permitAll()
-                .antMatchers("/users", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/edit/**", "/activities/request/approve/**", "/activities/request/reject/**")
-                .hasAnyAuthority("ADMIN", "ADMIN_HR")
-                .antMatchers("/user/delete/{id}", "/registration/**", "/users/**")
-                .hasAnyAuthority("SUPERADMIN", "ADMIN_HR")
-                .antMatchers("/currency/**", "/check_in_out/**", "/profile", "/activities", "/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**", "/change_password", "/user/profileUpdate")
-                .hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/companies/**", "/company/**")
+                .antMatchers("/users/**", "/activities/request", "/activities/add", "/activities/delete/**", "/activities/edit/**", "/activities/request/approve/**", "/activities/request/reject/**", "/registration/**")
+                .hasAuthority("ADMIN")
+                .antMatchers("/user/delete/{id}")
                 .hasAuthority("SUPERADMIN")
+                .antMatchers("/currency/**", "/shifts/**", "/profile", "/activities", "/activities/mark-time/**", "/activities/request/add/**", "/activities/request/complete/**", "/change_password", "/user/profileUpdate")
+                .hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/login")
                 .anonymous()
                 .anyRequest()

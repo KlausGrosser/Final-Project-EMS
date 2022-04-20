@@ -32,7 +32,7 @@ public class SupervisorService {
 
         Shift newShift = new Shift(shiftDate, shiftStart, shiftEnd, employee);
 
-        shiftService.saveShiftToEmployee(employee, newShift);
+        shiftService.saveShiftAndUpdateEmployee(employee, newShift);
     }
 
 

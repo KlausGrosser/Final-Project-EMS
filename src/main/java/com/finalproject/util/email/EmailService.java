@@ -20,7 +20,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -53,10 +55,40 @@ public class EmailService implements EmailSender{
         }
     }
 
-    @Scheduled(cron="10 2 * * * MON-FRI")
+    @Scheduled(cron="40 23 * * * MON-FRI")
+    public void sendEmailToSupervisorWithAbsentEmployees(){
+        for(Map.Entry<User, List<User>> entry : absenceService.getEmployeesAndSupervisorsRelation().entrySet()){
+
+            List<String> emailAddresses = new ArrayList<>();
+
+            for(User user : entry.getValue()){
+                emailAddresses.add(user.getUsername());
+            }
+
+            this.sendEmailToMultipleAddresses(
+                    emailAddresses,
+                    emailTemplateEngine.buildAbsenteeismWarningForSupervisor(
+                            entry.getValue(),
+                            entry.getKey().getFirstName(),
+                            "http://localhost:8080/absence/sendWarningToEmployees"),
+                    "Unusual absenteeism");
+        }
+
+
+
+    }
+
     public void sendWarningToAbsentEmployees(){
+        User currentUser = userService.getCurrentUser();
+
+        List<User> absentEmployees = new ArrayList<>();
+
+        if(currentUser.isSupervisorRole()){
+            absentEmployees = absenceService.getAssignedEmployees(currentUser);
+        }
+
         this.sendEmailToMultipleAddresses(
-                absenceService.getEmailsFromAbsentEmployees(),
+                absenceService.getEmailsFromAbsentEmployees(absentEmployees),
                 emailTemplateEngine.buildAbsentEmployeeWarningEmail(),
                 "Unusual absenteeism"
         );

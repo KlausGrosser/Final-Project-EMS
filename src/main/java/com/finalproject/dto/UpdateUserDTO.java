@@ -36,4 +36,8 @@ public class UpdateUserDTO {
     private Set<Authority> authorities;
 
     private Department department;
+
+    private String supervisorName;
+
+    private boolean supervisorRole;
 }

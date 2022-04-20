@@ -1,12 +1,10 @@
 package com.finalproject.model.service;
 
-import com.finalproject.model.entity.Absence;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.entity.Shift;
 import com.finalproject.model.repository.AbsenceRepository;
 import com.finalproject.model.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -14,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 
 @Service
@@ -41,7 +40,7 @@ public class ShiftService {
         int comparison= -1;
 
         if(!employee.getShifts().isEmpty()){
-            shift = findLastShift(employee);
+            shift = findCurrentShift(employee);
             LocalDate currentDate = LocalDate.now();
             if(shift.getShiftDay() != null){
                 LocalDate lastShiftDate = shift.getShiftDay();
@@ -53,34 +52,29 @@ public class ShiftService {
 
     }
 
-    public String start() {
+    public void start() {
         User employee = userService.getCurrentUser();
-        Shift shift = null;
+        Shift shift = findCurrentShift(employee);
 
-        shift = findLastShift(employee);
-        shift.setAbsent(false);
-        shift.setShiftDay(LocalDate.now());
+        if(Objects.nonNull(shift)){
+            shift.setAbsent(false);
+            shift.setShiftDay(LocalDate.now());
 
-        String result = "";
-
-        if (!(shift.isCurrentlyWorking())) {
-            shift.setCurrentlyWorking(true);
-            shift.setTempStartTime(LocalDateTime.now());
-            shift.getCheckIns().add(shift.getTempStartTime());
-
-            saveShiftToEmployee(employee, shift);
-
-            result = "Check in at: " + shift.getTempStartTime().format(formatter);
-        } else {
-            result = "You already checked in! Can't do it again if you don't check-out";
+            if (!(shift.isCurrentlyWorking())) {
+                shift.setCurrentlyWorking(true);
+                shift.setTempStartTime(LocalDateTime.now());
+                shift.getCheckIns().add(shift.getTempStartTime());
+                shift.setStatusMessage("Check in at: " + shift.getTempStartTime().format(formatter));
+                saveShiftAndUpdateEmployee(employee, shift);
+            }else {
+                shift.setStatusMessage("You already checked in! Can't do it again if you don't check-out");
+            }
         }
-        return result;
     }
 
-    public String stop() {
+    public void stop() {
         User employee = userService.getCurrentUser();
-        Shift shift = findLastShift(employee);
-        String result = "";
+        Shift shift = findCurrentShift(employee);
 
         if(shift !=null){
             if (shift.isCurrentlyWorking()) {
@@ -88,82 +82,59 @@ public class ShiftService {
                 shift.setTempEndTime(LocalDateTime.now());
                 shift.getCheckOuts().add(shift.getTempEndTime());
                 this.getTimeBetweenStartAndEnd(shift);
-
-                saveShiftToEmployee(employee, shift);
-
-                result = "Check out at: " + shift.getTempEndTime().format(formatter);
+                shift.setStatusMessage("Check out at: " + shift.getTempEndTime().format(formatter));
+                saveShiftAndUpdateEmployee(employee, shift);
             } else {
-                result = "You already checked-out!!";
+                shift.setStatusMessage("Sorry, you need to check in first!");
             }
-            return result;
-        }else{
-            return "Sorry, you need to check in first!";
         }
 
 
     }
 
-    public String getTotalWorkedTime() {
+    public void getTotalWorkedTime() {
         User employee = userService.getCurrentUser();
-        Shift shift = findLastShift(employee);
+        Shift shift = findCurrentShift(employee);
 
         if(shift !=null){
             if(shift.getTempEndTime() != null){
                 Duration difference = Duration.between(shift.getTempStartTime(), shift.getTempEndTime());
-                if(difference == null){
-                    return "Sorry, you need to check in first";
-                } else {
+                if(difference != null){
                     Duration total = getTotalTimeWorked(shift);
+                    this.saveShiftAndUpdateEmployee(employee, shift);
 
-                    return "Time worked today: " + total.toHours() + " hours, "
-                            + total.toMinutes() + " minutes, " + total.toSeconds() + " seconds";
+                    shift.setStatusMessage("Time worked today: " + total.toHours() + " hours, "
+                            + total.toMinutes() + " minutes, " + total.toSeconds() + " seconds");
                 }
             }else{
-                return "Sorry, you need to check out first";
+                shift.setStatusMessage("Sorry, you need to check in and check out first!");
             }
-
-        }else{
-            return "Sorry, you need to check out first";
         }
     }
 
-    public void saveShiftToEmployee(User employee, Shift shift){
-        Shift temp = null;
-        if(!employee.getShifts().isEmpty()){
-            temp = employee.getShifts().get(employee.getShifts().size()-1);
-        }
-
-        long id1 = shift.getId();
-        long id2 = 0;
-        if(temp != null){
-            id2 = temp.getId();
-        }
-
-        boolean idMatches = id1 == id2;
-        if(idMatches){
-            return;
-        }else{
+    public void saveShiftAndUpdateEmployee(User employee, Shift shift){
+        if(employee.getShifts().isEmpty()){
             employee.getShifts().add(shift);
+            shiftRepository.save(shift);
+            userService.save(employee);
         }
-
-        shiftRepository.save(shift);
-
-        userService.save(employee);
-
+        for(Shift temp : employee.getShifts()){
+            if(temp.equals(shift)){
+                shiftRepository.save(shift);
+                userService.save(employee);
+            }
+        }
     }
 
-    public Shift findLastShift(User employee){
+    public Shift findCurrentShift(User employee){
+        LocalDate currentDate = LocalDate.now();
         Shift shift = null;
-        if(!employee.getShifts().isEmpty()){
-            int currentWorkHours = employee.getShifts().size();
-            shift = employee.getShifts().get(currentWorkHours-1);
+        for(Shift temp : employee.getShifts()){
+            if(temp.getAssignedDay().equals(currentDate)){
+                shift = temp;
+            }
         }
-        if(shift != null){
-            return shiftRepository.getById(shift.getId());
-        }else{
-            return null;
-        }
-
+        return shift;
     }
 
     public Duration getTotalTimeWorked(Shift shift) {
@@ -183,7 +154,5 @@ public class ShiftService {
         shift.setTimeWorkedInLastPeriod(total);
         shift.getWorkedPeriods().add(total);
     }
-
-
 }
 

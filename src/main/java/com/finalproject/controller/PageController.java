@@ -1,27 +1,25 @@
 package com.finalproject.controller;
 
-import com.finalproject.dto.CompanyDTO;
-import com.finalproject.model.service.CompanyService;
+import com.finalproject.dto.RegistrationUserDTO;
+import com.finalproject.model.entity.Shift;
 import com.finalproject.util.email.EmailService;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Controller that gives static pages
  */
 @Controller
 public class PageController implements ErrorController {
-
     private final EmailService emailService;
-    private final CompanyService companyService;
 
-    public PageController(EmailService emailService, CompanyService companyService) {
+    public PageController(EmailService emailService) {
         this.emailService = emailService;
-        this.companyService = companyService;
     }
 
     @GetMapping("/index")
@@ -48,16 +46,15 @@ public class PageController implements ErrorController {
         return "/error/500";
     }
 
-    @GetMapping(path = "/check_in_out")
-    public String checkIn(){
+   /* @GetMapping(path = "/shifts")
+    public String getCheckInPage(){
         return "check_in_out";
-    }
+    }*/
 
     @GetMapping(path = "/confirm")
     public String confirm(@RequestParam("token") String token){
         emailService.confirmToken(token);
         return "redirect:/login";
     }
-
 
 }

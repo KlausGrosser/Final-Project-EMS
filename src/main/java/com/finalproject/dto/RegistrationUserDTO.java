@@ -36,4 +36,8 @@ public class RegistrationUserDTO {
     private String password;
 
     private Department department;
+
+    private boolean supervisorRole;
+
+    private String supervisorName;
 }
