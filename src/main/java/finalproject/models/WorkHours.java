@@ -46,7 +46,6 @@ public class WorkHours {
         this.startTime = startTime;
         this.endTime = endTime;
         this.timeWorked = timeWorked;
-        this.totalTimeWorked = totalTimeWorked;
         this.workedTimes = workedTimes;
         this.startTimes = startTimes;
         this.stopTimes = stopTimes;

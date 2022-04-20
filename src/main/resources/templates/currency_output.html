@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Currency Converter</title>
+  <title>Currency Converter Output</title>
 
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -29,6 +29,8 @@
       <ul class="nav navbar-nav">
         <li sec:authorize="isAuthenticated()"><a th:href="@{/employee_list}">Employee List</a></li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/departments_list}">Departments List</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/check_in_out}">Check-in/Check-out</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/leave}">Absence & Leave</a></li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/currency_input}">Currency Converter</a></li>
         <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log Out</a></li>
       </ul>
@@ -39,7 +41,7 @@
 <div class="container">
   <hr>
   <br>
-  <h2>Here is your converted salary  </h2>
+  <h2>Here is your converted amount!  </h2>
   <hr>
     <h4>Base currency: </h4>
         <span th:text="${(param.amount)}"></span>
@@ -48,9 +50,13 @@
   <hr>
      <h4> Converted currency: </h4>
       <span th:text="${@currencyRestService.getConvertedAmount(param.base_code, param.target_code, param.amount)}">...</span>
+
       <span th:text="${param.target_code}"></span>
       <br>
   <hr>
+
+  <h5> Interested into the service of Western Union?</h5>
+  <a href="#" th:href="@{https://www.westernunion.com/}" th:target="_blank">click here</a>
 
 </div>
 </body>
