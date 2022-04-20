@@ -44,6 +44,12 @@ public class LeaveController {
         return "add-leave";
     }
 
+    @GetMapping("/leaves/delete/{id}")
+    public String deleteLeave(@PathVariable("id") long leaveId) {
+        leaveService.deleteLeave(leaveId);
+        return "/delete_leave";
+    }
+
 
     //Post Mapping
     @PostMapping("/leaves/add")

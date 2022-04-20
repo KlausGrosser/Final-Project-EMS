@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 
 
 @Service
@@ -54,14 +55,10 @@ public class LeaveService {
     }
 
 
-//    public void deleteLeave(long id) {
-//        Leave leave = findLeaveById(id);
-//        Set<User> users = leave.getUsers();
-//        for (User user : users) {
-//            user.getLeaves().remove(leave);
-//        }
-//        leaveRepository.delete(leave);
-//    }
+    public void deleteLeave(long id) {
+        Leave leave = findLeaveById(id);
+        leaveRepository.delete(leave);
+    }
 
 
     public void approveLeaveRequest(long leaveId) {

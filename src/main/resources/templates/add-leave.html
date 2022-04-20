@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                     <form method="post" th:action="@{/leaves/add}" th:object="${leave}">
                         <div class="form-row">
-                            <div class="col-md-6 mb-6">
+                            <div class="col-md-12 mb-12">
                                 <label class="col-form-label" for="reason">
                                     <span th:text="#{leaves.add.reason}"></span>
                                     <select th:field="*{leaveReason}" class="form-control" id="reason" required>
@@ -58,7 +58,7 @@
                             <input type="date" th:field="*{endTime}" placeholder="yyyy-MM-dd"  id="endTime" required>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mt-1">
+                            <div class="col-md-12 mt-1">
                                 <input class="btn btn-primary" th:value="#{leaves.add.button.submit}" type="submit">
                             </div>
                         </div>

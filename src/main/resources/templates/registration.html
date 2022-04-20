@@ -56,8 +56,8 @@
                                    required/>
                             <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                   class="text-danger"></span>
-                            <span th:if="${usernameErrorMessage}" th:text="${usernameErrorMessage}"
-                                  class="text-danger"></span>
+<!--                            <span th:if="${usernameErrorMessage}" th:text="${usernameErrorMessage}"-->
+<!--                                  class="text-danger"></span>-->
                         </label>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -67,8 +67,7 @@
                                    th:field="*{password}"
                                    th:placeholder="#{registration.password.placeholder}"
                                    class="form-control"
-                                   required
-                            />
+                                   required/>
                             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                   class="text-danger"></span>
                         </label>
@@ -87,6 +86,20 @@
                             </select>
                             <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
                                   class="text-danger"></span>
+                        </label>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="col-form-label" for="company">
+                            <span th:text="#{registration.companyName.label}"></span>
+                            <select th:field="*{companyName}" class="form-control" id="company" required>
+                                <option value="">Select company</option>
+                                <option th:each="company : ${user}"
+                                        th:value="company"
+                                        th:text="${user.companyName}">company
+                                </option>
+                            </select>
+<!--                            <span th:if="${#fields.hasErrors('company')}" th:errors="*{companyName}"-->
+<!--                                  class="text-danger"></span>-->
                         </label>
                     </div>
                 </div>

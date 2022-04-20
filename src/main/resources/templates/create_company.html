@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Create company</title>
+    <title>Add new company</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -13,53 +14,62 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h1 class="display-4" th:text="#{company.header}"></h1>
+            <h1 class="display-4" th:text="#{company.add.title}">Add company</h1>
             <hr>
         </div>
         <div class="card-body">
-            <form th:action="@{/create_company}" th:object="${company}" method="post">
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{company.name.label}"></span>
-                            <input type="text"
-                                   th:field="*{name}"
-                                   th:placeholder="#{company.name.placeholder}"
-                                   class="form-control"
-                                   required/>
-                        </label>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{company.CEOname.label}"></span>
-                            <input type="text"
-                                   th:field="*{CEO}"
-                                   th:placeholder="#{company.CEO.placeholder}"
-                                   class="form-control"
-                                   required/>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" th:action="@{/company/add}" th:object="${company}">
+                        <div class="form-row">
+                            <div class="col-md-12 mb-12">
+                                <label>
+                                    <span th:text="#{company.name}"></span>
+                                    <input type="text"
+                                           th:field="*{name}"
+                                           th:placeholder="#{company.name.placeholder}"
+                                           class="form-control"
+                                           required/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-12">
+                                <label>
+                                    <span th:text="#{company.CEO}"></span>
+                                    <input type="text"
+                                           th:field="*{CEO}"
+                                           th:placeholder="#{company.CEO.placeholder}"
+                                           class="form-control"
+                                           required/>
 
-                        </label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{company.address.label}"></span>
-                            <input type="text"
-                                   th:field="*{address}"
-                                   th:placeholder="#{company.address.placeholder}"
-                                   class="form-control"
-                                   required/>
-                        </label>
-                    </div>
-                </div>
-                  </form>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-12">
+                                <label>
+                                    <span th:text="#{company.address}"></span>
+                                    <input type="text"
+                                           th:field="*{address}"
+                                           th:placeholder="#{company.address.placeholder}"
+                                           class="form-control"
+                                           required/>
 
-            <div>
-                <button type="submit" class="btn btn-primary" th:text="#{button.create}">Create</button>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <input class="btn btn-primary" th:value="#{button.create}" type="submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-                </div>
-
+        </div>
+</div>
+</div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
 

@@ -48,8 +48,8 @@
                             <th th:text="#{users.last_name}">Last name</th>
                             <th th:text="#{users.username}">Email</th>
                             <th th:text="#{users.department}">Department</th>
+                            <th th:text="#{users.companyName}">Company Name</th>
                             <th th:text="#{users.active}">Active</th>
-<!--                            <th th:text="#{users.roles}">Roles</th>-->
                             <th th:text="#{users.edit}">Edit</th>
                             <th sec:authorize="hasAuthority('SUPERADMIN')" th:text="#{users.delete}">Delete</th>
                         </tr>
@@ -61,8 +61,9 @@
                             <td><span th:text="${user.lastName}"></span></td>
                             <td><span th:text="${user.username}"></span></td>
                             <td><span th:text="${user.department}"></span></td>
+                            <td><span th:text="${user.companyName.getName()}"></span></td>
                             <td><span th:text="${user.enabled}"></span></td>
-<!--                            <td><span th:text="${user.authorities}"></span></td>-->
+
                             <td>
                                 <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary">
                                     <img th:src="@{/images/outline-edit-24px.svg}">

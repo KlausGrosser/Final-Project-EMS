@@ -10,10 +10,10 @@ import javax.persistence.Column;
 @ToString
 public class CompanyDTO {
 
-    @Column(name = "name", nullable = false)
+    @Column
     private String name;
-    @Column(name = "CEO_name", nullable = false)
+    @Column
     private String CEO;
-    @Column(name = "address", nullable = false)
+    @Column
     private String address;
 }

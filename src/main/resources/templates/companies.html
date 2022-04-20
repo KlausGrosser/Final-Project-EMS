@@ -1,72 +1,73 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <title>All companies</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>All users</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<nav th:replace="~{fragments/navbar::navbar}"></nav>
+<div th:replace="~{fragments/navbar::navbar}"></div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div th:if="${company.isEmpty()}">
-                        <h1 class="display-4" th:text="#{companies.empty}"></h1>
-                        <hr>
-                    </div>
-                    <div th:unless="${!company.isEmpty()}">
-                        <h1 class="display-4" th:text="#{company.header}">All companies</h1>
-                        <hr>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <form action="/companies" method="get">
-                        <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
-                            Add new company
-                        </button>
-                        <hr>
-                    </form>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="display-4" th:text="#{company.title}">Companies</h1>
+            <form method="get" th:action="@{/companies}">
 
+                <label for="company">Choose your company: &nbsp;</label>
+                <select     th:name="company" id="company" required>
+                    <option value="">Nothing selected</option>
+                    <option th:each="company : ${company}"
+                            th:value="${company.name}"
+                            th:text="${company.name}">Company selected
+                    </option>
+                </select>
+                <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
+                    <span th:text="#{company.button}"> </span>
+                </button>
+            </form>
 
-                    <table th:unless="${companies.isEmpty()}" class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th th:text="#{company.id}">Id</th>
-                            <th th:text="#{company.name}">Name</th>
-                            <th th:text="#{company.CEO}">CEO</th>
-                            <th th:text="#{company.address}">Address</th>
+        <div class="card-body">
 
-                            <th sec:authorize="hasAuthority('SUPERADMIN')" th:text="#{company.delete}">Delete</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="company : ${companies}">
-                            <td><span th:text="${company.id}"></span></td>
-                            <td><span th:text="${company.name}"></span></td>
-                            <td><span th:text="${company.CEO}"></span></td>
-                            <td><span th:text="${company.address}"></span></td>
-
-                            <td>
-                                <a sec:authorize="hasAuthority('SUPERADMIN')"  th:href="@{/company/delete/{id}(id=${company.id})}" class="btn btn-primary">
-                                    <img th:src="@{/images/outline-delete-24px.svg}">
+            <form th:action="@{/companies}" th:each="company : ${company}" method="get">
+                <div class="col-md-6">
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <p>
+                                <span th:text="#{company.name}">Name: </span>
+                                <span th:text="${company.getName()}"></span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <p>
+                                <span th:text="#{company.address}">Address: </span>
+                                <span th:text="${company.getAddress()}"></span>
+                            <p>
+                                <span th:text="#{company.CEO}">ceo: </span>
+                                <span th:text="${company.getCEO()}"></span>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div aria-label="btn-group" class="btn-group" role="group">
+                                <a class="btn btn-sm btn-secondary"
+                                   sec:authorize="hasAuthority('SUPERADMIN')"
+                                   th:href="@{/company/delete/{id}(id=${company.id})}"
+                                   th:text="#{company.delete}">
+                                    Delete
                                 </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer"
-                     th:include="~{/fragments/pagination.html::page-navigation(url='/companies',page=${companies})}"></div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
+
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
 
@@ -80,4 +81,3 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-</html>

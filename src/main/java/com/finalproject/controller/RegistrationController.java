@@ -43,6 +43,7 @@ public class RegistrationController {
         //userService.createUser(registrationUserDTO);
         emailService.createNewUserAndSendRegistrationMail(registrationUserDTO);
 
+
         //return "redirect:/login";
         return "register_check_email";
     }

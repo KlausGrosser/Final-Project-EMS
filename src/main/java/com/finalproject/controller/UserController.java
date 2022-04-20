@@ -56,7 +56,7 @@ public class UserController {
         @GetMapping("/users")
     public String getListOfUsers(Model model, String keyword,
                                  @PageableDefault(size = 15,
-                                         sort = {"lastName", "firstName"}) Pageable pageable) {
+                                         sort = {"id"}) Pageable pageable) {
         if (keyword != null){
             model.addAttribute("users", userService.findByKeyword(pageable, keyword));
         }
@@ -114,7 +114,7 @@ public class UserController {
 
         if(user.isFirstLogin()) {
             return "password_change";
-        }else if(user.getAuthorities().contains(Authority.SUPERADMIN) && companyRepository.findAll().isEmpty()) {
+        }else if(user.getAuthorities().contains(Authority.SUPERADMIN)) {
             return "create_company";
         }else{
             return "user-profile";

@@ -21,7 +21,6 @@
             <div th:unless="${leavePage.isEmpty()}">
                 <h1 class="display-4" th:text="#{leaves.title}">Leaves</h1>
                 <hr>
-                <div th:replace="~{/fragments/pagination.html::page-navigation(url='/leaves',page=${leavePage})}"></div>
             </div>
         </div>
         <div class="card-body">

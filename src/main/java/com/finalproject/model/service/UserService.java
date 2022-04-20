@@ -1,14 +1,18 @@
 package com.finalproject.model.service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.finalproject.dto.RegistrationUserDTO;
 import com.finalproject.dto.UpdateUserDTO;
 import com.finalproject.dto.UpdateUserProfileDTO;
 import com.finalproject.model.entity.Activity;
 import com.finalproject.model.entity.Authority;
+import com.finalproject.model.entity.Company;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.repository.UserRepository;
 import com.finalproject.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,6 +55,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(()-> new UsernameNotFoundException(username));
     }
 
+   // @JsonInclude(JsonInclude.Include.NON_ABSENT)
     public Page<User> findAllUsersPageable(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
@@ -72,6 +77,7 @@ public class UserService implements UserDetailsService {
                 .firstLogin(true)
                 .authorities(Collections.singleton(Authority.USER))
                 .department(userDTO.getDepartment().name())
+                .companyName(userDTO.getCompanyName())
                 .build();
         try {
             userRepository.save(user);

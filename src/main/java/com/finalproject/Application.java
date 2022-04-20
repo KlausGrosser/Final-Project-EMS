@@ -1,5 +1,6 @@
 package com.finalproject;
 
+import com.finalproject.model.entity.Company;
 import com.finalproject.model.entity.Department;
 import com.finalproject.model.repository.UserRepository;
 import com.finalproject.model.service.UserService;
@@ -11,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,7 +52,6 @@ public class Application {
             userAuthorities.add(Authority.USER);
 
 
-
             User u1 = new User(
                     1L,
                     "Rachel",
@@ -62,7 +61,8 @@ public class Application {
                     true,
                     false,
                     admin_HRAuthorities,
-                    Department.HUMAN_RESOURCES
+                    Department.HUMAN_RESOURCES,
+                    new Company("Foodora", "Jennifer Aniston", "Storgatan 33, 114 55 Stockholm, Sweden")
             );
             userRepository.save(u1);
 
@@ -75,7 +75,9 @@ public class Application {
                     true,
                     false,
                     adminAuthorities,
-                    Department.FINANCE
+                    Department.FINANCE,
+                    new Company("Talabat", "Courteney Cox", "153, Sheikh Zayed Road, Dubai")
+
             );
             userRepository.save(u2);
 
@@ -88,7 +90,8 @@ public class Application {
                     true,
                     false,
                     adminAuthorities,
-                    Department.SALES
+                    Department.SALES,
+                    new Company("Pedidos Ya", "Matt LeBlanc", "Cerrito 1186, Buenos Aires, Argentina")
             );
             userRepository.save(u3);
 
@@ -101,7 +104,8 @@ public class Application {
                     true,
                     false,
                     adminAuthorities,
-                    Department.TECH
+                    Department.TECH,
+                    new Company("Mjam", "Matthew Perry","Barichgasse 38, Top 1.4, 1030 Wien" )
             );
             userRepository.save(u4);
 
@@ -114,22 +118,24 @@ public class Application {
                     true,
                     false,
                     userAuthorities,
-                    Department.TECH
+                    Department.TECH,
+                    new Company("Foody", "David Schwimmer", "Makedonias 88 CY, 2238, Cyprus")
             );
             userRepository.save(u5);
 
-            User u6 = new User(
-                    6L,
+            User u0 = new User(
+                    0L,
                     "Phoebe",
                     "Buffay",
                     "super_admin@gmail.com",
                     passwordEncoder.encode("test"),
                     true,
                     false,
-                    superadminAuthorities
+                    superadminAuthorities,
+                   new Company("")
 
             );
-            userRepository.save(u6);
+            userRepository.save(u0);
 
 
         };
