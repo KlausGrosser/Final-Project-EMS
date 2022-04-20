@@ -1,7 +1,6 @@
 package com.finalproject.dto;
 
 
-import com.finalproject.model.entity.Company;
 import com.finalproject.model.entity.Department;
 import com.finalproject.model.entity.User;
 import lombok.*;
@@ -38,6 +37,6 @@ public class RegistrationUserDTO {
 
     private Department department;
 
-    private Company companyName;
+    private String company;
 
 }

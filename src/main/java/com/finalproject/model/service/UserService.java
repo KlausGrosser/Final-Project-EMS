@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
                 .firstLogin(true)
                 .authorities(Collections.singleton(Authority.USER))
                 .department(userDTO.getDepartment().name())
-                .companyName(userDTO.getCompanyName())
+                .company(userDTO.getCompany())
                 .build();
         try {
             userRepository.save(user);

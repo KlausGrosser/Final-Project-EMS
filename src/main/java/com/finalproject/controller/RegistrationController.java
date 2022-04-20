@@ -1,7 +1,7 @@
 package com.finalproject.controller;
 
 import com.finalproject.dto.RegistrationUserDTO;
-import com.finalproject.model.service.UserService;
+import com.finalproject.model.repository.CompanyRepository;
 import com.finalproject.util.email.EmailService;
 import com.finalproject.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
@@ -21,15 +21,18 @@ import javax.validation.Valid;
 public class RegistrationController {
     //private final UserService userService;
     private final EmailService emailService;
+    private final CompanyRepository companyRepository;
 
     public RegistrationController(//UserService userService,
-                                  EmailService emailService) {
+                                  EmailService emailService, CompanyRepository companyRepository) {
         //this.userService = userService;
         this.emailService = emailService;
+        this.companyRepository = companyRepository;
     }
 
     @GetMapping
-    public String getRegistrationPage(@ModelAttribute("user") RegistrationUserDTO registrationUserDTO) {
+    public String getRegistrationPage(@ModelAttribute("user") RegistrationUserDTO registrationUserDTO, Model model) {
+        model.addAttribute("companiesList", companyRepository.findAll());
         return "registration";
     }
 

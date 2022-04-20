@@ -84,12 +84,10 @@ public class User implements UserDetails {
 
     private String supervisorName;
 
-
-    @ManyToOne(cascade = {CascadeType.ALL})
-    private Company companyName;
+    private String company;
 
 
-    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities, Department department, Company companyName) {
+    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities, Department department, String company) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -99,11 +97,11 @@ public class User implements UserDetails {
         this.firstLogin = firstLogin;
         this.authorities = authorities;
         this.department = department.name();
-        this.companyName = companyName;
+        this.company = company;
 
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities,Company companyName ) {
+    public User(Long id, String firstName, String lastName, String username, String password, boolean enabled, boolean firstLogin, Set<Authority> authorities, String company) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -112,7 +110,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
         this.firstLogin = firstLogin;
         this.authorities = authorities;
-        this.companyName = companyName;
+        this.company = company;
 
     }
 

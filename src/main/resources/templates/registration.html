@@ -91,15 +91,15 @@
                     <div class="col-md-3 mb-3">
                         <label class="col-form-label" for="company">
                             <span th:text="#{registration.companyName.label}"></span>
-                            <select th:field="*{companyName}" class="form-control" id="company" required>
+                            <select th:field="*{company}" class="form-control" id="company" required>
                                 <option value="">Select company</option>
-                                <option th:each="company : ${user}"
-                                        th:value="company"
-                                        th:text="${user.companyName}">company
+                                <option th:each="company : ${companiesList}"
+                                        th:value="${company}"
+                                        th:text="${company}">company
                                 </option>
                             </select>
-<!--                            <span th:if="${#fields.hasErrors('company')}" th:errors="*{companyName}"-->
-<!--                                  class="text-danger"></span>-->
+                            <span th:if="${#fields.hasErrors('company')}" th:errors="*{company}"
+                                  class="text-danger"></span>
                         </label>
                     </div>
                 </div>

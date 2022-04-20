@@ -2,6 +2,7 @@ package com.finalproject;
 
 import com.finalproject.model.entity.Company;
 import com.finalproject.model.entity.Department;
+import com.finalproject.model.repository.CompanyRepository;
 import com.finalproject.model.repository.UserRepository;
 import com.finalproject.model.service.UserService;
 import com.finalproject.model.entity.Authority;
@@ -30,7 +31,8 @@ public class Application {
     public CommandLineRunner loadData(
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
-            UserService userService
+            UserService userService,
+            CompanyRepository companyRepository
     ) {
         return (args) -> {
             Set<Authority> superadminAuthorities = new HashSet<Authority>();
@@ -51,6 +53,16 @@ public class Application {
             Set<Authority> userAuthorities = new HashSet<Authority>();
             userAuthorities.add(Authority.USER);
 
+            Company c1 = new Company("Foodora", "Jennifer Aniston", "Storgatan 33, 114 55 Stockholm, Sweden");
+            Company c2 = new Company("Talabat", "Courteney Cox", "153, Sheikh Zayed Road, Dubai");
+            Company c3 =  new Company("Pedidos Ya", "Matt LeBlanc", "Cerrito 1186, Buenos Aires, Argentina");
+            Company c4 =  new Company("Mjam", "Matthew Perry","Barichgasse 38, Top 1.4, 1030 Wien" );
+
+           companyRepository.save(c1);
+           companyRepository.save(c2);
+           companyRepository.save(c3);
+           companyRepository.save(c4);
+
 
             User u1 = new User(
                     1L,
@@ -62,7 +74,8 @@ public class Application {
                     false,
                     admin_HRAuthorities,
                     Department.HUMAN_RESOURCES,
-                    new Company("Foodora", "Jennifer Aniston", "Storgatan 33, 114 55 Stockholm, Sweden")
+                    c1.getName()
+
             );
             userRepository.save(u1);
 
@@ -76,8 +89,7 @@ public class Application {
                     false,
                     adminAuthorities,
                     Department.FINANCE,
-                    new Company("Talabat", "Courteney Cox", "153, Sheikh Zayed Road, Dubai")
-
+                    c2.getName()
             );
             userRepository.save(u2);
 
@@ -91,7 +103,7 @@ public class Application {
                     false,
                     adminAuthorities,
                     Department.SALES,
-                    new Company("Pedidos Ya", "Matt LeBlanc", "Cerrito 1186, Buenos Aires, Argentina")
+                    c3.getName()
             );
             userRepository.save(u3);
 
@@ -105,7 +117,7 @@ public class Application {
                     false,
                     adminAuthorities,
                     Department.TECH,
-                    new Company("Mjam", "Matthew Perry","Barichgasse 38, Top 1.4, 1030 Wien" )
+                    c4.getName()
             );
             userRepository.save(u4);
 
@@ -119,7 +131,7 @@ public class Application {
                     false,
                     userAuthorities,
                     Department.TECH,
-                    new Company("Foody", "David Schwimmer", "Makedonias 88 CY, 2238, Cyprus")
+                    c4.getName()
             );
             userRepository.save(u5);
 
@@ -132,8 +144,8 @@ public class Application {
                     true,
                     false,
                     superadminAuthorities,
-                   new Company("")
-
+                    null,
+                    null
             );
             userRepository.save(u0);
 
