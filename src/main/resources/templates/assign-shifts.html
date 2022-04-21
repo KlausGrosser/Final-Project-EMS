@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Shift assignments</title>
+    <title>Assign Shifts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -11,21 +11,70 @@
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-4 mt-5">
-            <form method="post" th:object="${user}">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="display-4" th:text="#{shifts.header}"></h1>
+            <hr>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/shifts/assign_shifts}" th:object="${shift}" method="post">
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label>
+                            <span th:text="#{registration.shifts.label}"></span>
+                            <input type="date"
+                                   th:field="*{assignedDay}"
+                                   th:placeholder="#{registration.shifts.placeholder}"
+                                   class="form-control"
+                                   required/>
+                            <span th:if="${#fields.hasErrors('assignedDay')}" th:errors="*{assignedDay}"
+                                  class="text-danger"></span>
+                        </label>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label>
+                            <span th:text="#{shifts.start.label}"></span>
+                            <input type="time"
+                                   th:field="*{assignedStartTime}"
+                                   th:placeholder="#{shifts.start.placeholder}"
+                                   class="form-control"
+                                   required/>
+                            <span th:if="${#fields.hasErrors('assignedStartTime')}" th:errors="*{assignedStartTime}"
+                                  class="text-danger"></span>
+                        </label>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label>
+                            <span th:text="#{shifts.end.label}"></span>
+                            <input type="time"
+                                   th:field="*{assignedEndTime}"
+                                   th:placeholder="#{shifts.end.placeholder}"
+                                   class="form-control"
+                                   required/>
+                            <span th:if="${#fields.hasErrors('assignedEndTime')}" th:errors="*{assignedEndTime}"
+                                  class="text-danger"></span>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label>
+                                <span th:text="#{shifts.employee.label}"></span>
+                                <input type="text"
+                                       th:field="*{assignedEmployeeName}"
+                                       th:placeholder="#{shifts.employee.placeholder}"
+                                       class="form-control"
+                                       required/>
+                                <span th:if="${#fields.hasErrors('assignedEmployeeName')}" th:errors="*{assignedEmployeeName}"
+                                      class="text-danger"></span>
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="shift">Employee</label>
-                    <select id="shift" class="form-control select2-single" th:field="*{currentShift}">
-                        <option value="">Search employee</option>
-                    </select>
                 </div>
-
-                <button class="btn btn-primary" type="submit">Assign shift</button>
+                <button type="submit" class="btn btn-primary" th:text="#{shift.assign}">Assign Shift</button>
             </form>
         </div>
-</div>
+    </div>
 </div>
 
 <footer th:replace="~{fragments/footer::footer}"></footer>
@@ -39,43 +88,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{assets/select2-develop/dist/js/select2.full.js}"></script>
-
-<script>
-    $("#shift").select2({
-        theme: "bootstrap4",
-        ajax: {
-            url: '/shifts/assign_shifts',
-            dataType: 'json',
-            delay: 250,
-            processResults: function (response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    $(function() {
-        $("#shift").autocomplete({
-            source: "plantNamesAutocomplete",
-            minLength: 3,
-            select: function(event, ui) {
-                this.value = ui.item.label;
-                $("#Plant_Id").val(ui.item.value);
-                return false;
-            }
-        });
-    });
-</script>
-
-
 </body>
 </html>

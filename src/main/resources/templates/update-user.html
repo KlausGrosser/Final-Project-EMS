@@ -54,8 +54,9 @@
                                 <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
                                       class="text-danger"></span>
                             </div>
-                            <div class="form-group form-check col-md-6" sec:authorize="hasAuthority('SUPERADMIN')">
+                            <div class="form-group form-check col-md-6" sec:authorize="hasAuthority('HR_SUPERVISOR')">
                                 <ul>
+                                    <span th:text="#{users.update.authorities.label}"></span>
                                     <li th:each="authority : ${authorities}">
                                         <input type="checkbox" class="form-check-input" th:field="*{authorities}"
                                                th:value="${authority}"/>
@@ -65,20 +66,6 @@
                                 </ul>
                                 <span th:if="${#fields.hasErrors('authorities')}" th:errors="*{authorities}"
                                       class="text-danger"></span>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="col-form-label" for="department" sec:authorize="hasAuthority('SUPERADMIN')">
-                                    <span th:text="#{users.update.department.label}"></span>
-                                    <select th:field="*{department}" class="form-control" id="department">
-                                        <option value="">Select department</option>
-                                        <option th:each="department : ${T(com.finalproject.model.entity.Department).values()}"
-                                                th:value="${department}"
-                                                th:text="${department}">department
-                                        </option>
-                                    </select>
-                                    <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
-                                          class="text-danger"></span>
-                                </label>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label>
@@ -109,7 +96,34 @@
                                           class="text-danger"></span>
                                 </label>
                             </div>
-                        </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="col-form-label">
+                                    <span th:text="#{registration.company.label}"></span>
+                                    <select th:field="*{company}" class="form-control" id="company" required>
+                                        <option value="">Select Company</option>
+                                        <option th:each="company : ${companiesList}"
+                                                th:value="${company.name}"
+                                                th:text="${company.name}">
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('company')}" th:errors="*{company}"
+                                          class="text-danger"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="col-form-label" for="department" sec:authorize="hasAuthority('HR_SUPERVISOR')">
+                                    <span th:text="#{users.update.department.label}"></span>
+                                    <select th:field="*{department}" class="form-control" id="department">
+                                        <option value="">Select department</option>
+                                        <option th:each="department : ${T(com.finalproject.model.entity.Department).values()}"
+                                                th:value="${department}"
+                                                th:text="${department}">department
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
+                                          class="text-danger"></span>
+                                </label>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

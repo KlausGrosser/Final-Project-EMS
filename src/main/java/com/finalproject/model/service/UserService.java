@@ -79,6 +79,7 @@ public class UserService implements UserDetailsService {
                 .department(userDTO.getDepartment().name())
                 .supervisorRole(userDTO.isSupervisorRole())
                 .supervisorName(userDTO.getSupervisorName())
+                .company(userDTO.getCompany())
                 .build();
         try {
             userRepository.save(user);
@@ -128,6 +129,10 @@ public class UserService implements UserDetailsService {
 
         if (Objects.nonNull(userDTO.getSupervisorName())) {
             user.setSupervisorName(userDTO.getSupervisorName());
+        }
+
+        if (Objects.nonNull(userDTO.getCompany())) {
+            user.setCompany(userDTO.getCompany());
         }
 
         try {
@@ -224,6 +229,5 @@ public class UserService implements UserDetailsService {
 
         return names;
     }
-
 
 }

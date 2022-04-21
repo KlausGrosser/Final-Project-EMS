@@ -16,7 +16,9 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     Optional<Company> findByName(String name);
 
-    @Query(value="SELECT e FROM Company e WHERE e.name LIKE %:keyword% OR e.ceo LIKE %:keyword% OR e.address LIKE %:keyword%")
+    @Query(value="SELECT e FROM Company e WHERE e.name LIKE %:keyword% " +
+            "OR e.ceo LIKE %:keyword% " +
+            "OR e.address LIKE %:keyword%")
     Page<Company> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 }

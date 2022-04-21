@@ -4,7 +4,7 @@
 >
 <head>
   <meta charset="UTF-8">
-  <title>Add new company</title>
+  <title>Update company</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -14,13 +14,13 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h1 class="display-4" th:text="#{company.add.title}">Add company</h1>
+      <h1 class="display-4" th:text="#{company.update.title}">Update company</h1>
       <hr>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <form method="post" th:action="@{/company/add}" th:object="${company}">
+          <form action="#" th:action="@{/company/update/{id}(id=${company.id})}" th:object="${company}" method="post">
             <div class="form-row">
               <div class="col-md-12 mb-12">
                 <label>
@@ -29,7 +29,7 @@
                          th:field="*{name}"
                          th:placeholder="#{company.name.placeholder}"
                          class="form-control"
-                         required/>
+                         />
                 </label>
               </div>
             </div>
@@ -41,8 +41,7 @@
                          th:field="*{ceo}"
                          th:placeholder="#{company.ceo.placeholder}"
                          class="form-control"
-                         required/>
-
+                         />
                 </label>
               </div>
             </div>
@@ -54,8 +53,7 @@
                          th:field="*{address}"
                          th:placeholder="#{company.address.placeholder}"
                          class="form-control"
-                         required/>
-
+                       />
                 </label>
               </div>
             </div>

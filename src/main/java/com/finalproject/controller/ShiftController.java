@@ -1,7 +1,6 @@
 package com.finalproject.controller;
 
 import com.finalproject.dto.ShiftDTO;
-import com.finalproject.model.entity.Shift;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.service.UserService;
 import com.finalproject.model.service.ShiftService;

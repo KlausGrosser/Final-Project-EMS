@@ -8,6 +8,7 @@ import com.finalproject.model.entity.Authority;
 import com.finalproject.model.entity.Department;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.repository.CompanyRepository;
+import com.finalproject.model.service.CompanyService;
 import com.finalproject.model.service.UserService;
 import com.finalproject.util.exception.UsernameNotUniqueException;
 import lombok.extern.log4j.Log4j2;
@@ -39,12 +40,14 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final CompanyRepository companyRepository;
+    private final CompanyService companyService;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder, CompanyRepository companyRepository) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, CompanyRepository companyRepository, CompanyService companyService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.companyRepository = companyRepository;
+        this.companyService = companyService;
     }
 
 /*    @GetMapping("/users")
@@ -84,6 +87,7 @@ public class UserController {
         model.addAttribute("authorities", Authority.values());
         model.addAttribute("departments", Department.values());
         model.addAttribute("supervisorsList", userService.getAllSupervisors());
+        model.addAttribute("companiesList", companyService.findAll());
         return "update-user";
     }
 
@@ -94,7 +98,7 @@ public class UserController {
                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("authorities", Authority.values());
-            model.addAttribute("departments", Department.values());
+
             return "update-user";
         }
 
@@ -111,16 +115,15 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getUserProfilePage(@AuthenticationPrincipal User user,
-                                     Model model,
-                                     @ModelAttribute("companyDTO") CompanyDTO companyDTO) {
+                                     Model model) {
         model.addAttribute("user", userService.getUserById(user.getId()));
+        model.addAttribute("company", new CompanyDTO());
 
         if(user.isFirstLogin()){
             return "password_change";
         }else if(user.getAuthorities().contains(Authority.SUPERADMIN) && companyRepository.findAll().isEmpty()){
             return "create_company";
-        }
-        else{
+        }else{
             return "user-profile";
         }
     }

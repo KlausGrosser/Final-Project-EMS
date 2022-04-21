@@ -1,6 +1,7 @@
 package com.finalproject.model.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -22,6 +23,7 @@ public class Shift {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
     private LocalDate shiftDay;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate assignedDay;
     private LocalDateTime assignedStartTime;
     private LocalDateTime assignedEndTime;
