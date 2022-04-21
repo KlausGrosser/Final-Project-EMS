@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Shift assignments</title>
+    <title>Assign Shifts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -13,111 +13,65 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h1 class="display-4" th:text="#{registration.header}"></h1>
+            <h1 class="display-4" th:text="#{shifts.header}"></h1>
             <hr>
         </div>
         <div class="card-body">
-            <form th:action="@{/registration}" th:object="${shift}" method="post">
+            <form th:action="@{/shifts/assign_shifts}" th:object="${shift}" method="post">
                 <div class="form-row">
                     <div class="col-md-3 mb-3">
                         <label>
-                            <span th:text="#{registration.first_name.label}"></span>
-                            <input type="text"
-                                   th:field="*{firstName}"
-                                   th:placeholder="#{registration.first_name.placeholder}"
+                            <span th:text="#{registration.shifts.label}"></span>
+                            <input type="date"
+                                   th:field="*{assignedDay}"
+                                   th:placeholder="#{registration.shifts.placeholder}"
                                    class="form-control"
                                    required/>
-                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                            <span th:if="${#fields.hasErrors('assignedDay')}" th:errors="*{assignedDay}"
                                   class="text-danger"></span>
                         </label>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label>
-                            <span th:text="#{registration.last_name.label}"></span>
-                            <input type="text"
-                                   th:field="*{lastName}"
-                                   th:placeholder="#{registration.last_name.placeholder}"
-                                   class="form-control"
-                                   required
-                            />
-                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.username.label}"></span>
-                            <input type="text"
-                                   th:field="*{username}"
-                                   th:placeholder="#{registration.username.placeholder}"
+                            <span th:text="#{shifts.start.label}"></span>
+                            <input type="time"
+                                   th:field="*{assignedStartTime}"
+                                   th:placeholder="#{shifts.start.placeholder}"
                                    class="form-control"
                                    required/>
-                            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                            <span th:if="${#fields.hasErrors('assignedStartTime')}" th:errors="*{assignedStartTime}"
                                   class="text-danger"></span>
                         </label>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label>
-                            <span th:text="#{registration.password.label}"></span>
-                            <input type="password"
-                                   th:field="*{password}"
-                                   th:placeholder="#{registration.password.placeholder}"
+                            <span th:text="#{shifts.end.label}"></span>
+                            <input type="time"
+                                   th:field="*{assignedEndTime}"
+                                   th:placeholder="#{shifts.end.placeholder}"
                                    class="form-control"
-                                   required
-                            />
-                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                   required/>
+                            <span th:if="${#fields.hasErrors('assignedEndTime')}" th:errors="*{assignedEndTime}"
                                   class="text-danger"></span>
                         </label>
                     </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label>
+                                <span th:text="#{shifts.employee.label}"></span>
+                                <input type="text"
+                                       th:field="*{assignedEmployeeName}"
+                                       th:placeholder="#{shifts.employee.placeholder}"
+                                       class="form-control"
+                                       required/>
+                                <span th:if="${#fields.hasErrors('assignedEmployeeName')}" th:errors="*{assignedEmployeeName}"
+                                      class="text-danger"></span>
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label class="col-form-label" for="department">
-                            <span th:text="#{registration.department.label}"></span>
-                            <select th:field="*{department}" class="form-control" id="department" required>
-                                <option value="">Select department</option>
-                                <option th:each="department : ${T(com.finalproject.model.entity.Department).values()}"
-                                        th:value="${department}"
-                                        th:text="${department}">department
-                                </option>
-                            </select>
-                            <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label>
-                            <span th:text="#{registration.supervisorRole.label} + ' Check for yes, leave blank for no: '"></span>
-                            <input type="checkbox"
-                                   th:field="*{supervisorRole}"
-                                   th:placeholder="#{registration.supervisorRole.placeholder}"
-                                   class="form-control"
-                                   name="Check for yes, leave blank for no"
-                            />
-                            <span th:if="${#fields.hasErrors('supervisorRole')}" th:errors="*{supervisorRole}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label class="col-form-label">
-                            <span th:text="#{registration.supervisorName.label}"></span>
-                            <select th:field="*{supervisorName}" class="form-control" id="supervisor" required>
-                                <option value="">Select Supervisor</option>
-                                <option th:each="supervisor : ${supervisorsList}"
-                                        th:value="${supervisor.fullName}"
-                                        th:text="${supervisor.department} + ' : ' + ${supervisor.fullName}">
-                                </option>
-                            </select>
-                            <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
-                                  class="text-danger"></span>
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" th:text="#{button.signup}">Sign up</button>
+                <button type="submit" class="btn btn-primary" th:text="#{shift.assign}">Assign Shift</button>
             </form>
         </div>
     </div>

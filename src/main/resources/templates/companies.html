@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>All Companies</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="~{fragments/navbar::navbar}"></div>
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div th:if="${company.isEmpty()}">
+        <h1 class="display-4" th:text="#{company.empty}"></h1>
+        <hr>
+      </div>
+      <div th:unless="${company.isEmpty()}">
+        <h1 class="display-4" th:text="#{company.title}">Companies</h1>
+        <hr>
+      </div>
+      <hr>
+      <div class="card-body">
+        <form action="/company/add" method="get">
+          <button class="btn btn-outline-primary mr-3 my-2 my-sm-0" type="submit">
+            Add new company
+          </button>
+        </form>
+        <br>
+        <form th:action="@{/companies}" th:each="company : ${company}" method="get">
+          <div class="col-md-6">
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <p>
+                  <span th:text="#{company.name}">Name: </span>
+                  <span th:text="${company.getName()}"></span>
+                </p>
+              </div>
+              <div class="card-footer">
+                <p>
+                  <span th:text="#{company.address}">Address: </span>
+                  <span th:text="${company.getAddress()}"></span>
+                <p>
+                  <span th:text="#{company.ceo}">ceo: </span>
+                  <span th:text="${company.getCeo()}"></span>
+                </p>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div aria-label="btn-group" class="btn-group" role="group">
+                  <a class="btn btn-sm btn-secondary"
+                     sec:authorize="hasAuthority('SUPERADMIN')"
+                     th:href="@{/company/delete/{id}(id=${company.getId})}"
+                     th:text="#{company.delete}">
+                    Delete
+                  </a>
+                  <a class="btn btn-sm btn-secondary"
+                     sec:authorize="hasAuthority('SUPERADMIN')"
+                     th:href="@{/company/update/{id}(id=${company.getId})}"
+                     th:text="#{company.update}">
+                    Update
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <footer th:replace="~{fragments/footer::footer}"></footer>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+</body>

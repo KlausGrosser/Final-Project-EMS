@@ -40,4 +40,6 @@ public class UpdateUserDTO {
     private String supervisorName;
 
     private boolean supervisorRole;
+
+    private String company;
 }

@@ -38,6 +38,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "OR e.department LIKE %:keyword%")
     Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+
 }
 
 

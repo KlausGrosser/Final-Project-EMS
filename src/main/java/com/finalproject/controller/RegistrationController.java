@@ -1,7 +1,7 @@
 package com.finalproject.controller;
 
 import com.finalproject.dto.RegistrationUserDTO;
-import com.finalproject.model.entity.User;
+import com.finalproject.model.service.CompanyService;
 import com.finalproject.model.service.UserService;
 import com.finalproject.util.email.EmailService;
 import com.finalproject.util.exception.UsernameNotUniqueException;
@@ -12,8 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Controller that gives pages user registration related
@@ -24,16 +22,19 @@ import java.util.List;
 public class RegistrationController {
     private final UserService userService;
     private final EmailService emailService;
+    private final CompanyService companyService;
 
-    public RegistrationController(UserService userService, EmailService emailService) {
+    public RegistrationController(UserService userService, EmailService emailService, CompanyService companyService) {
         this.userService = userService;
         this.emailService = emailService;
+        this.companyService = companyService;
     }
 
     @GetMapping
     public String getRegistrationPage(@ModelAttribute("user") RegistrationUserDTO registrationUserDTO,
                                       Model model) {
         model.addAttribute("supervisorsList", userService.getAllSupervisors());
+        model.addAttribute("companiesList", companyService.findAll());
         return "registration";
     }
 
@@ -46,7 +47,6 @@ public class RegistrationController {
 
         emailService.createNewUserAndSendRegistrationMail(registrationUserDTO);
 
-        //return "redirect:/login";
         return "register_check_email";
     }
 

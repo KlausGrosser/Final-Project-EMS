@@ -40,4 +40,6 @@ public class RegistrationUserDTO {
     private boolean supervisorRole;
 
     private String supervisorName;
+
+    private String company;
 }

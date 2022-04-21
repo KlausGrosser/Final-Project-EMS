@@ -1,32 +1,40 @@
 package com.finalproject.model.service;
 
+import com.finalproject.dto.ShiftDTO;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.entity.Shift;
 import com.finalproject.model.repository.AbsenceRepository;
 import com.finalproject.model.repository.ShiftRepository;
+import com.finalproject.model.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 
 @Service
+@Log4j2
 public class ShiftService {
 
     private final UserService userService;
     private final ShiftRepository shiftRepository;
     private final AbsenceRepository absenceRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ShiftService(UserService userService, ShiftRepository shiftRepository, AbsenceRepository absenceRepository) {
+    public ShiftService(UserService userService, ShiftRepository shiftRepository, AbsenceRepository absenceRepository, UserRepository userRepository) {
         this.userService = userService;
         this.shiftRepository = shiftRepository;
         this.absenceRepository = absenceRepository;
+        this.userRepository = userRepository;
     }
 
     //Format the date and time
@@ -154,5 +162,26 @@ public class ShiftService {
         shift.setTimeWorkedInLastPeriod(total);
         shift.getWorkedPeriods().add(total);
     }
+
+    public void createNewShift(ShiftDTO shiftDTO) {
+        Shift shift = Shift
+                .builder()
+                .assignedDay(shiftDTO.getAssignedDay())
+                .assignedStartTime(shiftDTO.getAssignedStartTime())
+                .assignedEndTime(shiftDTO.getAssignedEndTime())
+                .employee(userService.findByFullName(shiftDTO.getAssignedEmployeeName()))
+                .build();
+
+        try {
+            this.saveShiftAndUpdateEmployee(shift.getEmployee(), shift);
+            //shiftRepository.save(shift);
+            log.info("New shift " + shift);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 

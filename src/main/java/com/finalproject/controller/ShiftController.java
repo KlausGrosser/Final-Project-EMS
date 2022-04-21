@@ -1,6 +1,6 @@
 package com.finalproject.controller;
 
-import com.finalproject.model.entity.Shift;
+import com.finalproject.dto.ShiftDTO;
 import com.finalproject.model.entity.User;
 import com.finalproject.model.service.UserService;
 import com.finalproject.model.service.ShiftService;
@@ -28,50 +28,29 @@ public class ShiftController {
     }
 
     //GetMapping
-    @GetMapping
-    public String getCheckInPage(Model model){
-        User employee = userService.getCurrentUser();
-        Shift shift = shiftService.findCurrentShift(employee);
-
-        model.addAttribute("shift", shift);
-
-        return "check_in_out";
-    }
 
     @GetMapping(path="/assign_shifts")
-    public String getAssignShiftsPage(@ModelAttribute("shift") Shift shift) {
+    public String getAssignShiftsPage(@ModelAttribute("shift") ShiftDTO shiftDTO,
+                                      Model model) {
+        model.addAttribute("user", new User());
         return "assign-shifts";
     }
 
-    @PostMapping(path = "/get_time")
-    public String getTotalWorkedTime(Model model) {
-        User employee = userService.getCurrentUser();
-        Shift shift = shiftService.findCurrentShift(employee);
+    @PostMapping(path="/assign_shifts")
+    public String registerNewShift(@ModelAttribute("shift") @Valid ShiftDTO shiftDTO,
+                                   BindingResult bindingResult,
+                                   User user,
+                                   Model model){
+        if (bindingResult.hasErrors()) {
+            return "assign-shifts";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("user", userService.findByFullName(shiftDTO.getAssignedEmployeeName()));
 
-        model.addAttribute("shift", shift);
-        shiftService.getTotalWorkedTime();
-        return "check_in_out";
-    }
+        shiftService.createNewShift(shiftDTO);
 
-    //PostMappings
-    @PostMapping(path = "/check_in")
-    public String startWorking(Model model) {
-        User employee = userService.getCurrentUser();
-        Shift shift = shiftService.findCurrentShift(employee);
 
-        model.addAttribute("shift", shift);
-        shiftService.start();
-        return "check_in_out";
-    }
-
-    @PostMapping(path = "/check_out")
-    public String stopWorking(Model model) {
-        User employee = userService.getCurrentUser();
-        Shift shift = shiftService.findCurrentShift(employee);
-
-        model.addAttribute("shift", shift);
-        shiftService.stop();
-        return "check_in_out";
+        return "user-profile";
     }
 }
 

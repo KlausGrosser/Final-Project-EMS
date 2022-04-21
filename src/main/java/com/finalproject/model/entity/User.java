@@ -3,6 +3,7 @@ package com.finalproject.model.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -76,6 +77,10 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Shift> shifts = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "current_shift_id")
+    private Shift currentShift;
+
     private String department;
 
     private String address;
@@ -90,6 +95,8 @@ public class User implements UserDetails {
 
     private String supervisorName;
 
+    private String company;
+
     public User(Long id,
                 String firstName,
                 String lastName,
@@ -102,7 +109,8 @@ public class User implements UserDetails {
                 String address,
                 int telephone,
                 boolean supervisorRole,
-                String supervisorName) {
+                String supervisorName,
+                Company company) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -117,6 +125,7 @@ public class User implements UserDetails {
         this.supervisorRole = supervisorRole;
         this.supervisorName = supervisorName;
         this.fullName = firstName + " " + lastName;
+        this.company = company.getName();
     }
 
     @Override

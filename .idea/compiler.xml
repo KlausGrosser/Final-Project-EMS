@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FinalProjectEMS" />
         <module name="KAL_EMS" />
+        <module name="FinalProjectEMS" />
+        <module name="ems-spring" />
         <module name="EMSFinalProject" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="EMSFinalProject" options="-parameters" />
       <module name="FinalProjectEMS" options="-parameters" />
       <module name="KAL_EMS" options="-parameters" />
+      <module name="ems-spring" options="-parameters" />
     </option>
   </component>
 </project>

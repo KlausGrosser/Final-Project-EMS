@@ -8,9 +8,15 @@ import org.springframework.security.core.GrantedAuthority;
  * @see User
  */
 public enum Authority implements GrantedAuthority {
+    //Regular employees
     USER,
-    ADMIN,
+    //Only for HR Agents
+    HR_AGENT,
+    //Only for HR Supervisors
+    HR_SUPERVISOR,
+    //Department Supervisors
     SUPERVISOR,
+    //Owner
     SUPERADMIN;
 
     @Override
